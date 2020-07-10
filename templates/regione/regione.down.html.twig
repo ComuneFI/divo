@@ -1,0 +1,65 @@
+{% extends "Default/index.html.twig" %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('alert') }}
+    {{ encore_entry_script_tags('divoSlicer') }}
+{% endblock %}
+
+{% block subcontent %}
+
+
+<div class="col-lg-10 mx-auto">
+
+<div class="row">
+  <div class="col-12 col-lg-12">
+    <!--start card-->
+    <div class="card-wrapper card-space">
+      <div class="card card-bg">
+        <div class="card-body">
+          <h5 class="card-title">SERVICE 2.1 - RECUPERA COMUNICAZIONI ELETTORALI</h5>
+          <p class="card-text">Restituisce l'elenco delle comunicazioni elettorali attivate sul sistema AWE per l'utente specificato e
+relativo all'ente (comune) passato in input. Ogni comunicazione è legata ad un evento elettorale di cui
+viene restituito il tipo.</p>
+        <div class="it-card-footer">
+          <a href="{{ path('readComunicazioniEventi') }}">
+            <button type="button" class="btn btn-primary">Accedi</button>
+          </a>
+        </div>
+        </div>
+      </div>
+    </div>
+    <!--end card-->
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 col-lg-12">
+    <!--start card-->
+    <div class="card-wrapper card-space">
+      <div class="card card-bg">
+        <div class="card-body">
+          <h5 class="card-title">SERVICE 2.2 - RECUPERA LISTE E CANDIDATI</h5>
+          <p class="card-text">E’ presente il concetto di circoscrizione, in quanto le stesse liste possono essere presentate con diversi
+candidati o con i candidati in diversa posizione, se un territorio è suddiviso in circoscrizioni. Per lo stesso
+motivo, per tutte le comunicazioni riguardanti voti e preferenze, è stata prevista come input l'informazione
+sulla circoscrizione, in modo da facilitare i controlli di coerenza prima dell'inserimento.</p>
+          <div class="it-card-footer">
+           <a href="{{ path('readCandidatiListe') }}">
+            <button type="button" class="btn btn-primary">Accedi</button>
+          </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end card-->
+  </div>
+</div>
+<a href="{{ path('welcome') }}">
+ <button type="button" class="btn btn-primary">Go back</button>
+ </a>
+
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "Default/index.html.twig" %}
+
+{% block javascripts %}
+ {{ encore_entry_script_tags('alert') }}
+{% endblock %}
+
+{% block subcontent %}
+
+<div class="section">
+
+{% if communication_esito is defined %}
+    {% if communication_esito.esito.codice == 1 %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <h4 class="alert-heading">{{ communication_esito.esito.descrizione }}</h4>
+      <p>L'operazione di invio dati è stata effettuata con successo.</p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %}
+    {% if communication_esito.esito.codice != 1 %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    L'operazione di invio dati ha riscontrato un errore: "<b>{{ communication_esito.esito.descrizione }}</b>".
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %}
+{% endif %}
+
+<br>
+
+<div class="col-lg-12 mx-auto">
+
+<form method="post" action="{{path('pushScrutini')}}" name="myform">
+  <div class="form-row">
+  <div class="form-group col-md-12">
+      <div class="bootstrap-select-wrapper">
+          <label>Evento - Sezione per Invio Dati</label>
+              <select title="Scegli una comunicazione" id="selectOption" name="selectOption" class="form-control">
+              {% for item in sections %}
+                  <option value="{{item.sezione.id}}">{{item.evento.evento}}, {{item.evento.descrizioneEvento}}: {{item.sezione.descrizione}}</option>
+              {% endfor %}
+              </select>
+  </div>
+  </div>
+    <div class="form-row">
+    <div class="form-group col text-center">
+      <button type="submit" class="btn btn-primary">Conferma Invio</button>
+    </div>
+    </div>
+</form>
+</div>
+
+<div>
+<a href="{{ path('sendRTdata') }}">
+ <button type="button" class="btn btn-primary">Go back</button>
+ </a>
+
+</div>
+
+</div>
+
+{% endblock %}

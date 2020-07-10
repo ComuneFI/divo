@@ -1,0 +1,94 @@
+{% extends "Default/index.html.twig" %}
+
+{% block subcontent %}
+
+<use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg"></use>
+
+<div class="section">
+
+<div class="col-lg-12 mx-auto">
+
+<div id="collapseDiv2" class="collapse-div" role="tablist">
+
+<h3>Candidati: Ispezione ed Aggiornamento</h3>
+
+{% for object  in visible_objects %}
+
+  <div class="collapse-header" id="heading1a">
+    <button data-toggle="collapse" data-target="#collapse{{ object.evento.id }}" aria-expanded="true" aria-controls="collapse1a">
+      Evento: {{object.evento.evento}} del {{ object.evento.dataEvento| date('Y-m-d') }} (codice: {{ object.evento.codiceEvento }})
+      <span class="badge badge-primary">{{ object.evento.statoWfDesc }}</span>
+    </button>
+  </div>
+  <div id="collapse{{ object.evento.id }}" class="collapse show" role="tabpanel" aria-labelledby="heading1b">
+      <div class="collapse-body">
+ 
+
+{% for item in object.circoscrizioni %}
+{% set circoscrizione = item.circoscrizione %}
+  <div id="collapse1a" class="collapse show" role="tabpanel" aria-labelledby="heading1a">
+    <div class="collapse-body">
+      <div id="collapseDiv3" class="collapse-div" role="tablist">
+        <div class="collapse-header" id="heading{{ circoscrizione.id }}">
+          <button data-toggle="collapse" data-target="#collapse{{ circoscrizione.id }}" aria-expanded="true" aria-controls="collapse{{ circoscrizione.id }}">
+            Circoscrizione: {{ circoscrizione.circDesc}} (id: {{ circoscrizione.idTarget }})
+          </button>
+        </div>
+        <div id="collapse{{ circoscrizione.id }}" class="collapse show" role="tabpanel" aria-labelledby="heading1b">
+          <div class="collapse-body">
+          <ul>
+          {% for key,candidatoListe in item.candidati %}
+          {% set candidato = candidatoListe.candidato %}
+            
+            <li><span class="font-weight-bold">{{key}} - {{candidato.cognome}} {{candidato.nome}}</span>, {{candidato.luogoNascita}}, {{candidato.sesso}} ( {{candidato.idTarget}} )
+            <ul>
+            {% for keylp,listaPreferenza in candidatoListe.liste %}
+            {% set lista = listaPreferenza.lista %}
+              <li><span class="font-weight-semibold">{{keylp}} - {{lista.listaDesc}}</span> ( {{ lista.idTarget }})
+              <ul>
+              {% for keylpc,candidatoSecondario in listaPreferenza.candidatisecondari %}
+                <li>{{keylpc}} - {{candidatoSecondario.cognome}} {{candidatoSecondario.nome}}</b>, {{candidatoSecondario.luogoNascita}}, {{candidatoSecondario.sesso}} ( {{candidatoSecondario.idTarget}} ) 
+              {% endfor %}
+              </ul>
+              </li>
+            {% endfor %}
+            </ul>
+            </li>
+            
+          {% endfor %}
+          </ul>
+          </li>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endfor %}
+
+     </div>
+  </div>
+
+{% endfor %}
+
+
+  </div>
+
+
+<a href="{{ path('retrieveRTdata') }}">
+ <button type="button" class="btn btn-primary">Go back</button>
+ </a>
+ <a href="{{ path('downCandidatiListe') }}">
+<button class="btn btn-primary btn-icon">
+  <svg class="icon icon-white">
+    <use xlink:href="#it-arrow-down-circle"></use>
+  </svg>
+  <span>Scarica dati</span>
+</button>
+</a>
+
+</div>
+
+</div>
+
+{% endblock %}

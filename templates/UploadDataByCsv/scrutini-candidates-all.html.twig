@@ -1,0 +1,93 @@
+{% extends "Default/index.html.twig" %}
+
+{% block javascripts %}
+      {{ encore_entry_script_tags('uploadDataCSV') }}
+{% endblock %}
+
+
+{% block subcontent %}
+<use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg"></use>
+
+
+<div class="container-fluid">
+    <div class="col-10 col-lg-10 mx-auto">
+    <p></p>
+            {% if (genericError) %}
+                <div class="alert alert-danger" role="alert">
+                    Non è stato possibile completare l'operazione. Scaricare il template per avere un formato di riferimento.
+                </div>
+            {% endif %}
+            {% if ( not checkArrayValid) %}
+                <div class="alert alert-danger" role="alert">
+                    Formato csv non valido, controllare il separatore che deve essere necessariamente il carattere -> ; e le colonne richieste presenti. Scaricare il template per avere un formato di riferimento
+                </div>
+            {% endif %}
+
+            {% if ( commit ) %}
+                <div class="alert alert-success" role="success">
+                    Dati aggiornati con successo
+                </div>
+            {% endif %}
+
+        <div class="shadow-sm p-3 mb-5 bg-white">
+            <h4>Download File Scrutini Candidati Principali</h4>
+            <p>E' possibile scaricare in formato CSV i dati presenti al momento sul sistema Divo.
+            Il download come template, permette di ottenere un formato CSV di file compatibile con la successiva funzione di Upload con CSV.
+            Nella estrazione delle informazioni vengono inclusi solamente i dati attivi e non ancora spediti al sistema di destinazione.</p>
+            <a href="{{ path('downCSVEvent', {fileRequested:'report_candidati', event:evento_id })}}">
+                <button class="btn btn-primary btn-icon">
+                    <span class="rounded-icon">
+                        <svg class="icon icon-primary">
+                            <use xlink:href="#it-arrow-down"></use>
+                        </svg>
+                    </span>
+                    <span>Download Dati Attuali</span>
+                </button>
+            </a>
+            <a href="{{ path('downCSVEvent', {fileRequested:'template_candidati', event:evento_id })}}">
+                <button class="btn btn-primary btn-icon">
+                    <span class="rounded-icon">
+                        <svg class="icon icon-primary">
+                            <use xlink:href="#it-file"></use>
+                        </svg>
+                    </span>
+                    <span>Download Dati Attuali (Template)</span>
+                </button>
+            </a>
+        </div>
+
+        <div class="shadow-sm p-3 mb-5 bg-white">
+            <h4>Upload Scrutini Candidati Principali da File</h4>
+            <p>E' possibile caricare i dati in modo massivo, utilizzando un file CSV compatibile con il template.
+            Procedere alla selezione del file e poi procedere con l'azione di upload premendo il bottone seguente.
+            <b>Attenzione, l'operazione di upload rimpiazza tutti i dati già presenti (li disabilita con flag OFF).</b>
+            </p>
+            <div class="form-row">
+                    {{ form_start(form) }}
+                    {{ form_row(form.filecsv) }}
+                            <button class="btn btn-primary btn-icon">
+                                <span class="rounded-icon">
+                                    <svg class="icon icon-primary">
+                                        <use xlink:href="#it-arrow-up"></use>
+                                    </svg>
+                                </span>
+                                <span>Upload File CSV (by Template)</span>
+                            </button>
+                            {{ form_end(form) }}
+            </div>
+
+        </div>
+
+    <div class="form-row">
+        <div class="col-lg-12 mx-auto">
+            {% set url = '/UploadDataByCsv/Event/'~ evento_id %}
+            <a href="{{ url }}"><button type="button" class="btn btn-primary">Go back</button></a>
+        </div>
+    </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

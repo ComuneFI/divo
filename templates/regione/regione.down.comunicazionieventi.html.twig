@@ -1,0 +1,74 @@
+{% extends "Default/index.html.twig" %}
+
+{% block subcontent %}
+
+<use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg"></use>
+
+<div class="section">
+
+<div class="col-lg-10 mx-auto">
+
+<div id="collapseDiv2" class="collapse-div" role="tablist">
+
+<h3>Eventi e Comunicazioni: Ispezione ed Aggiornamento</h3>
+
+{% for couple  in visible_couples %}
+
+  <div class="collapse-header" id="heading1a">
+    <button data-toggle="collapse" data-target="#collapse{{ couple.evento.id }}" aria-expanded="true" aria-controls="collapse1a">
+      Evento: {{couple.evento.evento}} del {{ couple.evento.dataEvento| date('Y-m-d') }} (codice: {{ couple.evento.codiceEvento }}) 
+      <span class="badge badge-primary">{{ couple.stato }}</span>
+    </button>
+  </div>
+  <div id="collapse{{ couple.evento.id }}" class="collapse show" role="tabpanel" aria-labelledby="heading1b">
+      <div class="collapse-body">
+         <b>configurazioni:</b> {{ json_decode(couple.evento.configurazioni) | json_encode(constant('JSON_PRETTY_PRINT')) }}
+ 
+
+{% for comunicazione in couple.comunicazioni %}
+
+  <div id="collapse1a" class="collapse show" role="tabpanel" aria-labelledby="heading1a">
+    <div class="collapse-body">
+      <div id="collapseDiv3" class="collapse-div" role="tablist">
+        <div class="collapse-header" id="heading{{ comunicazione.id }}">
+          <button data-toggle="collapse" data-target="#collapse{{ comunicazione.id }}" aria-expanded="true" aria-controls="collapse{{ comunicazione.id }}">
+            Comunicazione: {{ comunicazione.comunicazioneDesc}} (codice: {{ comunicazione.comunicazioneCodice }})
+          </button>
+        </div>
+        <div id="collapse{{ comunicazione.id }}" class="collapse show" role="tabpanel" aria-labelledby="heading1b">
+          <div class="collapse-body">
+            <b>comunicazione finale:</b> {{ comunicazione.comunicazioneFinal ? 'True' : 'False' }}<br>
+            <b>configurazioni:</b> {{ json_decode(comunicazione.configurazioni) | json_encode(constant('JSON_PRETTY_PRINT')) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endfor %}
+
+     </div>
+  </div>
+
+{% endfor %}
+
+
+  </div>
+
+<a href="{{ path('retrieveRTdata') }}">
+ <button type="button" class="btn btn-primary">Go back</button>
+</a>
+<a href="{{ path('downComunicazionieventi') }}">
+<button class="btn btn-primary btn-icon">
+  <svg class="icon icon-white">
+    <use xlink:href="#it-arrow-down-circle"></use>
+  </svg>
+  <span>Scarica dati</span>
+</button>
+</a>
+
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+###> symfony/framework-bundle ###
+/.env.local
+/.env.*.local
+/public/bundles/
+/var/
+###< symfony/framework-bundle ###
+/nbproject/private/
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+.phpunit.result.cache
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+#/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
+
+# Managed by Composer
+/app/bootstrap.php.cache
+/var/bootstrap.php.cache
+/bin/*
+!bin/console
+!bin/symfony_requirements
+/vendor/
+
+#sonarcube
+/.scannerwork/

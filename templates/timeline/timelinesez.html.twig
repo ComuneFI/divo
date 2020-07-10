@@ -1,0 +1,67 @@
+{% extends "Default/index.html.twig" %}
+{% block javascripts %}
+      {{ encore_entry_script_tags('timeline') }}
+
+{% endblock %}
+
+{% block subcontent %}
+
+<div class="section">
+ <select title="Scegli una evento tra quelli validi" id="selectOptionList" name="selectOptionList" class="form-control">
+    {% for event_id, event in descEventoArray %}
+      {% for sezione in sezioni[event_id] %} 
+       <option value="{{sezione.statoWf}}">Evento {{event}} (ID:{{event_id}}) - {{sezione.descrizione}} </option>
+        
+    {% endfor %}
+  {% endfor %}
+ </select>
+
+<use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg"></use>
+<div class="it-timeline-wrapper">
+  <div class="row">
+
+
+{% set actual_state = start_state %}
+{% set actual_descr = array_states[actual_state]['descr'] %}
+{% set precondition = true %}
+{% for i in 0..10000 if precondition %}
+    <div class="col-12">
+      <div class="timeline-element">
+        <div class="it-pin-wrapper STATE_{{actual_state}}">
+          <div class="pin-icon">
+            <svg class="icon">
+              <use xlink:href="#it-code-circle"></use>
+            </svg>
+          </div>
+          <div class="pin-text"><span>{{actual_state}}</span></div>
+      </div>
+      <div class="card-wrapper">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{actual_descr}}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+     
+    
+  
+        
+
+ 
+       {% if actual_state != end_state %} 
+            {% set actual_state = array_states[actual_state]['next']  %}
+            {% set actual_descr = array_states[actual_state]['descr']  %}
+        {% else %}
+            {% set precondition = false %}
+        {% endif %}
+{% endfor %}
+  
+  </div>
+  </div>
+</div>
+
+
+{% endblock %}

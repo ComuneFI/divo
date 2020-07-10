@@ -1,0 +1,272 @@
+{% extends "Default/index.html.twig" %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('alert') }}
+    {{ encore_entry_script_tags('divoSlicer') }}
+     {{ encore_entry_script_tags('openCollapse') }}
+{% endblock %}
+
+{% block subcontent %}
+
+    <use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg"></use>
+
+    <div class="section">
+
+        {% if communication_esito is defined %}
+            {% if communication_esito.esito.codice == 1 %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <h4 class="alert-heading">{{ communication_esito.esito.descrizione }}</h4>
+                    <p>L'operazione di invio dati è stata effettuata con successo.</p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+            {% if communication_esito.esito.codice != 1 %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    L'operazione di invio dati ha riscontrato un errore: "<b>{{ communication_esito.esito.descrizione }}</b>".
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <div class="col-lg-10 mx-auto">
+
+            <h3>Scrutini: Ispezione ed Invio</h3>
+
+          {% for item in data %}  
+
+            <div id="collapseDiv2-{{item.object.id}}" class="collapse-div" role="tablist">
+                      
+                    <div class="collapse-header" id="heading1a">
+                        <button data-toggle="collapse" data-target="#collapse-lemon{{item.object.id}}" aria-expanded="true" aria-controls="collapse1a">
+                            {{ item.object.evento }}
+                            -
+                            {{ item.object.descrizioneEvento }}
+                            <span class="badge badge-pill badge-primary">{{ item.object.statoWfDesc }}</span>
+                            <br></button>
+                    </div>
+                    <div id="collapse-lemon{{item.object.id}}" class="collapse show" role="tabpanel" aria-labelledby="heading1b">
+                        <div class="collapse-body">
+                                <p>
+                                    <button type="button" class="btn btn-primary btn-icon multiSlicer" data-eventid={{ item.object.id }} data-topic="scrutini" data-topic-text="Sezioni aggiornate" data-path="/{{ item.object.id }}/scrutini/sezioni/changed" aria-disabled="true">
+                                        <svg class="icon icon-white">
+                                            <use xlink:href="#it-arrow-up-circle"></use>
+                                        </svg>
+                                        <span>Invia Scrutini</span>
+                                    </button>
+
+                                    <button class="btn btn-secondary-outline btn-icon" type="button" data-toggle="collapse" data-target="#collapseMultipleRange" aria-expanded="false" aria-controls="collapseExample">
+                                        <svg class="icon icon-primary">
+                                            <use xlink:href="#it-zoom-in"></use>
+                                        </svg>
+                                        <!--span></span-->
+                                    </button>
+                                </p>
+                                <div class="collapse" id="collapseMultipleRange">
+                                    <div class="callout">
+                                        <div class="callout-title">
+                                            <span class="sr-only">Confermato</span>Invio Selettivo</div>
+                                        <p>Si selezioni la
+                                            <b>Sezione Iniziale</b>
+                                            e la
+                                            <b>Sezione Finale</b>
+                                            del proprio intervallo di interesse.
+                                                La procedura invierà i dati degli Scrutini relativi all'intervallo indicato (incluse la sezione iniziale e finale).<br>
+                                                L'operazione di invio potrebbe richiedere alcuni minuti nel caso si siano selezionate molte sezioni.</p>
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <div class="bootstrap-select-wrapper">
+                                                        <label>Sezione Iniziale</label>
+                                                        <select title="Scegli una sezione" id="start-sec-{{ item.object.id }}">
+                                                            {% for struct in item.array %}
+                                                                <option value="{{ struct.object.sezione.id }}">{{ struct.object.sezione.descrizione }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <div class="bootstrap-select-wrapper">
+                                                        <label>Sezione Finale</label>
+                                                        <select title="Scegli una sezione" id="end-sec-{{ item.object.id }}">
+                                                            {% for struct in item.array %}
+                                                                <option value="{{ struct.object.sezione.id }}">{{ struct.object.sezione.descrizione }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button type="button" class="btn btn-primary btn-icon btn-sm multiSlicer" data-eventid={{ item.object.id }} data-topic="scrutini" data-topic-text="Sezioni indicate" data-path="/{{ item.object.id }}/sezioni/range" aria-disabled="true">
+                                                <svg class="icon icon-white">
+                                                    <use xlink:href="#it-upload"></use>
+                                                </svg>
+                                                <span>Invia intervallo</span>
+                                            </button>
+                                        </div>
+
+                                    </div>
+
+                                    <h5>Dettaglio per sezione</h5>
+
+                                    {% for key,struct in item.array %}
+
+                                        {# sections #}
+
+                                        {% set arraySize = struct.array|length %}
+                                        <div class="collapse-header" id="heading1a">
+                                            <button data-toggle="collapse" data-target="#collapse-{{ struct.object.sezione.id }}" aria-expanded="true" aria-controls="collapse1a">
+                                                {{ struct.object.sezione.descrizione }}
+                                                <span class="badge badge-pill badge-primary">
+                                                    {{ struct.object.sezione.statoWfDesc }}</span>
+                                                <br></button>
+                                        </div>
+
+                                        <div id="collapse-{{ struct.object.sezione.id }}" class="collapse collapse-div-open" role="tabpanel" aria-labelledby="heading1b">
+                                                <div class="collapse-body">
+                                                    {% if arraySize > 0 %}
+                                                        <table class="table table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Candidato</th>
+                                                                    <th scope="col">Lista</th>
+                                                                    <th scope="col">Voti Totali</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {% set sum = 0 %}
+                                                                {% for scrutinio in struct.array %}
+                                                                    {% if scrutinio.type_vote == "1-MAIN" %}
+
+                                                                        <tr class="{% if scrutinio.bitnew != 0 %} record_nuovo table-primary {% endif %}">
+                                                                        {% else %}
+
+                                                                            <tr class="{% if scrutinio.bitnew != 0 %} record_nuovo  table-primary {% else %} table-secondary {% endif %}">
+                                                                            {% endif %}
+                                                                            <td>
+                                                                                <small>
+                                                                                    {% if scrutinio.type_vote == "1-MAIN" %}
+                                                                                        <b>{{ scrutinio.cand_cognome }}
+                                                                                            {{ scrutinio.cand_nome }}</b>
+                                                                                        ({{ scrutinio.cand_sesso }}),
+                                                                                        {{ scrutinio.cand_luogo }}
+                                                                                        {% set sum = sum + scrutinio.voti %} 
+                                                                                    {% endif %}
+                                                                                </small>
+                                                                            </td>
+                                                                            <td>
+                                                                                <small>{{ scrutinio.lista }}</small>
+                                                                            </td>
+                                                                            <td>
+                                                                                <small>
+                                                                                    <b>{{ scrutinio.voti }}</b>
+                                                                                </small>
+                                                                            </td>
+                                                                        </tr>
+                                                                    {% endfor %}      
+                                                                        <tr>                                                                      
+                                                                        <td>VOTI NON VALIDI</td>
+                                                                        <td></td><td></td>
+                                                                        </tr>                                                                          
+                                                                        <tr class="{% if struct.changed != 0 %} record_nuovo table-primary {% else %} table-secondary {% endif %}">                                                                      
+                                                                         <td>Schede Bianche</td>
+                                                                         <td></td>
+                                                                        <td>{{struct.schede_bianche}}</td>
+                                                                        
+                                                                         {% if struct.schede_bianche matches '/^\\d+$/' %}
+                                                                            {% set sum = sum + struct.schede_bianche %}
+                                                                         {% endif %}
+                                                                         
+                                                                        </tr> 
+                                                                        <tr class="{% if struct.changed != 0 %} record_nuovo table-primary {% else %} table-secondary {% endif %}">                                                                                                                                         
+                                                                        <td>Schede Contestate</td>
+                                                                        <td></td><td>{{struct.schede_contestate}}</td>
+                                                                      
+                                                                        {% if struct.schede_contestate matches '/^\\d+$/' %}
+                                                                            {% set sum = sum + struct.schede_contestate %}
+                                                                         {% endif %}
+                                                                        </tr>        
+                                                                        <tr class="{% if struct.changed != 0 %} record_nuovo table-primary {% else %} table-secondary {% endif %}">                                                                                                                                                                                                                
+                                                                        <td>Schede Nulle</td>
+                                                                        <td></td><td>{{struct.schede_nulle}}</td>
+                                                                        {% if struct.schede_nulle matches '/^\\d+$/' %}
+                                                                            {% set sum = sum + struct.schede_nulle %}
+                                                                         {% endif %}
+                                                                        </tr>
+                                                                        
+                                                                        <tr class="text-sm">
+                                                                        <td>Totale voti (validi e non validi)</td>
+                                                                        <td></td><td>{{ sum  }}</td>
+                                                                        </tr>
+
+                                                                          <tr>                                                                      
+                                                                        <td>AFFLUENZE</td>
+                                                                        <td></td><td></td>
+                                                                        </tr>                                                                          
+                                                                        <tr class="{% if struct.changedVotanti != 0 %} record_nuovo table-primary {% else %} table-secondary {% endif %}">                                                                      
+                                                                         <td>Votanti Maschi</td>
+                                                                         <td></td>
+                                                                        <td>{{struct.num_votanti_maschi}}</td>
+                                                                       
+                                                                        </tr> 
+                                                                        <tr class="{% if struct.changedVotanti != 0 %} record_nuovo table-primary {% else %} table-secondary {% endif %}">                                                                                                                                         
+                                                                       <td>Votanti Femmine</td>
+                                                                        <td></td><td>{{struct.num_votanti_femmine}}</td>
+                                                                       
+                                                                        </tr>        
+                                                                        <tr class="{% if struct.changedVotanti != 0 %} record_nuovo  table-primary {% else %} table-secondary {% endif %}">                                                                                                                                                                                                                
+                                                                        <td>Votanti Totali</td>
+                                                                        <td></td><td>{{struct.num_votanti_totali}}</td>
+                                                                        
+                                                                        </tr>
+                                                                        
+                                                                       
+                                                                </tbody>
+                                                            </table>
+
+                                                            {% if sections_valid[key] is defined %}
+                                                                <a href="{{ path('pushScrutini', { 'sezid': struct.object.sezione.id }) }}">
+                                                                    <button type="button" class="btn btn-outline-primary btn-sm checkEnabled" data-nextstate='POST_POLL' data-entityref='Eventi' aria-disabled="true">
+                                                                        <span>Invia dati ({{ struct.object.sezione.descrizione }}
+                                                                            -
+                                                                            {{ struct.object.evento.evento }})</span>
+                                                                    </button>
+                                                                </a>
+                                                            {% else %}
+                                                                <div class="alert alert-warning" role="alert">
+                                                                    La sezione non può essere inviata perché mancano alcuni dati, ricordiamo che i dati obbligatori sono:
+
+                                                                    <ul>
+                                                                        <li>Voti candidato principale</li>
+                                                                        <li>Voti non validi</li>
+                                                                        <li>Affluenze finali</li>
+                                                                    </ul>
+                                                                </div>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                  
+                                                </div>
+
+                                        </div> 
+                                        {% endfor %}
+
+                                    </div>
+                            
+                            </div>
+                                {% endfor %}
+
+
+                            </div>
+
+                            <a href="{{ path('sendRTdata') }}">
+                                <button type="button" class="btn btn-primary">Indietro</button>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                {% endblock %}

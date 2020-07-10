@@ -1,0 +1,185 @@
+{% extends "divo/divo.log.dbrecord.affluenze.html.twig" %}
+
+
+{% block cardbody %}
+    {{ parent() }}
+
+
+    <h5>Scrutinio Candidato</h5>
+    <table class="table table-sm table-responsive-sm table-striped bitable table-hover">
+        <thead>
+            <tr>
+                <td>Sezione</td>
+                <td>ID Record</td>
+                <td>Candidato</td>
+                <td>Voti</td>
+                <td>Off</td>
+                <td>Sent</td>
+                <td>Data Update</td>
+                <td>Data Upload</td>
+                <tr></thead>
+                <tbody>
+                    {% for recordScrutinio in records.scrutinicandidato %}
+                        <tr class='tr-sez sez-* sez-{{ recordScrutinio.rxsezioni.id }}'>
+                            <td>
+                              {{ recordScrutinio.rxsezioni.descrizione }}
+                            </td>
+                            <td>
+                                {{ recordScrutinio.id }}
+                            </td>
+                            <td>
+                              {{ records.poscandidato[recordScrutinio.candidatiprincipali.id] }}  -  {{ recordScrutinio.candidatiprincipali.nome }}  {{ recordScrutinio.candidatiprincipali.cognome }}
+                            </td>
+
+                            <td>
+                                {{ recordScrutinio.votiTotaleCandidato }}
+                            </td>
+                          
+                            <td>
+                                {{ recordScrutinio.off ? 'Sì' : 'No' }}
+                            </td>
+
+                            {% if recordScrutinio.sent == 1 %}
+                                {% set sentvalue='Inviato' %}
+                            {% else %}
+                                {% set sentvalue='NON Inviato' %}
+                            {% endif %}
+                            <td>
+                                {{ sentvalue }}
+                            </td>
+                            <td>
+                                {{ recordScrutinio.timestamp  | date('d/m/Y H:i:s') }}
+                            </td>
+                            <td>
+                                {{ recordScrutinio.insDate  | date('d/m/Y H:i:s') }}
+                            </td>
+
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </thead>
+
+
+
+    <h5>Scrutinio Lista</h5>
+    <table class="table table-sm table-responsive-sm table-striped bitable table-hover">
+        <thead>
+            <tr>
+                <td>Sezione</td>
+                <td>ID Record</td>
+                <td>Lista (Candidato principale)</td>
+                <td>Voti</td>
+                <td>Off</td>
+                <td>Sent</td>
+                <td>Data Update</td>
+                <td>Data Upload</td>
+                <tr></thead>
+                <tbody>
+              
+                    {% for recordScrutinioListe in records.scrutiniliste %}
+                  
+              
+                        <tr class='tr-sez sez-* sez-{{ recordScrutinioListe.rxsezioni.id }}'>
+                            <td>
+                              {{ recordScrutinioListe.rxsezioni.descrizione }}
+                            </td>
+                            <td>
+                                {{ recordScrutinioListe.id }}
+                            </td>
+                            <td>
+                                {{ recordScrutinioListe.listapreferenze.listaDesc }}
+        
+                                ({{ records.listaxprincipale[recordScrutinioListe.listapreferenze.id] }})
+                            </td>
+
+                            <td>
+                                {{ recordScrutinioListe.votiTotLista }}
+                            </td>
+                          
+                            <td>
+                                {{ recordScrutinioListe.off ? 'Sì' : 'No' }}
+                            </td>
+
+                            {% if recordScrutinioListe.sent == 1 %}
+                                {% set sentvalue='Inviato' %}
+                            {% else %}
+                                {% set sentvalue='NON Inviato' %}
+                            {% endif %}
+                            <td>
+                                {{ sentvalue }}
+                            </td>
+                            <td>
+                                {{ recordScrutinioListe.timestamp  | date('d/m/Y H:i:s') }}
+                            </td>
+                            <td>
+                                {{ recordScrutinioListe.insDate  | date('d/m/Y H:i:s') }}
+                            </td>
+
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </thead>
+   <h5>Voti Non Validi</h5>
+    <table class="table table-sm table-responsive-sm table-striped bitable table-hover">
+        <thead>
+            <tr>
+                <td>Sezione</td>
+                <td>ID Record</td>
+                <td>Schede Bianche</td>
+                <td>Schede Nulle</td>
+                <td>Schede Contestate</td>
+                <td>Off</td>
+                <td>Sent</td>
+                <td>Data Update</td>
+                <td>Data Upload</td>
+                <tr></thead>
+                <tbody>
+                    {% for recordScrutinioVotiNonValidi in records.votinonvalidi %}
+                        <tr class='tr-sez sez-* sez-{{ recordScrutinioVotiNonValidi.rxsezioni.id }}'>
+                            <td>
+                              {{ recordScrutinioVotiNonValidi.rxsezioni.descrizione }}
+                            </td>
+                            <td>
+                                {{ recordScrutinioVotiNonValidi.id }}
+                            </td> 
+                            <td>
+                                {{ recordScrutinioVotiNonValidi.numeroSchedeBianche }}
+                            </td>
+                             <td>
+                                {{ recordScrutinioVotiNonValidi.numeroSchedeNulle }}
+                            </td>
+                             <td>
+                                {{ recordScrutinioVotiNonValidi.numeroSchedeContestate }}
+                            </td>
+                          
+                            <td>
+                                {{ recordScrutinioVotiNonValidi.off ? 'Sì' : 'No' }}
+                            </td>
+
+                            {% if recordScrutinioVotiNonValidi.sent == 1 %}
+                                {% set sentvalue='Inviato' %}
+                            {% else %}
+                                {% set sentvalue='NON Inviato' %}
+                            {% endif %}
+                            <td>
+                                {{ sentvalue }}
+                            </td>
+                            <td>
+                                {{ recordScrutinioVotiNonValidi.timestamp  | date('d/m/Y H:i:s') }}
+                            </td>
+                            <td>
+                                {{ recordScrutinioVotiNonValidi.insDate  | date('d/m/Y H:i:s') }}
+                            </td>
+
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </thead>
+
+    {% endblock %}

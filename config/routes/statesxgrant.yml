@@ -1,0 +1,51 @@
+Statesxgrant_container:
+    path:  /
+    controller: 'App\Controller\StatesxgrantController::index'
+
+Statesxgrant_lista:
+    path:  /lista
+    controller: 'App\Controller\StatesxgrantController::lista'
+    options:
+        expose: true
+
+Statesxgrant_indexdettaglio:
+    path:  /indexDettaglio
+    controller: 'App\Controller\StatesxgrantController::indexDettaglio'
+    options:
+        expose: true
+
+Statesxgrant_new:
+    path:  /new
+    controller: 'App\Controller\StatesxgrantController::new'
+    methods:    GET|POST
+
+Statesxgrant_edit:
+    path:  /{id}/edit
+    controller: 'App\Controller\StatesxgrantController::edit'
+
+Statesxgrant_update:
+    path:  /{id}/update
+    controller: 'App\Controller\StatesxgrantController::update'
+    methods:    POST|PUT
+
+Statesxgrant_aggiorna:
+    path:  /{id}/{token}/aggiorna
+    controller: 'App\Controller\StatesxgrantController::aggiorna'
+    methods:    POST|PUT
+    options:
+        expose: true
+
+Statesxgrant_delete:
+    path:  /{id}/{token}/delete
+    controller: 'App\Controller\StatesxgrantController::delete'
+    methods:    POST|DELETE
+
+Statesxgrant_deletemultiple:
+    path:  /{token}/delete
+    controller: 'App\Controller\StatesxgrantController::delete'
+    methods:    POST|DELETE
+
+Statesxgrant_tabella:
+    path:  /tabella
+    controller: 'App\Controller\StatesxgrantController::tabella'
+    methods:    POST

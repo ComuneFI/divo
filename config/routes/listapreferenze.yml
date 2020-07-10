@@ -1,0 +1,51 @@
+Listapreferenze_container:
+    path:  /
+    controller: 'App\Controller\ListapreferenzeController::index'
+
+Listapreferenze_lista:
+    path:  /lista
+    controller: 'App\Controller\ListapreferenzeController::lista'
+    options:
+        expose: true
+
+Listapreferenze_indexdettaglio:
+    path:  /indexDettaglio
+    controller: 'App\Controller\ListapreferenzeController::indexDettaglio'
+    options:
+        expose: true
+
+Listapreferenze_new:
+    path:  /new
+    controller: 'App\Controller\ListapreferenzeController::new'
+    methods:    GET|POST
+
+Listapreferenze_edit:
+    path:  /{id}/edit
+    controller: 'App\Controller\ListapreferenzeController::edit'
+
+Listapreferenze_update:
+    path:  /{id}/update
+    controller: 'App\Controller\ListapreferenzeController::update'
+    methods:    POST|PUT
+
+Listapreferenze_aggiorna:
+    path:  /{id}/{token}/aggiorna
+    controller: 'App\Controller\ListapreferenzeController::aggiorna'
+    methods:    POST|PUT
+    options:
+        expose: true
+
+Listapreferenze_delete:
+    path:  /{id}/{token}/delete
+    controller: 'App\Controller\ListapreferenzeController::delete'
+    methods:    POST|DELETE
+
+Listapreferenze_deletemultiple:
+    path:  /{token}/delete
+    controller: 'App\Controller\ListapreferenzeController::delete'
+    methods:    POST|DELETE
+
+Listapreferenze_tabella:
+    path:  /tabella
+    controller: 'App\Controller\ListapreferenzeController::tabella'
+    methods:    POST

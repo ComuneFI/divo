@@ -1,0 +1,94 @@
+{% extends "Default/index.html.twig" %}
+
+{% block javascripts %}
+      {{ encore_entry_script_tags('uploadDataCSV') }}
+{% endblock %}
+
+{% block subcontent %}
+    <use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg"></use>
+    <div class="section">
+
+        <div class="col-lg-12 mx-auto">
+            {% if (errorDelete) %}
+                <div class="alert alert-danger" role="alert">
+                    Impossibile caricare i nuovi candidati
+                </div>
+            {% endif %}
+            {% if ( not checkArrayValid) %}
+                <div class="alert alert-danger" role="alert">
+                    Formato csv non valido, controllare il separatore che deve essere necessariamente il carattere -> ; e l'id source deve essere unico
+                </div>
+            {% endif %}
+
+            {% if ( commit ) %}
+                <div class="alert alert-success" role="success">
+                    Dati aggiornati
+                </div>
+            {% endif %}
+
+
+            <table class="table table-sm table-responsive-sm table-striped bitable table-hover">
+                <thead>
+                    <tr>
+                      <td>Nome</td>
+                      <td>Cognome</td>
+                      <td>IdSource</td>
+                   
+                      
+                    </tr>
+                    <tbody>
+                      {% for record in records %}
+
+                        <tr>
+                            <td>{{ record.nome }}</td>
+                            <td>{{ record.cognome }}</td>
+                            <td>{{ record.idSource }}</td>
+
+                            
+                        </tr>
+                       
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <button class="btn btn-primary btn-icon csvbutton" data-filename="rxcandidati.csv">
+                    <span class="rounded-icon">
+                        <svg class="icon icon-primary">
+                            <use xlink:href="#it-arrow-down"></use>
+                        </svg>
+                    </span>
+                    <span>Download CSV</span>
+                </button>
+            </br>
+        </br>
+        <p class="font-weight-bold">
+            Carica configurazione da file (Attenzione l'operazione
+            <b>cancella</b>
+            i dati presenti)
+        </p>
+    </br>
+    <div class="form-row">
+
+        {{ form_start(form) }}
+        {{ form_row(form.filecsv) }}<br>
+            <br>
+                <button class="btn btn-primary btn-icon">
+                    <span class="rounded-icon">
+                        <svg class="icon icon-primary">
+                            <use xlink:href="#it-arrow-up"></use>
+                        </svg>
+                    </span>
+                    <span>Upload CSV e Salva</span>
+                </button>
+                {{ form_end(form) }}
+            </div>
+
+
+        </div>
+</br>
+<div class="form-row">
+    <div class="col-lg-12 mx-auto">{% set url = '/UploadDataByCsv/' %}
+                <a href="{{ url }}"><button type="button" class="btn btn-primary">Go back</button>
+            </a>
+</div>
+</div>
+{% endblock %}

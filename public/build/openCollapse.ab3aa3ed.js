@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["openCollapse"],{fzuR:function(n,o,e){(function(n){e("fbCW"),n(document).ready((function(){n(".collapse-body").each((function(){n(this).find(".record_nuovo").length>0&&n(this).parents(".collapse-div-open").addClass("show")}))}))}).call(this,e("EVdn"))}},[["fzuR","runtime",0,2]]]);

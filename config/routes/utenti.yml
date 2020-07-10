@@ -1,0 +1,51 @@
+Utenti_container:
+    path:  /
+    controller: 'App\Controller\UtentiController::index'
+
+Utenti_lista:
+    path:  /lista
+    controller: 'App\Controller\UtentiController::lista'
+    options:
+        expose: true
+
+Utenti_indexdettaglio:
+    path:  /indexDettaglio
+    controller: 'App\Controller\UtentiController::indexDettaglio'
+    options:
+        expose: true
+
+Utenti_new:
+    path:  /new
+    controller: 'App\Controller\UtentiController::new'
+    methods:    GET|POST
+
+Utenti_edit:
+    path:  /{id}/edit
+    controller: 'App\Controller\UtentiController::edit'
+
+Utenti_update:
+    path:  /{id}/update
+    controller: 'App\Controller\UtentiController::update'
+    methods:    POST|PUT
+
+Utenti_aggiorna:
+    path:  /{id}/{token}/aggiorna
+    controller: 'App\Controller\UtentiController::aggiorna'
+    methods:    POST|PUT
+    options:
+        expose: true
+
+Utenti_delete:
+    path:  /{id}/{token}/delete
+    controller: 'App\Controller\UtentiController::delete'
+    methods:    POST|DELETE
+
+Utenti_deletemultiple:
+    path:  /{token}/delete
+    controller: 'App\Controller\UtentiController::delete'
+    methods:    POST|DELETE
+
+Utenti_tabella:
+    path:  /tabella
+    controller: 'App\Controller\UtentiController::tabella'
+    methods:    POST

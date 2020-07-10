@@ -1,0 +1,167 @@
+{% extends "@BiCore/layout.html.twig" %}
+{% block javascripts %}
+      {{ encore_entry_script_tags('checkenabled') }}
+
+{% endblock %}
+{% block content %}
+{% block subcontent %}
+    <!--h1>DIVO! {{  'home.benvenuto'|trans({}, 'App') }} {{app.user.username}}</h1-->
+
+<div class="col-lg-10 mx-auto">
+<use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg"></use>
+<div class="row">
+  <div class="col-12 col-lg-6">
+    <!--start card-->
+    <div class="card-wrapper card-space">
+      <div class="card card-bg">
+        <div class="card-body">
+            <div class="top-icon">
+            <svg class="icon">
+              <use xlink:href="#it-download"></use>
+            </svg>
+            </div>
+          <h5 class="card-title">Recupero delle informazioni da {{SYSTEM_DEST}}</h5>
+          <p class="card-text">Accedi alla sezione per il recupero delle informazioni fornite dalla Regione Toscana mediante cooperazione: informazioni relative alle comunicazioni attese per evento; 
+          informazioni relative a candidati e liste di preferenza</p>
+          <a class="read-more" href="{{ path('retrieveRTdata') }}">
+            <span class="text">Recupera dati</span>
+            <svg class="icon">
+              <use xlink:href="#it-arrow-right"></use>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!--end card-->
+  </div>
+    <div class="col-12 col-lg-6">
+    <!--start card-->
+    <div class="card-wrapper card-space">
+      <div class="card card-bg">
+        <div class="card-body">
+            <div class="top-icon">
+            <svg class="icon">
+              <use xlink:href="#it-settings"></use>
+            </svg>
+            </div>
+          <h5 class="card-title">Configura informazioni</h5>
+          <p class="card-text">Procedi mapping delle informazioni raccolte localmente e disponibili sul sistema Divo. In particolare le informazioni che è possibile trasferire sono:
+          le affluenze rilevate, gli scrutini di candidati e voti di lista, le preferenze di lista espresse.</p>
+          <a class="read-more" href="{{ path('config') }}">
+            <span class="text">Configura dati</span>
+            <svg class="icon">
+              <use xlink:href="#it-arrow-right"></use>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!--end card-->
+  </div>
+</div>
+
+</div>
+
+
+
+
+<div class="col-lg-10 mx-auto">
+
+<div class="row">
+  <div class="col-12 col-lg-6">
+    <!--start card-->
+    <div class="card-wrapper card-space">
+      <div class="card card-bg">
+        <div class="card-body">
+            <div class="top-icon">
+            <svg class="icon">
+              <use xlink:href="#it-list"></use>
+            </svg>
+            </div>
+          <h5 class="card-title">Archivio logs Divo</h5>
+          <p class="card-text">La sezione permette di scendere nel dettaglio degli esiti delle chiamate effettuate da Divo verso le API esposte da {{SYSTEM_DEST}}</p>
+          <a class="read-more" href="{{ path('readLogs') }}">
+            <span class="text">Visualizza logs</span>
+            <svg class="icon">
+              <use xlink:href="#it-arrow-right"></use>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!--end card-->
+  </div>
+
+    <div class="col-12 col-lg-6">
+    <!--start card-->
+    <div class="card-wrapper card-space">
+      <div class="card card-bg">
+        <div class="card-body">
+            <div class="top-icon">
+            <svg class="icon">
+              <use xlink:href="#it-upload"></use>
+            </svg>
+            </div>
+          <h5 class="card-title">Invio delle informazioni alla {{SYSTEM_DEST}}</h5>
+          <p class="card-text">Procedi all'invio delle informazioni raccolte localmente e disponibili sul sistema Divo. In particolare le informazioni che è possibile trasferire sono:
+          le affluenze rilevate, gli scrutini di candidati e voti di lista, le preferenze di lista espresse.</p>
+          <a class="read-more" href="{{ path('sendRTdata') }}">
+            <span class="text">Invia dati</span>
+            <svg class="icon">
+              <use xlink:href="#it-arrow-right"></use>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!--end card-->
+  </div>
+</div>
+
+
+
+<div class="row">
+  <!--div class="col-12 col-lg-6">
+    <!--start card>
+    <div class="card-wrapper card-space">
+      <div class="card card-bg">
+        <div class="card-body">
+            <div class="top-icon">
+            <svg class="icon">
+              <use xlink:href="#it-note"></use>
+            </svg>
+            </div>
+          <h5 class="card-title">Recupero delle informazioni da {{SYSTEM_SOURCE}}</h5>
+          <p class="card-text">Accedi alla sezione per il recupero delle informazioni dal sistema sorgente: informazioni relative alle comunicazioni attese per evento; 
+          informazioni relative a candidati e liste di preferenza</p>
+          <a class="read-more" href="{{ path('retrieveSOURCEdata') }}">
+            <span class="text">Recupera dati</span>
+            <svg class="icon">
+              <use xlink:href="#it-arrow-right"></use>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!--end card>
+  </div-->
+</div>
+
+
+
+</div>
+{% endblock %}
+
+
+{% block myFooter %}
+<div class="fixed-bottom">
+<div class="chip chip-lg">
+  <div class="avatar size-xs">
+    <img src="{{ asset('build/images/divo_icon.png') }}" alt="DIVO {{divo_version}}">
+  </div>
+  <span class="chip-label">Divo {{divo_version}}</span>
+</div>
+</div>
+{% endblock %}
+
+{% endblock %}

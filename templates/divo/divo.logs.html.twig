@@ -1,0 +1,98 @@
+{% extends "Default/index.html.twig" %}
+
+{% block subcontent %}
+
+<div class="section">
+
+<!--div class="col-lg-10 mx-auto"-->
+
+<div class="it-list-wrapper">
+
+<use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg"></use>
+<a href="{{ path('welcome') }}">
+ <button type="button" class="btn btn-primary">Go back</button>
+
+ </a>
+ 
+<div>
+  <div class="row">
+ <form id ="filter" method="post" action="{{path(path)}}" >
+    <div class="form-check form-check-inline">
+      <input id="success" type="checkbox" name='success'  {% if success == 'on' %} checked="checked" {% endif %}>
+      <label for="success">Success</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input id="error" type="checkbox" name='error'  {% if error == 'on' %} checked="checked" {% endif %}>
+      <label for="error">Error</label>
+    </div>
+      <input  type="number" name='activeFilter'  value='1' hidden='hidden'>
+      <input  type="number" name='page'  value='{{thisPage}}' hidden='hidden'>
+    <button type="submit" class="btn btn-outline-primary">Filtra</button>
+   </form>
+
+
+  </div>
+</div>
+  <ul class="it-list">
+    {% for log in logs %}
+    <li>
+    <div class='row'>
+      <div class='col-11'>
+        <a href="{{ path('readLog', { 'logid': log.id }) }}">
+          <div class="it-right-zone">
+            <span class="text">
+              {% if log.codiceEsito == 1 %}
+              {% set buttonType='btn-success' %}
+              <div class="chip chip-success">
+                <svg class="icon icon-xs icon-success"><use xlink:href="#it-check-circle"></use></svg>
+                <span class="chip-label">Success</span> 
+              {% else %}
+              {% set buttonType='btn-danger' %}
+              <div class="chip chip-danger">
+                <svg class="icon icon-xs icon-danger"><use xlink:href="#it-warning-circle"></use></svg>
+                <span class="chip-label">Error</span> 
+              {% endif %}
+              </div>
+              {{ log.descrizioneEsito }}
+              <em>{{ log.requestedws }}</em>
+            </span>
+            <span class="it-multiple">
+              <span class="metadata">{{ log.timestamp | date('Y-m-d H:i:s') }}</span>
+            
+            <!--svg class="icon">
+              <use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg#it-password-visible"></use>
+            </svg-->
+            <!--svg class="icon">
+              <use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg#it-code-circle"></use>
+            </svg>
+            <svg class="icon">
+              <use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg#it-code-circle"></use>
+            </svg-->
+    
+          </div>
+        </a>
+      </div>
+      <div class='col-1'>
+       <a href="{{ path('readDetailRecordLog', { 'logid': log.id }) }}">
+            <button type="button" class="btn {{buttonType}}">Dettaglio Records</button> 
+             </a>
+      </div>
+    </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% set other = "success:"~ success ~",error:" ~ error  ~",activeFilter:1" %}
+{% include "divo/pagination.html.twig" %}
+
+<a href="{{ path('welcome') }}">
+ <button type="button" class="btn btn-primary">Go back</button>
+ </a>
+
+</div>
+
+</div>
+
+{% endblock %}
+

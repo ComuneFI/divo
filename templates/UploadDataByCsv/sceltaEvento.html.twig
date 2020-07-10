@@ -1,0 +1,156 @@
+{% extends "@BiCore/layout.html.twig" %}
+  
+{% block javascripts %}
+      {{ encore_entry_script_tags('uploadDataCSV') }}
+{% endblock %}
+{% block content %}
+{% block subcontent %}
+    <!--h1>DIVO! {{  'home.benvenuto'|trans({}, 'App') }} {{app.user.username}}</h1-->
+
+<div class="col-lg-10 mx-auto">
+<use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg"></use>
+{% if num_eventi > 0 %}
+<div class="row">
+  <div class="col-12 col-lg-12">
+  <p>
+  <h5> Scegli l'evento per il quale caricare i dati:</h5> 
+  </p>
+  </div>
+</div>
+<!-- for -->
+{% for evento in eventi %}
+<div class="row">
+  <div class="col-12 col-lg-12">
+    <!--start card-->
+    <div class="card-wrapper card-space">
+      <div class="card card-bg">
+        <div class="card-body">
+            <div class="top-icon">
+            <svg class="icon">
+
+            </svg>
+            </div>
+            <h5 class="card-title">{{evento.eventi.evento}}</h5>
+            <h5 class="card-title">ID:{{evento.eventi.id}} - CODICE: {{evento.eventi.codiceEvento}} - DATA: {{evento.eventi.dataEvento| date("d/m/Y") }} </h5>
+          
+          <p class="card-text"></p>
+    
+          <a class="read-more showSpinner" href="{{'UploadDataByCsv/Event/'~  evento.eventi.id}}">
+            <span class="text">Carica dati</span>
+            <svg class="icon">
+              <use xlink:href="#it-arrow-right"></use>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!--end card-->
+  </div>
+
+  </div>
+ 
+{% endfor %}
+
+  
+{% else %}
+<div class="row">
+  <div class="col-12 col-lg-12">
+  <p>
+  <h5>Attenzione non risultano Eventi associati all'Ente</h5> 
+  </p>
+  </div>
+</div>
+{% endif %}
+
+
+
+<div class="row">
+
+  <div class="col-12 col-lg-4">
+    <!--start card-->
+    <div class="card-wrapper card-space">
+      <div class="card card-bg">
+        <div class="card-body">
+            <div class="top-icon">
+            <svg class="icon">
+                 <use xlink:href="#it-upload"></use>
+            </svg>
+            </div>
+          <h5 class="card-title">Carica Candidati Presidente</h5>
+          <p class="card-text"></p>
+            {% set url = '/uploadCSVRxCandidati/' %}
+          <a class="read-more showSpinner" href="{{ url}}">
+            <span class="text">Carica dati</span>
+            <svg class="icon">
+              <use xlink:href="#it-arrow-right"></use>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!--end card-->
+  </div>
+    <div class="col-12 col-lg-4">
+    <!--start card-->
+    <div class="card-wrapper card-space">
+      <div class="card card-bg">
+        <div class="card-body">
+            <div class="top-icon">
+            <svg class="icon">
+                 <use xlink:href="#it-upload"></use>
+            </svg>
+            </div>
+          <h5 class="card-title">Carica Liste</h5>
+          <p class="card-text"></p>
+            {% set url = '/uploadCSVRxListe/'  %}
+          <a class="read-more showSpinner" href="{{ url}}">
+            <span class="text">Carica dati</span>
+            <svg class="icon">
+              <use xlink:href="#it-arrow-right"></use>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!--end card-->
+  </div>
+    <div class="col-12 col-lg-4">
+    <!--start card-->
+    <div class="card-wrapper card-space">
+      <div class="card card-bg">
+        <div class="card-body">
+            <div class="top-icon">
+            <svg class="icon">
+                 <use xlink:href="#it-upload"></use>
+            </svg>
+            </div>
+          <h5 class="card-title">Carica Candidati Liste</h5>
+          <p class="card-text"></p>
+            {% set url = '/uploadCSVRxCandidatiSecondari/'  %}
+          <a class="read-more showSpinner" href="{{ url}}">
+            <span class="text">Carica dati</span>
+            <svg class="icon">
+              <use xlink:href="#it-arrow-right"></use>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!--end card-->
+  </div>
+</div>  
+
+
+</div>
+
+</div>
+
+
+
+</div>
+{% endblock %}
+
+
+
+
+{% endblock %}

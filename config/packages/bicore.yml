@@ -1,0 +1,6 @@
+bi_core:
+    lockfile: "%kernel.cache_dir%/maintenance.lock"  
+    appname: divo
+    appid: 9999
+    solosso: false
+    table_schema: '%env(resolve:BICORE_SCHEMA)%'

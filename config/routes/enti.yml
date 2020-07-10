@@ -1,0 +1,51 @@
+Enti_container:
+    path:  /
+    controller: 'App\Controller\EntiController::index'
+
+Enti_lista:
+    path:  /lista
+    controller: 'App\Controller\EntiController::lista'
+    options:
+        expose: true
+
+Enti_indexdettaglio:
+    path:  /indexDettaglio
+    controller: 'App\Controller\EntiController::indexDettaglio'
+    options:
+        expose: true
+
+Enti_new:
+    path:  /new
+    controller: 'App\Controller\EntiController::new'
+    methods:    GET|POST
+
+Enti_edit:
+    path:  /{id}/edit
+    controller: 'App\Controller\EntiController::edit'
+
+Enti_update:
+    path:  /{id}/update
+    controller: 'App\Controller\EntiController::update'
+    methods:    POST|PUT
+
+Enti_aggiorna:
+    path:  /{id}/{token}/aggiorna
+    controller: 'App\Controller\EntiController::aggiorna'
+    methods:    POST|PUT
+    options:
+        expose: true
+
+Enti_delete:
+    path:  /{id}/{token}/delete
+    controller: 'App\Controller\EntiController::delete'
+    methods:    POST|DELETE
+
+Enti_deletemultiple:
+    path:  /{token}/delete
+    controller: 'App\Controller\EntiController::delete'
+    methods:    POST|DELETE
+
+Enti_tabella:
+    path:  /tabella
+    controller: 'App\Controller\EntiController::tabella'
+    methods:    POST

@@ -1,0 +1,51 @@
+States_container:
+    path:  /
+    controller: 'App\Controller\StatesController::index'
+
+States_lista:
+    path:  /lista
+    controller: 'App\Controller\StatesController::lista'
+    options:
+        expose: true
+
+States_indexdettaglio:
+    path:  /indexDettaglio
+    controller: 'App\Controller\StatesController::indexDettaglio'
+    options:
+        expose: true
+
+States_new:
+    path:  /new
+    controller: 'App\Controller\StatesController::new'
+    methods:    GET|POST
+
+States_edit:
+    path:  /{id}/edit
+    controller: 'App\Controller\StatesController::edit'
+
+States_update:
+    path:  /{id}/update
+    controller: 'App\Controller\StatesController::update'
+    methods:    POST|PUT
+
+States_aggiorna:
+    path:  /{id}/{token}/aggiorna
+    controller: 'App\Controller\StatesController::aggiorna'
+    methods:    POST|PUT
+    options:
+        expose: true
+
+States_delete:
+    path:  /{id}/{token}/delete
+    controller: 'App\Controller\StatesController::delete'
+    methods:    POST|DELETE
+
+States_deletemultiple:
+    path:  /{token}/delete
+    controller: 'App\Controller\StatesController::delete'
+    methods:    POST|DELETE
+
+States_tabella:
+    path:  /tabella
+    controller: 'App\Controller\StatesController::tabella'
+    methods:    POST

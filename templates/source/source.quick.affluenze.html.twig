@@ -1,0 +1,132 @@
+{% extends "Default/index.html.twig" %}
+
+{% block javascripts %}
+ {{ encore_entry_script_tags('alert') }}
+ {{ encore_entry_script_tags('divoSlicer') }}
+ {{ encore_entry_script_tags('openCollapse') }}
+{% endblock %}
+
+{% block subcontent %}
+
+<use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg"></use>
+
+<div class="section">
+
+{% if communication_esito is defined %}
+    {% if communication_esito.esito.codice == 1 %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <h4 class="alert-heading">{{ communication_esito.esito.descrizione }}</h4>
+      <p>L'operazione di invio dati è stata effettuata con successo.</p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %}
+    {% if communication_esito.esito.codice != 1 %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    L'operazione di invio dati ha riscontrato un errore: "<b>{{ communication_esito.esito.descrizione }}</b>".
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %}
+{% endif %}
+
+<div class="col-lg-10 mx-auto">
+
+<h3>Affluenze: Ispezione ed Invio</h3>
+
+<div id="collapseDiv2" class="collapse-div" role="tablist">
+
+{% for item  in data|sort((a, b) => a.comunicazione.id <=> b.comunicazione.id) %}
+  <div class="collapse-header" id="heading1a">
+    <button data-toggle="collapse" data-target="#collapse{{ item.comunicazione.id }}" aria-expanded="true" aria-controls="collapse1a">
+      <small>Evento (ID: {{  item.eventoid }}): {{ item.evento }} {{ item.eventodesc}}</small> <span class="badge badge-pill badge-primary">{{ item.eventostatus }}</span> 
+      <br><small>Comunicazione:</small> {{item.comunicazione.comunicazioneDesc}} 
+    </button>
+  </div>
+  <div id="collapse{{ item.comunicazione.id }}" class="collapse collapse-div-open" role="tabpanel" aria-labelledby="heading1b">
+      <div class="collapse-body">
+
+
+
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col"># Sez.</th>
+      <th scope="col">Sez.</th>
+      <th scope="col">Voti Maschi</th>
+      <th scope="col">Voti Femmine</th>
+      <th scope="col">Voti Totali</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% set sum = 0 %}
+
+{% for affluenza in item.affluenze %}    
+     <tr class="text-sm {% if affluenza.bitnew != 0 %} record_nuovo table-primary {% endif %} ">
+      <th scope="row">{{affluenza.numero}}</th>
+      <td>{{ affluenza.descrizione }} <span class="badge badge-pill badge-primary">{{ affluenza.statowfdesc }}</span></td>
+      <td>
+      {% if affluenza.num_votanti_maschi is defined %} 
+        {{ affluenza.num_votanti_maschi }}
+      {% else %}
+        -
+      {% endif %}
+      </td>
+      <td>
+      {% if affluenza.num_votanti_femmine is defined %} 
+        {{ affluenza.num_votanti_femmine }}
+      {% else %}
+        -
+      {% endif %}
+      </td>
+      <td>
+      {% if item.includeAffluenzaMF == 1 %}
+        {{ affluenza.num_votanti_femmine + affluenza.num_votanti_maschi }}
+        {% set sum = sum + affluenza.num_votanti_femmine + affluenza.num_votanti_maschi %} 
+      {% else %}
+          {{ affluenza.num_votanti_totali }}
+        {% set sum = sum + affluenza.num_votanti_totali %} 
+      {% endif %}
+      </td>
+    </tr>
+
+{% endfor %}
+    <tr class="text-sm">
+      <th scope="row">Totale</th>
+      <td>Totale voti</td>
+      <td></td><td></td><td>{{ sum }}</td>
+    </tr>
+  </tbody>
+</table>
+
+     </div>
+
+    
+    <button type="button" class="btn btn-primary btn-sm divo-post-data" data-eventid={{ item.eventoid }} data-topic=votantiChanged data-itemid={{ item.comunicazione.id }}>
+      <svg class="icon icon-white"><use xlink:href="#it-arrow-up-circle"></use></svg>
+      <span>Invia dati SOLO MODIFICATI({{item.comunicazione.comunicazioneDesc}})</span>
+    </button> 
+    <button type="button" class="btn btn-primary btn-sm divo-post-data" data-eventid={{ item.eventoid }} data-topic=votanti data-itemid={{ item.comunicazione.id }}>
+      <svg class="icon icon-white"><use xlink:href="#it-arrow-up-circle"></use></svg>
+      <span>Invia dati ({{item.comunicazione.comunicazioneDesc}})</span>
+    </button> 
+    
+  </div>
+   <p></p>
+
+{% endfor %}
+
+  </div>
+
+<br>
+<a href="{{ path('sendRTdata') }}">
+ <button type="button" class="btn btn-primary">Go back</button>
+ </a>
+
+</div>
+
+</div>
+
+{% endblock %}

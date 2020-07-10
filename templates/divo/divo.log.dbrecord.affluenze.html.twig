@@ -1,0 +1,127 @@
+{% extends "Default/index.html.twig" %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('tableDetailLog') }}
+
+{% endblock %}
+{% block subcontent %}
+
+    <div class="section">
+        <use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg"></use>
+        <div class="row">
+            <div
+                class="col-12 col-lg-12">
+
+                <!--start card-->
+                <div class="card-wrapper card-space">
+                    <div class="card card-bg card-big">
+                        <div class="card-body">
+                            {% block cardbody %}
+                                {% if log.codiceEsito == 1 %}
+                                    <div class="top-icon">
+                                        <svg class="icon icon-success">
+                                            <use xlink:href="#it-check-circle"></use>
+                                        </svg>
+                                    </div>
+                                {% else %}
+                                    <div class="top-icon">
+                                        <svg class="icon icon-danger">
+                                            <use xlink:href="#it-warning-circle"></use>
+                                        </svg>
+                                    </div>
+                                {% endif %}
+                                <b>
+                                    Invio del:</b>
+                                {{ log.timestamp | date('d/m/Y H:i:s') }}
+                                 <br><br>
+                                <div class="bootstrap-select-wrapper">
+                                    <label for="scegliSezione">
+                                        Filtra per sezione</label>
+                                    <select id='selectSez' name='scegliSezione'>
+                                    <option value='*'>Tutte le sezioni</option>
+                                        {% for key, desc in records.elenco_sezioni %}
+                                            <option value='{{ key }}'>{{ desc }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <br><br>
+
+                                <h5>Votanti</h5>
+                                <table class="table table-sm table-responsive-sm table-striped bitable table-hover">
+                                    <thead>
+                                        <tr>
+                                            <td>Sezione</td>
+                                            <td>ID Record</td>
+                                            <td>Comunicazione</td>
+                                            <td>Votanti Maschi</td>
+                                            <td>Votanti Femmine</td>
+                                            <td>Votanti Totali</td>
+                                            <td>Off</td>
+                                            <td>Sent</td>
+                                            <td>Data Update</td>
+                                            <td>Data Upload</td>
+                                            <tr></thead>
+                                            <tbody>
+                                                {% for record in records.votanti %}
+                                                     <tr class='tr-sez sez-* sez-{{ record.rxsezioni.id }}'>
+                                                        <td>
+                                                            {{ record.rxsezioni.descrizione }}
+                                                        </td>
+                                                        <td>
+                                                            {{ record.id }}
+                                                        </td>
+                                                        <td>
+                                                            {{ record.confxvotanti.comunicazioneDesc }}
+                                                        </td>
+
+                                                        <td>
+                                                            {{ record.numVotantiMaschi }}
+                                                        </td>
+                                                        <td>
+                                                            {{ record.numVotantiFemmine }}
+                                                        </td>
+                                                        <td>
+                                                            {{ record.numVotantiTotali }}
+                                                        </td>
+                                                        <td>
+                                                            {{ record.off ? 'Sì' : 'No' }}
+                                                        </td>
+
+                                                        {% if record.sent == 1 %}
+                                                            {% set sentvalue='Inviato' %}
+                                                        {% else %}
+                                                            {% set sentvalue='NON Inviato' %}
+                                                        {% endif %}
+                                                        <td>
+                                                            {{ sentvalue }}
+                                                        </td>
+                                                        <td>
+                                                            {{ record.timestamp  | date('d/m/Y H:i:s') }}
+                                                        </td>
+                                                        <td>
+                                                            {{ record.insDate  | date('d/m/Y H:i:s') }}
+                                                        </td>
+
+
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+
+                                    {% endblock %}
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <a href="{{ path('readLogs') }}">
+                    <button type="button" class="btn btn-primary">Go back</button>
+                </a>
+
+
+            </div>
+
+        {% endblock %}

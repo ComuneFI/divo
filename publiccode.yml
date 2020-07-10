@@ -1,0 +1,66 @@
+# This repository adheres to the publiccode.yml standard by including this 
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+publiccodeYmlVersion: '0.2'
+categories:
+  - workflow-management
+  - communications
+description:
+  it:
+    features:
+      - track API communication outcomes
+      - GUI interaction with data
+      - upload and download by CSV
+    genericName: Integration
+    longDescription: >
+      Application to integrate third party with AWE/Regione Toscana API.
+
+
+      It includes several ways to integrate a third party, for example by ETL or
+      working directly on dedicated database tables; it includes also an easy
+      way to upload and download data by CSV files.
+
+
+      The software provides a graphical interface and it guides the operator
+      during the election day in order to interact with collecting of votes,
+      transmission of affluences and collected votes.
+
+
+      The software has developed using Bootstrap Italia components and styles.
+    shortDescription: Application to integrate thirdy party with AWE/Regione Toscana API
+developmentStatus: development
+intendedAudience:
+  scope:
+    - government
+it:
+  conforme:
+    gdpr: false
+    lineeGuidaDesign: false
+    misureMinimeSicurezza: false
+    modelloInteroperabilita: false
+  countryExtensionVersion: '0.2'
+  piattaforme:
+    anpr: false
+    cie: false
+    pagopa: false
+    spid: false
+legal:
+  license: OSL-3.0
+localisation:
+  availableLanguages:
+    - it
+  localisationReady: false
+maintenance:
+  contacts:
+    - name: Riccardo Vannetti
+    - name: Sara Ciampittiello
+    - name: Andrea Manzi
+    - name: Giovanni Rossi
+  type: community
+name: Divo
+platforms:
+  - linux
+releaseDate: '2020-07-07'
+softwareType: standalone/web
+url: 'https://github.com/ComuneFI/divo'

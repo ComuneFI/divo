@@ -1,0 +1,53 @@
+App_Statesxgrant:
+  resource: routes/statesxgrant.yml
+  prefix: /Statesxgrant
+
+App_States:
+  resource: routes/states.yml
+  prefix: /States
+
+App_Rxcandidatisecondari:
+  resource: routes/rxcandidatisecondari.yml
+  prefix: /Rxcandidatisecondari
+
+App_Rxliste:
+  resource: routes/rxliste.yml
+  prefix: /Rxliste
+
+App_Listapreferenze:
+  resource: routes/listapreferenze.yml
+  prefix: /Listapreferenze
+
+App_Utenti:
+  resource: routes/utenti.yml
+  prefix: /Utenti
+App_Rxcandidati:
+  resource: routes/rxcandidati.yml
+  prefix: /Rxcandidati
+  
+App_Enti:
+  resource: routes/enti.yml
+  prefix: /Enti
+
+# This file is the entry point to configure your own HTTP routes.
+# Files in the routes/ subdirectory configure the routes for your dependencies.
+
+#project_extension_routes_hook
+autenticazione:
+    resource: "@AutenticazioneBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fi_Lineacomune:
+    resource: "@LineacomuneauthBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fi_pannello_amministrazione:
+    resource: "@PannelloAmministrazioneBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fi_core:
+    resource: "@BiCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

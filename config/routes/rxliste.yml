@@ -1,0 +1,51 @@
+Rxliste_container:
+    path:  /
+    controller: 'App\Controller\RxlisteController::index'
+
+Rxliste_lista:
+    path:  /lista
+    controller: 'App\Controller\RxlisteController::lista'
+    options:
+        expose: true
+
+Rxliste_indexdettaglio:
+    path:  /indexDettaglio
+    controller: 'App\Controller\RxlisteController::indexDettaglio'
+    options:
+        expose: true
+
+Rxliste_new:
+    path:  /new
+    controller: 'App\Controller\RxlisteController::new'
+    methods:    GET|POST
+
+Rxliste_edit:
+    path:  /{id}/edit
+    controller: 'App\Controller\RxlisteController::edit'
+
+Rxliste_update:
+    path:  /{id}/update
+    controller: 'App\Controller\RxlisteController::update'
+    methods:    POST|PUT
+
+Rxliste_aggiorna:
+    path:  /{id}/{token}/aggiorna
+    controller: 'App\Controller\RxlisteController::aggiorna'
+    methods:    POST|PUT
+    options:
+        expose: true
+
+Rxliste_delete:
+    path:  /{id}/{token}/delete
+    controller: 'App\Controller\RxlisteController::delete'
+    methods:    POST|DELETE
+
+Rxliste_deletemultiple:
+    path:  /{token}/delete
+    controller: 'App\Controller\RxlisteController::delete'
+    methods:    POST|DELETE
+
+Rxliste_tabella:
+    path:  /tabella
+    controller: 'App\Controller\RxlisteController::tabella'
+    methods:    POST

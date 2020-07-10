@@ -1,0 +1,22 @@
+
+{% if maxPages > 1 %}
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+  
+    <li class="page-item {{ thisPage == 1 ? 'disabled' }} ">
+        <a  class="page-link" href="{{ path(path, {page: thisPage-1 < 1 ? 1 : thisPage-1 ,success:success,error:error,activeFilter:1 })  }}">Precedente</a>
+    </li>
+
+    {% for i in 1..maxPages %}
+    <li class="page-item  {{ thisPage == i ?  'disabled' }}">
+     <a  class="page-link" href="{{ path(path, {page: i,success:success,error:error,activeFilter:1}) }}">{{ i }}</a>
+    </li>
+    {% endfor %}
+
+   
+    <li class="page-item  {{ thisPage == maxPages ? 'disabled' }} ">
+        <a  class="page-link" href="{{ path(path, {page: thisPage+1 <= maxPages ? thisPage+1 : thisPage,success:success,error:error,activeFilter:1}) }}">Successivo</a>
+    </li>
+</ul>
+</nav>
+{% endif %}

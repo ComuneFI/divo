@@ -1,0 +1,92 @@
+{% extends "Default/index.html.twig" %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('configsave') }}
+
+{% endblock %}
+{% block subcontent %}
+<use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg"></use>
+<div class="section">
+
+<div class="col-lg-12 mx-auto">
+
+<div id="collapseDiv2" class="collapse-div" role="tablist">
+
+{% for object  in visible_objects %}
+
+  <div class="collapse-header" id="heading1a">
+    <button data-toggle="collapse" data-target="#collapse{{ object.evento.id }}" aria-expanded="true" aria-controls="collapse1a">
+      Evento: {{object.evento.evento}} del {{ object.evento.dataEvento| date('Y-m-d') }} (codice: {{ object.evento.codiceEvento }})
+    </button>
+  </div>
+  <div id="collapse{{ object.evento.id }}" class="collapse show" role="tabpanel" aria-labelledby="heading1b">
+      <div class="collapse-body">
+ 
+
+{% for item in object.circoscrizioni %}
+{% set circoscrizione = item.circoscrizione %}
+Circoscrizione: {{ circoscrizione.circDesc}} (id: {{ circoscrizione.idTarget }})
+ <table class="table table-sm table-responsive-sm table-striped bitable table-hover">
+    <thead>
+    <tr> 
+
+        <th scope="col">Ordine Lista</th>
+        <th scope="col">Nome lista</th>
+        <th scope="col">Nome Candidato</th>
+        <th scope="col">Cognome Candidato</th>
+        <th scope="col">Ordine Candidato</th>
+        <th scope="col">Zona</th>
+        <th scope="col">Tipo lista</th>
+    </tr>
+    </thead>
+    <tbody>
+          {% for key,candidatoListe in item.candidati %}
+          {% set candidato = candidatoListe.candidato %}
+            
+           
+           
+            {% for keylp,listaPreferenza in candidatoListe.liste %}
+            {% set numCandidatiSecondari=0 %}
+            {% set numCandidatiSecondariConfig=0 %}
+            {% set lista = listaPreferenza.lista %}
+                  {% for keylpc,candidatoSecondario in listaPreferenza.candidatisecondari %}
+                   <tr>
+                    <th scope="row">{{keylp}}</th>
+                    <td>{{lista.listaDesc}}</td>
+                    <td>{{candidatoSecondario.nome|upper}}</td>
+                    <td>{{candidatoSecondario.cognome|upper}}</td>
+                    <td>{{keylpc}}</td>
+                    <td>1</td>
+                    <td>LCC</td>
+                    </tr>           
+                  {% endfor %}
+            {% endfor %}
+          {% endfor %}
+          
+        </div>
+{% endfor %}
+     </tbody>
+     </table>
+     </div>
+  </div>
+
+{% endfor %}
+
+
+  </div>
+
+
+
+
+
+
+
+   <button type="button" class="btn btn-primary csvbutton" data-filename="candidati_secondari_LCC.csv">Export Csv</button>
+
+<a href="{{ path('downCSVxSource') }}">
+ <button type="button" class="btn btn-primary">Go back</button>
+ </a>
+</div>
+
+</div>
+
+{% endblock %}

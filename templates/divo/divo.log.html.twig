@@ -1,0 +1,57 @@
+{% extends "Default/index.html.twig" %}
+
+{% block subcontent %}
+
+<div class="section">
+<use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg"></use>
+<div class="row">
+  <div class="col-12 col-lg-12">
+    <!--start card-->
+    <div class="card-wrapper card-space">
+      <div class="card card-bg card-big">
+        <div class="card-body">
+          {% if log.codiceEsito == 1 %}
+          <div class="top-icon">
+            <svg class="icon icon-success">
+              <use xlink:href="#it-check-circle"></use>
+            </svg>
+          </div>
+          {% else %}
+          <div class="top-icon">
+            <svg class="icon icon-danger">
+              <use xlink:href="#it-warning-circle"></use>
+            </svg>
+          </div>
+          {% endif %}
+
+          
+          <h5 class="card-title">{{log.descrizioneEsito}}</h5>
+          <p class="card-text">
+            <span><b>Time:</b> {{ log.timestamp | date('Y-m-d H:i:s') }} </span><br>
+            <span><b>Requested API:</b> {{ log.requestedws }} </span><br>
+            <span><b>Codice Esito:</b> {{ log.codiceEsito }} </span><br>
+            <span><b>Payload:</b> {{ log.payload }} </span><br>
+            <span><b>Response:</b> {{ log.responseMessage }} </span><br>
+
+          </p>
+          <!--a class="read-more" href="#">
+            <span class="text">Leggi di più</span>
+            <svg class="icon">
+              <use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg#it-arrow-right"></use>
+            </svg>
+          </a-->
+        </div>
+      </div>
+    </div>
+    <!--end card-->
+  </div>
+</div>
+
+<a href="{{ path('readLogs') }}">
+ <button type="button" class="btn btn-primary">Go back</button>
+ </a>
+
+
+</div>
+
+{% endblock %}

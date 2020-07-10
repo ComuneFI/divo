@@ -1,0 +1,51 @@
+Rxcandidatisecondari_container:
+    path:  /
+    controller: 'App\Controller\RxcandidatisecondariController::index'
+
+Rxcandidatisecondari_lista:
+    path:  /lista
+    controller: 'App\Controller\RxcandidatisecondariController::lista'
+    options:
+        expose: true
+
+Rxcandidatisecondari_indexdettaglio:
+    path:  /indexDettaglio
+    controller: 'App\Controller\RxcandidatisecondariController::indexDettaglio'
+    options:
+        expose: true
+
+Rxcandidatisecondari_new:
+    path:  /new
+    controller: 'App\Controller\RxcandidatisecondariController::new'
+    methods:    GET|POST
+
+Rxcandidatisecondari_edit:
+    path:  /{id}/edit
+    controller: 'App\Controller\RxcandidatisecondariController::edit'
+
+Rxcandidatisecondari_update:
+    path:  /{id}/update
+    controller: 'App\Controller\RxcandidatisecondariController::update'
+    methods:    POST|PUT
+
+Rxcandidatisecondari_aggiorna:
+    path:  /{id}/{token}/aggiorna
+    controller: 'App\Controller\RxcandidatisecondariController::aggiorna'
+    methods:    POST|PUT
+    options:
+        expose: true
+
+Rxcandidatisecondari_delete:
+    path:  /{id}/{token}/delete
+    controller: 'App\Controller\RxcandidatisecondariController::delete'
+    methods:    POST|DELETE
+
+Rxcandidatisecondari_deletemultiple:
+    path:  /{token}/delete
+    controller: 'App\Controller\RxcandidatisecondariController::delete'
+    methods:    POST|DELETE
+
+Rxcandidatisecondari_tabella:
+    path:  /tabella
+    controller: 'App\Controller\RxcandidatisecondariController::tabella'
+    methods:    POST

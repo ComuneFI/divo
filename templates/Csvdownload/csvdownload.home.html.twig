@@ -1,0 +1,57 @@
+{% extends "Default/index.html.twig" %}
+
+{% block subcontent %}
+
+
+<div class="col-lg-10 mx-auto">
+
+<div class="row">
+  <div class="col-12 col-lg-12">
+    <!--start card-->
+    <div class="card-wrapper card-space">
+      <div class="card card-bg">
+        <div class="card-body">
+          <h5 class="card-title">Scarica CSV candidato principale</h5>
+          <p class="card-text"></p>
+        <div class="it-card-footer">
+
+          <a href="{{'/service/downCSVCandPrincxSource/'~  evento}}">
+            <button type="button" class="btn btn-primary">Esegui</button>
+          </a>
+        
+        </div>
+        </div>
+      </div>
+    </div>
+    <!--end card-->
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 col-lg-12">
+    <!--start card-->
+    <div class="card-wrapper card-space">
+      <div class="card card-bg">
+        <div class="card-body">
+          <h5 class="card-title">Scarica CSV dettaglio liste</h5>
+          <p class="card-text"></p>
+          <div class="it-card-footer">
+           <a href="{{'/service/downCSVCandSecxSource/'~  evento}}">
+    
+            <button type="button" class="btn btn-primary">Esegui</button>
+          </a>
+         
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end card-->
+  </div>
+</div>
+<a href="{{ path('welcome') }}">
+ <button type="button" class="btn btn-primary">Go home</button>
+ </a>
+</div>
+
+
+{% endblock %}

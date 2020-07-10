@@ -1,0 +1,140 @@
+{% extends "Default/index.html.twig" %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('uploadDataCSV') }}
+{% endblock %}
+
+
+{% block subcontent %}
+    <use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg"></use>
+    <div class="section">
+
+        <div class="col-lg-12 mx-auto">
+            {% if (errorDelete) %}
+                <div class="alert alert-danger" role="alert">
+                    Impossibile mettere ad off i dati precedenti
+                </div>
+            {% endif %}
+            {% if ( not checkArrayValid) %}
+                <div class="alert alert-danger" role="alert">
+                    Formato csv non valido, controllare il separatore che deve essere necessariamente il carattere -> ; e l'id sezione deve essere valido
+                </div>
+            {% endif %}
+
+            {% if ( commit ) %}
+                <div class="alert alert-success" role="success">
+                    Dati aggiornati
+                </div>
+            {% endif %}
+            Scaricare il file e compilare i valori da caricare (Vengono mostrati solo i record con off a false e sent a 0)
+            {% set idComunicazione='' %}
+            <table class="table table-sm table-responsive-sm table-striped bitable table-hover">
+                <thead>
+                    <tr>
+                        <td>evento_id</td>
+                        <td>evento</td>
+                        <td>circo_id</td>
+                        <td>circ_desc</td>
+                        <td>rxsezione_id</td>
+                        <td>numero</td>
+                        <td>descrizione</td>
+                     
+                        <td>confxvotanti_id</td>
+                        <td>comunicazione_desc</td>
+                        <td>Voti Maschi</td>
+                        <td>Voti Femmine</td>
+                        <td>Voti Totali</td>
+
+                    </tr>
+                    <tbody>
+
+                        {% set i= 0 %}
+                        {% for record in records %}
+                            {% set idComunicazione= record.confxvotanti_id %}
+                            {% set i= i+1 %}
+                            <tr class='tr'>
+                                <td><input class="checkbox" type="checkbox" checked>{{ record.evento_id }}</td>
+                                <td>{{ record.evento }}</td>
+                                <td>{{ record.circo_id }}</td>
+                                <td>{{ record.circ_desc }}</td>
+                                <td>{{ record.rxsezione_id }}</td>
+                                <td>{{ record.numero }}</td>
+                                <td>{{ record.descrizione }}</td>
+                                <td>{{ record.confxvotanti_id }}</td>
+                                <td>{{ record.comunicazione_desc }}</td>
+                                <td>{{ record.num_votanti_maschi }}
+                                <input type='text' readonly='readonly' hidden='hidden'  data-iter='{{i}}' class='inputSave'                          
+                                 name='confxvotanti_id' value='{{record.confxvotanti_id}}'>
+                                 <input type='text' readonly='readonly' hidden='hidden' data-iter='{{i}}' class='inputSave'                                 
+                                 name='rxsezione_id' value='{{record.rxsezione_id}}'>
+                                <input type='text' readonly='readonly' hidden='hidden' data-iter='{{i}}'  class='inputSave'                                 
+                                 name='id_record' value='{{record.id_record}}'>
+                                <input type='number' name='num_votanti_maschi' data-iter='{{i}}' class='inputSave' value='{{ record.num_votanti_maschi }}'>
+                                </td>
+                                <td>{{ record.num_votanti_femmine }}
+                                 <input type='number' name='num_votanti_femmine' data-iter='{{i}}' class='inputSave' value='{{ record.num_votanti_femmine }}'>
+                                </td>
+                                <td>
+                                {{ record.num_votanti_totali }}
+                                <input type='number' name='num_votanti_totali' data-iter='{{i}}' class='inputSave' value='{{ record.num_votanti_totali }}'>
+                                
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+
+               <!-- <button class="btn btn-primary btn-icon csvbutton" data-filename="affluenza_{{ idComunicazione }}_{{idsezione}}.csv">
+                    <span class="rounded-icon">
+                        <svg class="icon icon-primary">
+                            <use xlink:href="#it-arrow-down"></use>
+                        </svg>
+                    </span>
+                    <span>Download CSV</span>
+                </button>-->
+                 <button class="btn btn-primary btn-icon save-inputdata" data-table='Rxvotanti'>
+                    <span class="rounded-icon">
+                        <svg class="icon icon-primary">
+                            <use xlink:href="#it-arrow-up"></use>
+                        </svg>
+                    </span>
+                    <span>Salva selezionati</span>
+                </button>
+            </br>
+        </br>
+       <!-- <p class="font-weight-bold">
+            Carica configurazione da file (Attenzione l'operazione
+            <b>
+                mette a off
+            </b>
+            i dati presenti)
+        </p>
+    </br>
+  <div class="form-row">
+
+        {{ form_start(form) }}
+        {{ form_row(form.filecsv) }}<br>
+            <br>
+                <button class="btn btn-primary btn-icon">
+                    <span class="rounded-icon">
+                        <svg class="icon icon-primary">
+                            <use xlink:href="#it-arrow-up"></use>
+                        </svg>
+                    </span>
+                    <span>Upload CSV e Salva</span>
+                </button>
+                {{ form_end(form) }}
+            </div>
+
+        </div>
+    </br>-->
+    <div class="form-row">
+        <div class="col-lg-12 mx-auto">
+             {% set url = '/UploadDataByCsv/Event/'~ evento_id %}
+            <a href="{{ url }}"><button type="button" class="btn btn-primary">Go back</button></a>
+        </div>
+    </div>
+{% endblock %}

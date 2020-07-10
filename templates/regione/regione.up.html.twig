@@ -1,0 +1,115 @@
+{% extends "Default/index.html.twig" %}
+
+{% block subcontent %}
+
+    {% set configuration= config_status.ncandprinc == 0 and config_status.ncandsec == 0 and config_status.nliste == 0 %}
+    {% set configurationMsg = '<h4 class="alert-heading">Configurazioni mancanti</h4>' %}
+    {% if config_status.ncandprinc > 0 %}
+        {% set  configurationMsg = configurationMsg ~ '<p>Candidati presidente da configurare: ' ~ config_status.ncandprinc ~ ';</p> ' %}
+    {% endif %}
+    {% if config_status.ncandsec > 0 %}
+        {% set  configurationMsg = configurationMsg ~ '<p>Candidati secondari da configurare: ' ~ config_status.ncandsec ~ ';</p> ' %}
+    {% endif %}
+    {% if config_status.nliste > 0 %}
+        {% set  configurationMsg = configurationMsg ~ '<p>Liste da configurare: ' ~ config_status.nliste ~ ';</p> ' %}
+    {% endif %}
+    <div class="col-lg-10 mx-auto">
+
+        <div class="row">
+            <div
+                class="col-12 col-lg-12">
+                <!--start card-->
+                <div class="card-wrapper card-space">
+                    <div class="card card-bg">
+                        <div class="card-body">
+                            <h5 class="card-title">SERVICE 3.1 - INVIA MODIFICA VOTANTI</h5>
+                            <p class="card-text">Dà la possibilità di comunicare i dati di più sezioni; per modificare dati già trasmessi si prevede l'invio
+                                                                tramite nuova richiesta al servizio. L’attributo evento sui riferisce ai dati della comunicazione elettorale
+                                                                attiva.</p>
+                            <div class="it-card-footer">
+                                <a href="{{ path('readVotanti') }}">
+                                    <button type="button" class="btn btn-primary">Accedi</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end card-->
+            </div>
+        </div>
+
+        <div class="row">
+            <div
+                class="col-12 col-lg-12">
+                <!--start card-->
+                <div class="card-wrapper card-space">
+                    <div class="card card-bg">
+                        <div class="card-body">
+                            <h5 class="card-title">SERVICE 3.2 - INVIO MODIFICA SCRUTINI</h5>
+                            <p class="card-text">Utilizzato per l’invio relativo alla comunicazione finale dei votanti,
+                                <b>una sezione alla volta</b>; per modificare
+                                                                        dati già trasmessi si prevede l'invio tramite nuova richiesta al servizio. L’attributo evento si riferisce alla
+                                                                        comunicazione elettorale attiva.</p>
+                            <div class="it-card-footer">
+                                {% if configuration %}
+                                    <a href="{{ path('readScrutini') }}">
+                                        <button type="button" class="btn btn-primary">Accedi</button>
+                                    {% else %}
+                                        <div class='col-12'>
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ configurationMsg | raw }}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end card-->
+            </div>
+        </div>
+
+        <div class="row">
+            <div
+                class="col-12 col-lg-12">
+                <!--start card-->
+                <div class="card-wrapper card-space">
+                    <div class="card card-bg">
+                        <div class="card-body">
+                            <h5 class="card-title">SERVICE 3.3 - INVIO MODIFICA PREFERENZE</h5>
+                            <p class="card-text">L’attributo evento si riferisce alla comunicazione elettorale attiva; per modificare dati già trasmessi si
+                                                                prevede l'invio tramite nuova richiesta al servizio,
+                                <b>una sezione alla volta</b>.
+                                                                        Se nel servizio “Recupera comunicazioni elettorali” si ha acquisizionePreferenze=0 per la comunicazione
+                                                                        con codice = evento.codice, viene restituito un messaggio di errore in quanto le preferenze non sono
+                                                                        acquisibili.</p>
+                            <div class="it-card-footer">
+                                {% if configuration %}
+                                    <a href="{{ path('readPreferenze') }}">
+                                        <button type="button" class="btn btn-primary">Accedi</button>
+                                    {% else %}
+                                        <div class='col-12'>
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ configurationMsg | raw }}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end card-->
+            </div>
+        </div>
+
+
+        <a href="{{ path('welcome') }}">
+            <button type="button" class="btn btn-primary">Go back</button>
+        </a>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,20 @@
+lineacomuneauth:
+    client_id: cmsdrupal
+    client_secret: lin&alin&a
+    #Da abilitare preventivamente a linea comune
+    redirect_uri: http://divo.localhost
+    #login_url: https://identificazione.055055.it/iam/oauth2/authorize
+    #logout_url: 
+    #check_url: https://identificazione.055055.it/iam/oauth2/access_token
+    #tokeninfo_url: https://identificazione.055055.it/iam/oauth2/tokeninfo
+    #codicecanale: PROD
+    #codiceservizio: RETECIVICATEST
+    #realm: /forcns
+    #response_type: code
+    repository_users: BiCoreBundle:Operatori
+    repository_class: Cdf\BiCoreBundle\Entity\Operatori
+    #scope: cn mail peopleCellulare peopleTelefono peopleCognome peopleNome peopleDataNascita peopleLuogoNascita peopleEmailAddressPersonale
+    #proxy: proxyhttps.comune.intranet:8080
+                
+
+    

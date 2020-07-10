@@ -1,0 +1,51 @@
+Rxcandidati_container:
+    path:  /
+    controller: 'App\Controller\RxcandidatiController::index'
+
+Rxcandidati_lista:
+    path:  /lista
+    controller: 'App\Controller\RxcandidatiController::lista'
+    options:
+        expose: true
+
+Rxcandidati_indexdettaglio:
+    path:  /indexDettaglio
+    controller: 'App\Controller\RxcandidatiController::indexDettaglio'
+    options:
+        expose: true
+
+Rxcandidati_new:
+    path:  /new
+    controller: 'App\Controller\RxcandidatiController::new'
+    methods:    GET|POST
+
+Rxcandidati_edit:
+    path:  /{id}/edit
+    controller: 'App\Controller\RxcandidatiController::edit'
+
+Rxcandidati_update:
+    path:  /{id}/update
+    controller: 'App\Controller\RxcandidatiController::update'
+    methods:    POST|PUT
+
+Rxcandidati_aggiorna:
+    path:  /{id}/{token}/aggiorna
+    controller: 'App\Controller\RxcandidatiController::aggiorna'
+    methods:    POST|PUT
+    options:
+        expose: true
+
+Rxcandidati_delete:
+    path:  /{id}/{token}/delete
+    controller: 'App\Controller\RxcandidatiController::delete'
+    methods:    POST|DELETE
+
+Rxcandidati_deletemultiple:
+    path:  /{token}/delete
+    controller: 'App\Controller\RxcandidatiController::delete'
+    methods:    POST|DELETE
+
+Rxcandidati_tabella:
+    path:  /tabella
+    controller: 'App\Controller\RxcandidatiController::tabella'
+    methods:    POST

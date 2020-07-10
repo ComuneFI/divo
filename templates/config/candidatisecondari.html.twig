@@ -1,0 +1,225 @@
+{% extends "Default/index.html.twig" %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('configsave') }}
+
+{% endblock %}
+{% block subcontent %}
+    <use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg"></use>
+    <div class="section">
+
+        <div class="col-lg-12 mx-auto">
+
+            <div id="collapseDiv2" class="collapse-div" role="tablist">
+
+                {% for object  in visible_objects %}
+
+                    <div class="collapse-header" id="heading1a">
+                        <button data-toggle="collapse" data-target="#collapse{{ object.evento.id }}" aria-expanded="true" aria-controls="collapse1a">
+                            ID
+                            {{ object.evento.id }}
+                            -
+                                                    Evento:
+                            {{ object.evento.evento }}
+                            del
+                            {{ object.evento.dataEvento| date('Y-m-d') }}
+                            (codice:
+                            {{ object.evento.codiceEvento }})
+                        </button>
+                        <input type='text' class='state' data-event='{{ object.evento.id }}' value='{{ state }}' readonly='readonly' hidden='hidden'></div>
+                        <div id="collapse{{ object.evento.id }}" class="collapse show" role="tabpanel" aria-labelledby="heading1b">
+                            <div class="collapse-body">
+
+
+                                {% for item in object.circoscrizioni %}
+                                    {% set circoscrizione = item.circoscrizione %}
+                                    <div id="collapse1a" class="collapse show" role="tabpanel" aria-labelledby="heading1a">
+                                        <div class="collapse-body">
+                                            <div id="collapseDiv3" class="collapse-div" role="tablist">
+                                                <div class="collapse-header" id="heading{{ circoscrizione.id }}">
+                                                    <button data-toggle="collapse" data-target="#collapse{{ circoscrizione.id }}" aria-expanded="true" aria-controls="collapse{{ circoscrizione.id }}">
+                                                        Circoscrizione:
+                                                        {{ circoscrizione.circDesc }}
+                                                        (id:
+                                                        {{ circoscrizione.idTarget }})
+                                                    </button>
+                                                </div>
+                                                <div id="collapse{{ circoscrizione.id }}" class="collapse show" role="tabpanel" aria-labelledby="heading1b">
+                                                    <div class="collapse-body">
+                                                        <button class="btn btn-primary btn-icon uploadAutonaticConfiguration" data-evento='{{ object.evento.id }}'>
+                                                            <span>Carica configurazione suggerita</span>
+                                                        </button>
+                                                        <ul>
+                                                            {% for key,candidatoListe in item.candidati %}
+                                                                {% set candidato = candidatoListe.candidato %}
+
+                                                                <li>
+                                                                    <span class="font-weight-bold">{{ key }}
+                                                                        -
+                                                                        {{ candidato.cognome }}
+                                                                        {{ candidato.nome }}</span>,
+                                                                    {{ candidato.luogoNascita }},
+                                                                    {{ candidato.sesso }}
+                                                                    (
+                                                                    {{ candidato.idTarget }}
+                                                                    )
+                                                                    <ul>
+
+                                                                        {% for keylp,listaPreferenza in candidatoListe.liste %}
+                                                                            {% set numCandidatiSecondari=0 %}
+                                                                            {% set numCandidatiSecondariConfig=0 %}
+                                                                            {% set lista = listaPreferenza.lista %}
+                                                                            <li>
+                                                                                <span class="font-weight-semibold">{{ keylp }}
+                                                                                    -
+                                                                                    {{ lista.listaDesc }}</span>
+                                                                                (
+                                                                                {{ lista.idTarget }})
+                                                                                <ul>
+                                                                                    {% if (lista.idSource !='') %}
+                                                                                        {% for keylpc,candidatoSecondario in listaPreferenza.candidatisecondari %}
+
+                                                                                            <li>{{ keylpc }}
+                                                                                                -
+                                                                                                {{ candidatoSecondario.cognome }}
+                                                                                                {{ candidatoSecondario.nome }}</b>,
+                                                                                            {{ candidatoSecondario.luogoNascita }},
+                                                                                            {{ candidatoSecondario.sesso }}
+                                                                                            (
+                                                                                            {{ candidatoSecondario.idTarget }}
+                                                                                            )
+
+                                                                                            {% set numCandidatiSecondari=numCandidatiSecondari+1 %}
+
+                                                                                            <!-- FORM ROW -->
+                                                                                            <div class="form-row">
+                                                                                                <div class="form-group col-md-6">
+                                                                                                    <span class="font-weight-bold">[{{ candidatoSecondario.idTarget }}] - (pos.{{ keylpc }})
+                                                                                                        {{ candidatoSecondario.cognome }}
+                                                                                                        {{ candidatoSecondario.nome }}</b>,
+                                                                                                    {{ candidatoSecondario.luogoNascita }},
+                                                                                                    {{ candidatoSecondario.sesso }}
+                                                                                                    ( source =
+                                                                                                    {{ candidatoSecondario.idSource }}
+                                                                                                    )</span>
+                                                                                            </div>
+                                                                                            <div class="form-group col-md-6">
+                                                                                                <div class="bootstrap-select-wrapper">
+                                                                                                    <label>Sorgente per
+                                                                                                        {{ candidatoSecondario.cognome }}
+                                                                                                        {{ candidatoSecondario.nome }}
+                                                                                                        ({{ candidatoSecondario.idTarget }})</label>
+                                                                                                    <svg class="icon icon-danger d-none">
+                                                                                                        <use xlink:href="#it-error"></use>
+                                                                                                    </svg>
+                                                                                                    <select name="mapping{{ object.evento.id }}" title="Scegli una opzione" data-iddb="{{ candidatoSecondario.id }}">
+                                                                                                        <option value="" title="Scegli una opzione" data-content="Annulla <span class='reset-label'></span>"></option>
+                                                                                                        {% for itemList in listCandidates %}
+                                                                                                            {% set verifiedDescription = (candidatoSecondario.cognome| upper == itemList.cognome| upper and candidatoSecondario.nome | upper == itemList.nome | upper   ) %}
+                                                                                                            {% set selected = '' %}
+                                                                                                            {% set class ="" %}
+                                                                                                            {% set listaRxCandidatoRxListaId = itemList.rxlistaId %}
+                                                                                                            {% if (listaRxCandidatoRxListaId == lista.idSource) %}
+                                                                                                                {% set style ="" %}
+                                                                                                                {% if (dataupload[candidatoSecondario.id] is defined and dataupload[candidatoSecondario.id] == itemList.idSource) %}
+                                                                                                                    {% set selected = 'selected' %}
+                                                                                                                {% elseif (candidatoSecondario.idSource == itemList.idSource and not dataupload[candidatoSecondario.id] is defined  ) %}
+                                                                                                                    {% set selected = 'selected' %}
+                                                                                                                    {% set numCandidatiSecondariConfig=numCandidatiSecondariConfig+1 %}
+                                                                                                                {% endif %}
+                                                                                                                {% if (verifiedDescription) %}
+                                                                                                                    {% set style ="background-color: #ffff0061;" %}
+                                                                                                                    {% set class ="suggested" %}
+                                                                                                                {% endif %}
+                                                                                                                <option style="{{ style }}" class="{{ class }}" value="{{ itemList.idSource }}" {{ selected }}>
+                                                                                                                    {{ itemList.cognome }}
+                                                                                                                    {{ itemList.nome }}
+                                                                                                                    ( source =
+                                                                                                                    {{ itemList.idSource }}
+                                                                                                                    )
+                                                                                                                </option>
+                                                                                                            {% endif %}
+                                                                                                        {% endfor %}
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <!--END FORM ROW -->
+
+
+                                                                                    {% endfor %}
+                                                                                    {% set numCandidatiSecondarinoconfig=numCandidatiSecondari-numCandidatiSecondariConfig %}
+                                                                                    Numero candidati secondari da configurare
+                                                                                    <span class="font-weight-bold">
+                                                                                        {{ numCandidatiSecondarinoconfig }}
+                                                                                    </span>
+                                                                                    su
+                                                                                    <span class="font-weight-bold">{{ numCandidatiSecondari }}</span>
+
+                                                                                {% else %}
+                                                                                    <div class="alert alert-warning" role="alert">
+                                                                                        Prima di procedere con la configurazione è necessario configurare l'idSource della lista
+                                                                                    </div>
+                                                                                {% endif %}
+                                                                            </ul>
+                                                                        </li>
+                                                                    {% endfor %}
+                                                                </ul>
+                                                            </li>
+
+                                                        {% endfor %}
+                                                    </ul>
+                                                </li>
+
+                                                <button class="btn btn-primary btn-icon savebutton" data-evento='{{ object.evento.id }}' data-tableName='Candidatisecondari'>
+                                                    <span class="rounded-icon">
+                                                        <svg class="icon icon-primary">
+                                                            <use xlink:href="#it-locked"></use>
+                                                        </svg>
+                                                    </span>
+                                                    <span>Save</span>
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+                </div>
+            {% endfor %}
+
+            <a href="{{ path('downCSV' , {fileRequested:'secondari'} ) }}">
+                <button class="btn btn-primary btn-icon">
+                    <span class="rounded-icon">
+                        <svg class="icon icon-primary">
+                            <use xlink:href="#it-arrow-down"></use>
+                        </svg>
+                    </span>
+                    <span>Download CSV</span>
+                </button>
+            </a>
+        </br>
+    </br>
+</br>
+<p class="font-weight-bold">
+    Carica configurazione da file (dopo aver caricato i dati ricordarsi di confermarli cliccando sul bottone Save)</p></br><div class="form-row">
+
+{{ form_start(form) }}
+{{ form_row(form.filecsv) }}
+<button class="btn btn-primary btn-icon">
+    <span class="rounded-icon">
+        <svg class="icon icon-primary">
+            <use xlink:href="#it-arrow-up"></use>
+        </svg>
+    </span>
+    <span>Upload CSV</span>
+</button>
+{{ form_end(form) }}</div><br>
+<br></div>
+<a href="{{ path('config') }}">
+    <button type="button" class="btn btn-primary">Go back</button>
+</a></div></div>{% endblock %}
+

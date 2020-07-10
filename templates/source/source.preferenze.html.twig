@@ -1,0 +1,183 @@
+{% extends "Default/index.html.twig" %}
+
+{% block javascripts %}
+ {{ encore_entry_script_tags('alert') }}
+ {{ encore_entry_script_tags('divoSlicer') }}
+  {{ encore_entry_script_tags('openCollapse') }}
+{% endblock %}
+
+{% block subcontent %}
+
+<use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg"></use>
+
+<div class="section">
+
+{% if communication_esito is defined %}
+    {% if communication_esito.esito.codice == 1 %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <h4 class="alert-heading">{{ communication_esito.esito.descrizione }}</h4>
+      <p>L'operazione di invio dati è stata effettuata con successo.</p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %}
+    {% if communication_esito.esito.codice != 1 %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    L'operazione di invio dati ha riscontrato un errore: "<b>{{ communication_esito.esito.descrizione }}</b>".
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <br>
+    {% endif %}
+{% endif %}
+
+<div class="col-lg-10 mx-auto">
+
+<h3>Preferenze: Ispezione ed Invio</h3>
+
+<div id="collapseDiv2" class="collapse-div" role="tablist">
+
+{% for key,item in data %}
+
+<div class="collapse-header" id="heading1a">
+    <button data-toggle="collapse" data-target="#collapse-{{item.event.id}}" aria-expanded="true" aria-controls="collapse1a">
+      {{ item.event.evento }} - {{ item.event.descrizioneEvento }} 
+      <span class="badge badge-pill badge-primary">{{ item.event.statoWfDesc }}</span> <br>
+    </button>
+</div>
+<div id="collapse-{{item.event.id}}" class="collapse show" role="tabpanel" aria-labelledby="heading1b">
+      <div class="collapse-body">
+
+<p>
+  <button type="button" class="btn btn-primary btn-icon multiSlicer" data-eventid={{ item.event.id }} data-topic="preferenze" data-topic-text="Sezioni aggiornate" data-path="/{{ item.event.id }}/preferenze/sezioni/changed" aria-disabled="true">
+      <svg class="icon icon-white"><use xlink:href="#it-arrow-up-circle"></use></svg>
+      <span>Invia Preferenze</span>
+  </button>
+
+  <button class="btn btn-secondary-outline btn-icon" type="button" data-toggle="collapse" data-target="#collapseMultipleRange" aria-expanded="false" aria-controls="collapseExample">
+  <svg class="icon icon-primary"><use xlink:href="#it-zoom-in"></use></svg>
+  <!--span></span-->
+  </button>
+</p>
+<div class="collapse" id="collapseMultipleRange">
+  <div class="callout">
+    <div class="callout-title"><span class="sr-only">Confermato</span>Invio Selettivo</div>
+    <p>Si selezioni la <b>Sezione Iniziale</b> e la <b>Sezione Finale</b> del proprio intervallo di interesse.
+    La procedura invierà i dati delle Preferenze relativi all'intervallo indicato (incluse la sezione iniziale e finale).<br>
+    L'operazione di invio potrebbe richiedere alcuni minuti nel caso si siano selezionate molte sezioni.</p>
+    
+    <div class="form-row">
+        <div class="form-group col-md-6">
+          <div class="bootstrap-select-wrapper">
+            <label>Sezione Iniziale</label>
+            <select title="Scegli una sezione" id="start-sec-{{ item.event.id }}">
+            {% for struct in item.array %}
+              <option value="{{ struct.sezione.sezione.id }}">{{ struct.sezione.sezione.descrizione }}</option>
+            {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <div class="bootstrap-select-wrapper">
+            <label>Sezione Finale</label>
+           <select title="Scegli una sezione" id="end-sec-{{ item.event.id }}">
+            {% for struct in item.array %}
+              <option value="{{ struct.sezione.sezione.id }}">{{ struct.sezione.sezione.descrizione }}</option>
+            {% endfor %}
+            </select>
+          </div>
+        </div>
+    </div>
+    
+    <button type="button" class="btn btn-primary btn-icon btn-sm multiSlicer" data-eventid={{ item.event.id }} data-topic="preferenze" data-topic-text="Sezioni indicate" data-path="/{{ item.event.id }}/sezioni/range" aria-disabled="true">
+        <svg class="icon icon-white"><use xlink:href="#it-upload"></use></svg>
+        <span>Invia intervallo</span>
+    </button>
+  </div>
+
+</div>
+
+      <h5>Dettaglio per sezione</h5> 
+      
+
+      {% for struct in item.array %}
+      {% set iter = 0 %}
+
+<div class="collapse-header" id="heading1a">
+    <button data-toggle="collapse" data-target="#collapse{{ struct.sezione.sezione.id }}" aria-expanded="true" aria-controls="collapse1a">
+      {{ struct.sezione.evento.evento }} {{ struct.sezione.evento.descrizioneEvento}} - {{struct.sezione.sezione.descrizione}} 
+      <span class="badge badge-pill badge-primary"> {{ struct.sezione.sezione.statoWfDesc }}</span>
+    </button>
+  </div>
+  
+  <div id="collapse{{ struct.sezione.sezione.id }}" class="collapse collapse-div-open" role="tabpanel" aria-labelledby="heading1b">
+      <div class="collapse-body">
+    
+ 
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Lista</th>
+      <th scope="col">Candidato Secondario</th>
+      <th scope="col">Voti Totali</th>
+    </tr>
+  </thead>
+  <tbody>
+
+
+  {% for preferenza in struct.preferenze|sort((a, b) => b.lista_desc <=> a.lista_desc) %}
+
+  {% set iter =iter +1  %}
+    <tr class="{% if preferenza.bitnew != 0 %} record_nuovo table-primary {% else %} table-secondary {% endif %}">
+      <td><small>{{ preferenza.lista_desc }}</small>
+      </td>
+      <td><small><b>{{ preferenza.cognome }} {{ preferenza.nome }}</b>
+      ({{ preferenza.sesso }}), {{ preferenza.luogo_nascita }} </small></td>
+      <td><small><b>{{ preferenza.numero_voti }}</b></small></td>
+    </tr>
+
+  {% endfor %}
+
+    <tr>
+      <td>Totale voti liste preferenza
+      </td>
+      <td></td>
+      <td><b>{{ struct.totaleVoti }}</b></td>
+    </tr>
+
+
+  </tbody>
+</table>
+{% if iter > 0 %}
+  <a href="{{ path('pushPreferenze', { 'sectionid': struct.sezione.sezione.id }) }}">
+ <button type="button" class="btn btn-outline-primary btn-sm">
+ <span>Invia ({{ struct.sezione.sezione.descrizione }} - {{struct.sezione.evento.evento}})</span>
+ </button>
+ </a>
+{% endif %}
+
+     </div>
+  </div>
+
+
+{% endfor %}
+
+      </div> {# closing id="collapse body #}
+</div> {# closing id="collapse-item.event.id" #}
+
+{% endfor %}
+
+  </div>
+
+
+<a href="{{ path('sendRTdata') }}">
+ <button type="button" class="btn btn-primary">Go back</button>
+ </a>
+
+</div>
+
+</div>
+
+{% endblock %}
