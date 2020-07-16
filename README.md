@@ -19,14 +19,18 @@ sudo apt install php-sqlite3 php-xml php-gd php-curl php-mbstring php-zip compos
 ```
 git clone https://github.com/ComuneFi/divo.git
 cd divo
-#Copiare il file `.env` in `.env.local` per impostare il database da utilizzare (DATABASE_URL, BICORE_SCHEMA)
+#Copiare il file `.env` in `.env.local` per impostare il database da utilizzare
+##DATABASE_URL https://symfony.com/doc/current/doctrine.html#configuring-the-database
+### es. DATABASE_URL="pgsql://db_user:db_password@127.0.0.1:3306/db_name"
+##BICORE_SCHEMA (nome schema nel database)
+### es. BICORE_SCHEMA=divo
 composer install
 bin/console cache:clear
 bin/console bicorebundle:install admin password admin@admin.it
 bin/console App:CreateViews
 ```
 
-###Configurazione:
+### Configurazione:
 
 - Accedere all'applicativo da browser (es. http://divo.comune.intranet/)
 - Inserire username e password forniti in fase di installazione (es. admin - password)
