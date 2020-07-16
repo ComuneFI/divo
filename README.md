@@ -44,8 +44,8 @@ bin/console App:CreateViews
 
 ### Abilitazione utenti:
 * divouser : Nome utente
-* divopass : Password
-* email@email.it : Indirizzo mail dell'utente
+* divopass : Password utente
+* email@email.it : Indirizzo email dell'utente
 * ws_user_per_accedere_regione_toscana : Nome utente per l'erogazione dei servizi di RT
 * ws_password_per_accedere_regione_toscana : Password utente per l'erogazione dei servizi di RT
 
