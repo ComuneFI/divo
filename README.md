@@ -36,3 +36,20 @@ bin/console App:CreateViews
 - Inserire username e password forniti in fase di installazione (es. admin - password)
 - Accedere alla rotta Enti (es. http://divo.comune.intranet/Enti)
 - Inserire il nome del Comune e il codice provincia e codice del Comune prendendo le informazioni da https://www.istat.it/storage/codici-unita-amministrative/Elenco-comuni-italiani.csv (solo la parte numerica)
+
+
+### Upgrade
+```
+cd divo
+git pull
+composer install
+```
+
+### Upgrade ad una specifica release
+```
+cd divo
+git pull
+#Per posizionarsi sulla release 1.2.2
+git checkout 1.2.2
+composer install
+```
