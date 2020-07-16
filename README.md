@@ -43,11 +43,11 @@ bin/console App:CreateViews
 
 
 ### Abilitazione utenti:
-*divouser -> Nome utente
-*divopass -> Password
-*email@email.it -> Indirizzo mail dell'utente
-*ws_user_per_accedere_regione_toscana -> Nome utente per l'erogazione dei servizi di RT
-*ws_password_per_accedere_regione_toscana-> Password utente per l'erogazione dei servizi di RT
+* divouser : Nome utente
+* divopass : Password
+* email@email.it : Indirizzo mail dell'utente
+* ws_user_per_accedere_regione_toscana : Nome utente per l'erogazione dei servizi di RT
+* ws_password_per_accedere_regione_toscana : Password utente per l'erogazione dei servizi di RT
 
 ```
 bin/console App:CreateUser "divouser" "divopass" "email@email.it" "ws_user_per_accedere_regione_toscana" "ws_password_per_accedere_regione_toscana"
