@@ -113,7 +113,7 @@ class CreateUserCommand extends Command {
         //Si crea l'utente per DIVO con i parametri passati
         $newutenti = new Utenti();
         $newutenti->setUsername($rtusername);
-        $newutenti->setPsw($rtusername);
+        $newutenti->setPsw($rtuserpassword);
         $newutenti->setEnti($ente);
         $newutenti->setUserId($newOperatore->getId());
 
