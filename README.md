@@ -30,6 +30,8 @@ composer install
 bin/console cache:clear
 bin/console bicorebundle:install admin password admin@admin.it
 bin/console App:CreateViews
+bin/console App:LoadFixtures
+
 
 ```
 
