@@ -30,7 +30,9 @@ composer install
 bin/console cache:clear
 bin/console bicorebundle:install admin password admin@admin.it
 bin/console App:CreateViews
+
 ```
+
 
 ### Configurazione:
 
@@ -39,6 +41,17 @@ bin/console App:CreateViews
 - Accedere alla rotta Enti (es. http://divo.comune.intranet/Enti)
 - Inserire il nome del Comune e il codice provincia e codice del Comune prendendo le informazioni da https://www.istat.it/storage/codici-unita-amministrative/Elenco-comuni-italiani.csv (solo la parte numerica)
 
+
+### Abilitazione utenti:
+*divouser -> Nome utente
+*divopass -> Password
+*email@email.it -> Indirizzo mail dell'utente
+*ws_user_per_accedere_regione_toscana -> Nome utente per l'erogazione dei servizi di RT
+*ws_password_per_accedere_regione_toscana-> Password utente per l'erogazione dei servizi di RT
+
+```
+bin/console App:CreateUser "divouser" "divopass" "email@email.it" "ws_user_per_accedere_regione_toscana" "ws_password_per_accedere_regione_toscana"
+```
 
 ### Upgrade
 ```
