@@ -42,7 +42,7 @@ bin/console App:CreateViews
 - Inserire il nome del Comune e il codice provincia e codice del Comune prendendo le informazioni da https://www.istat.it/storage/codici-unita-amministrative/Elenco-comuni-italiani.csv (solo la parte numerica)
 
 
-### Abilitazione utenti:
+### Creazione utenti:
 * divouser : Nome utente
 * divopass : Password utente
 * email@email.it : Indirizzo email dell'utente
