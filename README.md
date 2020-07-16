@@ -4,7 +4,7 @@
 
 ## Per iniziare
 
-**NOTA**: richiede PHP 7.2.
+**NOTA**: richiede PHP 7.2 e PostgreSQL >= 10.13 
 
 ### Prerequisiti
 
