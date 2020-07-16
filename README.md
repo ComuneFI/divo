@@ -8,13 +8,15 @@
 
 ### Prerequisiti
 
-Testato su Debian next stable 10 (buster).
+Testato su CentOS 7 ma compatibile con altre distribuzioni Linux.
 
 ```sh
 sudo apt install php-sqlite3 php-xml php-gd php-curl php-mbstring php-zip composer git
 ```
 
 ### Installazione
+
+ATTENZIONE: Il DB e lo schema non devono avere lo stesso nome, si consiglia di nominare il DB “divo” e lo schema “divoschema”
 
 ```
 git clone https://github.com/ComuneFi/divo.git
@@ -23,7 +25,7 @@ cd divo
 ##DATABASE_URL https://symfony.com/doc/current/doctrine.html#configuring-the-database
 ### es. DATABASE_URL="pgsql://db_user:db_password@127.0.0.1:3306/db_name"
 ##BICORE_SCHEMA (nome schema nel database)
-### es. BICORE_SCHEMA=divo
+### es. BICORE_SCHEMA=divoschema
 composer install
 bin/console cache:clear
 bin/console bicorebundle:install admin password admin@admin.it
