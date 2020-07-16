@@ -16,7 +16,7 @@ sudo apt install php-sqlite3 php-xml php-gd php-curl php-mbstring php-zip compos
 
 ### Installazione
 
-ATTENZIONE: Il DB e lo schema non devono avere lo stesso nome, si consiglia di nominare il DB “divo” e lo schema “divoschema”
+ATTENZIONE: Il DataBase e lo schema del DataBase non devono avere lo stesso nome, si consiglia di nominare il DB “divo” e lo schema “divoschema”
 
 ```
 git clone https://github.com/ComuneFi/divo.git
