@@ -11,8 +11,6 @@
         "php": "^7.2",
         "comunedifirenze/bicorebundle": "^1.0",
         "doctrine/doctrine-bundle": "^2.0",
-        "fi/autenticazionebundle": "^5.0",
-        "fi/lineacomuneauthbundle": "^1.0",
         "sensiolabs/security-checker": "^6.0",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "4.4.*",

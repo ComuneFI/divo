@@ -33,14 +33,6 @@ App_Enti:
 # Files in the routes/ subdirectory configure the routes for your dependencies.
 
 #project_extension_routes_hook
-autenticazione:
-    resource: "@AutenticazioneBundle/Resources/config/routing.yml"
-    prefix:   /
-
-fi_Lineacomune:
-    resource: "@LineacomuneauthBundle/Resources/config/routing.yml"
-    prefix:   /
-
 fi_pannello_amministrazione:
     resource: "@PannelloAmministrazioneBundle/Resources/config/routing.yml"
     prefix:   /
