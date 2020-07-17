@@ -33,7 +33,7 @@ class HomepageTest extends PantherTestCase {
         /* @var $userManager \FOS\UserBundle\Doctrine\UserManager */
         $userManager = $container->get('fos_user.user_manager');
         /* @var $loginManager \FOS\UserBundle\Security\LoginManager */
-        $user = $userManager->findUserByUsername('divoadmin');
+        $user = $userManager->findUserByUsername('admin');
         $token = new UsernamePasswordToken($user, $user->getPassword(), $firewall, $user->getRoles());
         $session->set('_security_' . $firewall, serialize($token));
         $session->save();

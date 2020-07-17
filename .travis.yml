@@ -31,7 +31,7 @@ before_script:
   - phpenv config-add ./build/travis.php.ini
   - echo "APP_ENV=prod" >> .env.local
   - echo "BICORE_SCHEMA=divoschema" >> .env.local
-  - echo "DATABASE_URL=\"pdo-pgsql://biuser:biuserpwd@localhost:5432/unittest\"" >> .env.local
+  - echo "DATABASE_URL=\"pdo-pgsql://divodbuser:divodbpwd@localhost:5432/unittest\"" >> .env.local
   - sudo apt-get update
   - sudo apt-get install apache2 libapache2-mod-fcgid make ant
 
@@ -52,10 +52,10 @@ before_script:
 
   - if [[ "$DB" == "pgsql" ]]; then echo "PROVISIONING WITH PostgreSQL"; fi
   - if [[ "$DB" == "pgsql" ]]; then psql -c 'create database unittest;' -U postgres; fi
-  - if [[ "$DB" == "pgsql" ]]; then psql -c "CREATE USER biuser WITH PASSWORD 'biuserpwd';" -U postgres; fi
-  - if [[ "$DB" == "pgsql" ]]; then psql -c "GRANT ALL PRIVILEGES ON DATABASE unittest TO biuser;" -U postgres; fi
-  - if [[ "$DB" == "pgsql" ]]; then psql -c "ALTER USER biuser CREATEDB;" -U postgres; fi
-  - if [[ "$DB" == "pgsql" ]]; then psql -c "alter role biuser superuser;" -U postgres; fi
+  - if [[ "$DB" == "pgsql" ]]; then psql -c "CREATE USER divodbuser WITH PASSWORD 'divodbpwd';" -U postgres; fi
+  - if [[ "$DB" == "pgsql" ]]; then psql -c "GRANT ALL PRIVILEGES ON DATABASE unittest TO divodbuser;" -U postgres; fi
+  - if [[ "$DB" == "pgsql" ]]; then psql -c "ALTER USER divodbuser CREATEDB;" -U postgres; fi
+  - if [[ "$DB" == "pgsql" ]]; then psql -c "alter role divodbuser superuser;" -U postgres; fi
 script:
   - ant
 
