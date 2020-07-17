@@ -38,6 +38,9 @@ cd divo
 ### es. DATABASE_URL="pgsql://db_user:db_password@127.0.0.1:3306/db_name"
 ##BICORE_SCHEMA (nome schema nel database)
 ### es. BICORE_SCHEMA=divoschema
+#Infine per abilitare l'ambiente di produzione:
+##APP_ENV=prod
+##con APP_ENV=env è utile per la fase di debug, in ambiente di produzione impostare prod
 composer install
 bin/console cache:clear
 bin/console bicorebundle:install admin password admin@admin.it
