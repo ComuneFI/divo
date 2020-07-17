@@ -85,7 +85,7 @@
 
     <target name="bicorebundle-createutente">
         <exec executable="php" failonerror="true">
-            <arg line="bin/console bin/console App:CreateUser divouser divopass email@email.it rt_ws_user rt_ws_password"/>
+            <arg line="bin/console App:CreateUser divouser divopass email@email.it rt_ws_user rt_ws_password"/>
         </exec>
     </target>
 
