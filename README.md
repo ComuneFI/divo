@@ -8,11 +8,23 @@
 
 ### Prerequisiti
 
-Testato su CentOS 7 ma compatibile con altre distribuzioni Linux.
+Testato su Debian e CentOS 7 ma compatibile con altre distribuzioni Linux.
 
-```sh
-sudo apt install php-sqlite3 php-xml php-gd php-curl php-mbstring php-zip composer git
-```
+- apache HTTP server 
+- Composer (https://getcomposer.org/) 
+- git
+
+Moduli php
+
+- php7.*-xml  
+- php7.*-intl  
+- php7.*-mbstring  
+- php7.*-sqlite3  
+- php7.*-zip 
+- php7.*-gd 
+- php7.*-curl 
+- php7.*-bz2 
+- php7.*-pgsql 
 
 ### Installazione
 
