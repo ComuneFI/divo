@@ -4,7 +4,7 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         database_url: "%env(resolve:DATABASE_URL)%"
-        divo_version: "v1.2.5"
+        divo_version: "v1.2.6"
     form_themes:
         - bootstrap_4_layout.html.twig
     exception_controller: null
