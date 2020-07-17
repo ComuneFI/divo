@@ -1,4 +1,5 @@
 # Divo
+[![Build Status](https://travis-ci.org/ComuneFI/divo.svg?branch=master)](https://travis-ci.org/ComuneFI/divo)
 
 > ⚠️ **WORK IN PROGRESS** ⚠️
 

@@ -1,6 +1,7 @@
+dist: bionic
 language: php
-
 sudo: false
+
 cache:
     directories:
         - $HOME/.composer/cache/files
@@ -8,22 +9,53 @@ cache:
 php:
   - 7.2
 
+addons:
+  postgresql: 9.6
+  #chrome: stable
+
+
 services:
   - xvfb
+  - postgresql
 
 # Configure different DB environments
 env:
   matrix:
-    - DB=sqlite3
+    - DB=pgsql
   
 addons:
   chrome: stable
 
 before_script:
   - chmod +x bin/console
-  - sudo apt-get install ant
   - phpenv config-add ./build/travis.php.ini
+  - echo "APP_ENV=prod" >> .env.local
+  - echo "BICORE_SCHEMA=divoschema" >> .env.local
+  - echo "DATABASE_URL=\"pdo-pgsql://biuser:biuserpwd@localhost:5432/unittest\"" >> .env.local
+  - sudo apt-get update
+  - sudo apt-get install apache2 libapache2-mod-fcgid make ant
 
+  #- cat ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - if [[ ! $TRAVIS_PHP_VERSION =~ ^hhvm ]]; then sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf; fi
+  - if [[ ! $TRAVIS_PHP_VERSION =~ ^hhvm ]]; then sudo cp ./build/www.conf ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/; fi
+  - sudo a2enmod rewrite actions alias
+  - if [[ ! $TRAVIS_PHP_VERSION =~ ^hhvm ]]; then echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
+  - if [[ ! $TRAVIS_PHP_VERSION =~ ^hhvm ]]; then sudo sed -i -e "s,www-data,travis,g" /etc/apache2/envvars; fi
+  #- if [[ ! $TRAVIS_PHP_VERSION =~ ^hhvm ]]; then sudo chown -R travis:travis /var/lib/apache2/fastcgi; fi
+  - if [[ ! $TRAVIS_PHP_VERSION =~ ^hhvm ]]; then ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm; fi
+  - if [[ ! $TRAVIS_PHP_VERSION =~ ^hhvm ]]; then sudo cp -f ./build/travis-ci-apache /etc/apache2/sites-available/000-default.conf; fi
+  - if [[ ! $TRAVIS_PHP_VERSION =~ ^hhvm ]]; then sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf; fi
+  - sudo sed -i 's/Listen 80/Listen 8000/' /etc/apache2/ports.conf
+  - sudo sed -i 's/NameVirtualHost \*:80/NameVirtualHost \*:8000/' /etc/apache2/ports.conf
+  - sudo service apache2 restart
+
+
+  - if [[ "$DB" == "pgsql" ]]; then echo "PROVISIONING WITH PostgreSQL"; fi
+  - if [[ "$DB" == "pgsql" ]]; then psql -c 'create database unittest;' -U postgres; fi
+  - if [[ "$DB" == "pgsql" ]]; then psql -c "CREATE USER biuser WITH PASSWORD 'biuserpwd';" -U postgres; fi
+  - if [[ "$DB" == "pgsql" ]]; then psql -c "GRANT ALL PRIVILEGES ON DATABASE unittest TO biuser;" -U postgres; fi
+  - if [[ "$DB" == "pgsql" ]]; then psql -c "ALTER USER biuser CREATEDB;" -U postgres; fi
+  - if [[ "$DB" == "pgsql" ]]; then psql -c "alter role biuser superuser;" -U postgres; fi
 script:
   - ant
 
