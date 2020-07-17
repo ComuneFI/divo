@@ -46,10 +46,34 @@ bin/console cache:clear
 bin/console bicorebundle:install admin password admin@admin.it
 bin/console App:CreateViews
 bin/console App:LoadFixtures
-
-
 ```
 
+###Esempio di VirtualHost
+```
+<VirtualHost *:80>
+    ServerName          divo.comune.it
+    ServerAlias         divo divo.*
+    DocumentRoot        /var/www/html/divo/public
+    DirectoryIndex      index.php
+    <Directory "/var/www/html/divo/public">
+       AllowOverride All
+       Require all granted
+       php_admin_value open_basedir "/var/www/html/divo:/tmp"
+    </Directory>
+
+    ErrorLog            logs/divo-error_log
+    CustomLog           logs/divo-access_log common
+
+    # optionally disable the RewriteEngine for the asset directories
+    # which will allow apache to simply reply with a 404 when files are
+    # not found instead of passing the request into the full symfony stack
+    <Directory /var/www/html/divo/public/bundles>
+        <IfModule mod_rewrite.c>
+            RewriteEngine Off
+        </IfModule>
+    </Directory>
+</VirtualHost>
+```
 
 ### Configurazione:
 
