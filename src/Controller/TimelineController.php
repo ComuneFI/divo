@@ -80,6 +80,7 @@ class TimelineController extends DivoController
         $listEnteEventi = $this->ORMmanager->getActiveEntityObjects($serviceURLEneteEventi, $param_filter, $param_order);
         $listRxCircoscrizioni_array=[];
         $descEventoArray=[];
+        $sezioni_array=[];
         foreach ($listEnteEventi as $singleEvent){
             $event=$singleEvent->getEventi()->getId();
     
