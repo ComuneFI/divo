@@ -78,10 +78,19 @@ bin/console App:LoadFixtures
 
 ### Configurazione:
 
-- Accedere all'applicativo da browser (es. http://divo.comune.intranet/)
+- Accedere all'applicativo da browser (es. http://divo.comune.it/)
 - Inserire username e password forniti in fase di installazione (es. admin - password)
-- Accedere alla rotta Enti (es. http://divo.comune.intranet/Enti)
+- Accedere alla rotta Enti (es. http://divo.comune.it/Enti)
 - Inserire il nome del Comune e il codice provincia e codice del Comune prendendo le informazioni da https://www.istat.it/storage/codici-unita-amministrative/Elenco-comuni-italiani.csv (solo la parte numerica)
+
+Oppure come esempio per il Comune di Firenze:
+```
+bin/console App:CreateEnte "Comune di Firenze" 48 17
+```
+Il comando accetta 3 parametri
+- Descrizione ente
+- Codice provincia
+- Codice comune
 
 
 ### Creazione utenti:

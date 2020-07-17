@@ -9,6 +9,8 @@
                     bicorebundle-install,
                     bicorebundle-createview,
                     bicorebundle-loadfixture,
+                    bicorebundle-createente,
+                    bicorebundle-createutente,
                     php-security-checker, 
                     phpunit-ci,
                     finish">
@@ -72,6 +74,18 @@
     <target name="bicorebundle-loadfixture">
         <exec executable="php" failonerror="true">
             <arg line="bin/console App:LoadFixtures"/>
+        </exec>
+    </target>
+    
+    <target name="bicorebundle-createente">
+        <exec executable="php" failonerror="true">
+            <arg line="bin/console App:CreateEnte 'Comune di Firenze' 48 17"/>
+        </exec>
+    </target>
+
+    <target name="bicorebundle-createutente">
+        <exec executable="php" failonerror="true">
+            <arg line="bin/console bin/console App:CreateUser divouser divopass email@email.it rt_ws_user rt_ws_password"/>
         </exec>
     </target>
 
