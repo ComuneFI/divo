@@ -85,15 +85,12 @@ class LoadFixturesCommand extends Command {
 ,(3,'Config. Candidati Principali','COF_CANDIDATES','extended','COF_LISTS','Eventi')
 ,(4,'Config. Liste di Preferenza','COF_LISTS','extended','COF_PREFERENCESCANDIDATES','Eventi')
 ,(5,'Config. Candidati di Preferenza','COF_PREFERENCESCANDIDATES','extended','POST_AFFLUENCE','Eventi')
-,(24,'Affluenze Test','POST_AFFLUENCE_Z','extended','POST_AFFLUENCE_2','RxSezioni')
 ,(17,'Sezione pronta','READY','extended','POST_AFFLUENCE_1','RxSezioni')
 ,(18,'Post Affluenze 1','POST_AFFLUENCE_1','extended','POST_AFFLUENCE_2','RxSezioni');";
 
         $fixtures["statesxgrant"] = "INSERT INTO $schema.statesxgrant (id,\"current\",\"next\",enabled,crackable,discr,entity_ref) VALUES 
 (23,'GET_LISTSCANDIDATES','COF_CANDIDATES',true,false,'extended','Eventi')
 ,(43,'COF_LISTS','COF_CANDIDATES',false,true,'extended','Eventi')
-,(900,'POST_AFFLUENCE_Z','POST_AFFLUENCE_2',false,false,'extended','RxSezioni')
-,(901,'POST_AFFLUENCE_1','POST_AFFLUENCE_Z',false,false,'extended','RxSezioni')
 ,(107,'START','CLOSE',false,false,'extended','Eventi')
 ,(103,'START','COF_PREFERENCESCANDIDATES',false,false,'extended','Eventi')
 ,(104,'START','POST_AFFLUENCE',false,false,'extended','Eventi')
