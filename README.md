@@ -104,7 +104,7 @@ Il comando accetta 3 parametri
 bin/console App:CreateUser "divouser" "divopass" "email@email.it" "ws_user_per_accedere_regione_toscana" "ws_password_per_accedere_regione_toscana"
 ```
 
-### Configurazone data evento:
+### Configurazione data evento:
 - Accedere all'applicativo da browser (es. http://divo.comune.it/)
 - Inserire username e password forniti in fase di installazione (es. admin - password)
 - Accedere alla rotta Enti (es. http://divo.comune.it/Utenti)
