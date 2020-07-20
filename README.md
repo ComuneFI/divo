@@ -41,7 +41,7 @@ cd divo
 ### es. BICORE_SCHEMA=divoschema
 #Infine per abilitare l'ambiente di produzione:
 ##APP_ENV=prod
-##con APP_ENV=env è utile per la fase di debug, in ambiente di produzione impostare prod
+##con APP_ENV=dev è utile per la fase di debug, in ambiente di produzione impostare prod
 composer install
 bin/console cache:clear
 bin/console bicorebundle:install admin password admin@admin.it
