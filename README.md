@@ -125,3 +125,6 @@ git pull
 git checkout 1.2.2
 composer install
 ```
+
+## Documentazione tecnica
+[Documentazione tecnica](./wiki)
