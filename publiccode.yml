@@ -34,6 +34,8 @@ intendedAudience:
   scope:
     - government
 it:
+  riuso:
+    codiceIPA: c_d612
   conforme:
     gdpr: false
     lineeGuidaDesign: false
