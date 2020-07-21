@@ -36,7 +36,7 @@ git clone https://github.com/ComuneFi/divo.git
 cd divo
 #Copiare il file `.env` in `.env.local` per impostare il database da utilizzare
 ##DATABASE_URL https://symfony.com/doc/current/doctrine.html#configuring-the-database
-### es. DATABASE_URL="pgsql://db_user:db_password@127.0.0.1:3306/db_name"
+### es. DATABASE_URL="pgsql://db_user:db_password@127.0.0.1:5432/db_name"
 ##BICORE_SCHEMA (nome schema nel database)
 ### es. BICORE_SCHEMA=divoschema
 #Infine per abilitare l'ambiente di produzione:
