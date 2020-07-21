@@ -8,6 +8,7 @@ categories:
   - communications
 description:
   it:
+    documentation: 'https://github.com/ComuneFI/divo/wiki'
     features:
       - track API communication outcomes
       - GUI interaction with data
@@ -34,8 +35,6 @@ intendedAudience:
   scope:
     - government
 it:
-  riuso:
-    codiceIPA: c_d612
   conforme:
     gdpr: false
     lineeGuidaDesign: false
@@ -47,8 +46,10 @@ it:
     cie: false
     pagopa: false
     spid: false
+  riuso:
+    codiceIPA: c_d612
 legal:
-  license: OSL-3.0
+  license: AGPL-3.0-or-later
 localisation:
   availableLanguages:
     - it
