@@ -1,12 +1,6 @@
 {
     "type": "project",
     "license": "MIT",
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "http://satis.comune.intranet"
-        }
-    ],
     "require": {
         "php": "^7.2",
         "comunedifirenze/bicorebundle": "^1.0",
