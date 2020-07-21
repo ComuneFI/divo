@@ -1,5 +1,6 @@
 # Divo
 [![Build Status](https://travis-ci.org/ComuneFI/divo.svg?branch=master)](https://travis-ci.org/ComuneFI/divo)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ComuneFI/divo/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ComuneFI/divo/?branch=master)
 
 > ⚠️ **WORK IN PROGRESS** ⚠️
 
