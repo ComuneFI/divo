@@ -76,6 +76,8 @@ bin/console App:LoadFixtures
 </VirtualHost>
 ```
 
+Controllare inoltre che l'utente apache (o www-data) abbia diritti di lettura/scrittura sulla cartella var all'interno del progetto https://symfony.com/doc/4.4/setup/file_permissions.html
+
 ### Configurazione:
 
 - Accedere all'applicativo da browser (es. http://divo.comune.it/)
