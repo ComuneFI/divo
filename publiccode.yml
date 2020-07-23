@@ -32,6 +32,15 @@ description:
 
       Nello sviluppo del software sono stati utilizzati i componenti grafici
       inclusi in Bootstrap Italia.
+    screenshots:
+      - >-
+        https://raw.githubusercontent.com/ComuneFI/divo/master/assets/images/cover/main-page.png
+      - >-
+        https://raw.githubusercontent.com/ComuneFI/divo/master/assets/images/cover/config-steps.png
+      - >-
+        https://raw.githubusercontent.com/ComuneFI/divo/master/assets/images/cover/log.png
+      - >-
+        https://raw.githubusercontent.com/ComuneFI/divo/master/assets/images/cover/log-details.png
     shortDescription: >-
       Applicazione di integrazione di sistemi terzi o dati con API dei servizi
       elettorali della Regione Toscana
