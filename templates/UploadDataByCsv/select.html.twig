@@ -3,7 +3,7 @@
  <select class="sez_sel form-control">
     <option value=''>Seleziona sezione</option>
         {% for rxsezioniItem in rxsezioni %}
-        <option value="{{rxsezioniItem.id}}"> Circoscrizione: {{rxsezioniItem.getCircoscrizioni.circDesc}} - Sezione: {{rxsezioniItem.Descrizione}}</option>
+        <option value="{{rxsezioniItem.id}}"> Circoscrizione: {{rxsezioniItem.getCircoscrizioni.circDesc}}  - Numero sezione: {{rxsezioniItem.Numero}} - Descrizione sezione: {{rxsezioniItem.Descrizione}}</option>
         {% endfor %}
 </select>
 {% endblock %}
