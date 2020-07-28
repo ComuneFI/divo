@@ -1,9 +1,11 @@
 
  {% block select %}
+ <div class="bootstrap-select-wrapper">
  <select class='sez_sel' class="form-control">
     <option value=''>Seleziona sezione</option>
         {% for rxsezioniItem in rxsezioni %}
         <option value="{{rxsezioniItem.id}}"> Circoscrizione: {{rxsezioniItem.getCircoscrizioni.circDesc}} - Sezione: {{rxsezioniItem.Descrizione}}</option>
         {% endfor %}
 </select>
+</div>
 {% endblock %}
