@@ -8,59 +8,89 @@ categories:
   - communications
 description:
   it:
+    documentation: 'https://github.com/ComuneFI/divo/wiki'
     features:
-      - track API communication outcomes
-      - GUI interaction with data
-      - upload and download by CSV
-    genericName: Integration
+      - interazione visuale con i dati elettorali
+      - upload e download di dati in formato CSV
+      - tracking di tutte le chiamate a servizi REST API della Regione
+      - 'configurazione di liste, candidati, candidati di preferenza'
+    genericName: Integratore di Servizi
     longDescription: >
-      Application to integrate third party with AWE/Regione Toscana API.
+      L'applicazione fornisce una facile **integrazione con i servizi esposti da
+      piattaforma AWE / Regione Toscana** per quanto riguarda gli eventi
+      elettorali. Permette di interagire con i servizi fornendo una interfaccia
+      grafica intuitiva e varie modalità di interazione (upload e download di
+      files CSV, lettura di dati provenienti da sistemi terzi ed inseriti su
+      tabelle di inbound, ETL processes in inbound, form di inserimento dati). 
 
 
-      It includes several ways to integrate a third party, for example by ETL or
-      working directly on dedicated database tables; it includes also an easy
-      way to upload and download data by CSV files.
+      Durante l'evento elettorale l'operatore viene guidato nell'avanzare delle
+      attività mediante un flusso a stati che indica quale stato si è raggiunto.
+      L'applicazione include inoltre alcuni vincoli e guidano l'operatore nella
+      corretta successione di operazioni.
 
 
-      The software provides a graphical interface and it guides the operator
-      during the election day in order to interact with collecting of votes,
-      transmission of affluences and collected votes.
-
-
-      The software has developed using Bootstrap Italia components and styles.
-    shortDescription: Application to integrate thirdy party with AWE/Regione Toscana API
+      Nello sviluppo del software sono stati utilizzati i componenti grafici
+      inclusi in Bootstrap Italia.
+    screenshots:
+      - >-
+        https://raw.githubusercontent.com/ComuneFI/divo/master/assets/images/cover/main-page.png
+      - >-
+        https://raw.githubusercontent.com/ComuneFI/divo/master/assets/images/cover/config-steps.png
+      - >-
+        https://raw.githubusercontent.com/ComuneFI/divo/master/assets/images/cover/log.png
+      - >-
+        https://raw.githubusercontent.com/ComuneFI/divo/master/assets/images/cover/log-details.png
+    shortDescription: >-
+      Applicazione di integrazione di sistemi terzi o dati con API dei servizi
+      elettorali della Regione Toscana
 developmentStatus: development
 intendedAudience:
+  countries:
+    - it
   scope:
     - government
 it:
   conforme:
-    gdpr: false
-    lineeGuidaDesign: false
-    misureMinimeSicurezza: false
-    modelloInteroperabilita: false
+    gdpr: true
+    lineeGuidaDesign: true
+    misureMinimeSicurezza: true
+    modelloInteroperabilita: true
   countryExtensionVersion: '0.2'
   piattaforme:
     anpr: false
     cie: false
     pagopa: false
     spid: false
+  riuso:
+    codiceIPA: c_d612
 legal:
-  license: OSL-3.0
+  license: AGPL-3.0-or-later
 localisation:
   availableLanguages:
     - it
   localisationReady: false
 maintenance:
   contacts:
-    - name: Riccardo Vannetti
-    - name: Sara Ciampittiello
-    - name: Andrea Manzi
-    - name: Giovanni Rossi
-  type: community
+    - affiliation: Comune di Firenze
+      email: giovanni1.rossi@comune.fi.it
+      name: Giovanni Rossi
+    - affiliation: Comune di Firenze
+      email: sara.campittiello@comune.fi.it
+      name: Sara Ciampittiello
+    - affiliation: Comune di Firenze
+      email: andrea.manzi@comune.fi.it
+      name: Andrea Manzi
+    - affiliation: Comune di Firenze
+      email: riccardo.vannetti@comune.fi.it
+      name: Riccardo Vannetti
+  type: internal
 name: Divo
 platforms:
   - linux
 releaseDate: '2020-07-07'
 softwareType: standalone/web
+softwareVersion: 1.2.10
 url: 'https://github.com/ComuneFI/divo'
+usedBy:
+  - Comune di Firenze

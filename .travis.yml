@@ -60,7 +60,7 @@ script:
   - ant
 
 after_success:
-  - rm var/cache/dbtest.sqlite
+  - wget https://scrutinizer-ci.com/ocular.phar -t 3
 
 after_failure:
 

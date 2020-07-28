@@ -1,5 +1,6 @@
 # Divo
 [![Build Status](https://travis-ci.org/ComuneFI/divo.svg?branch=master)](https://travis-ci.org/ComuneFI/divo)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ComuneFI/divo/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ComuneFI/divo/?branch=master)
 
 > ⚠️ **WORK IN PROGRESS** ⚠️
 
@@ -36,7 +37,7 @@ git clone https://github.com/ComuneFi/divo.git
 cd divo
 #Copiare il file `.env` in `.env.local` per impostare il database da utilizzare
 ##DATABASE_URL https://symfony.com/doc/current/doctrine.html#configuring-the-database
-### es. DATABASE_URL="pgsql://db_user:db_password@127.0.0.1:3306/db_name"
+### es. DATABASE_URL="pgsql://db_user:db_password@127.0.0.1:5432/db_name"
 ##BICORE_SCHEMA (nome schema nel database)
 ### es. BICORE_SCHEMA=divoschema
 #Infine per abilitare l'ambiente di produzione:
@@ -75,6 +76,8 @@ bin/console App:LoadFixtures
     </Directory>
 </VirtualHost>
 ```
+
+Controllare inoltre che l'utente apache (o www-data) abbia diritti di lettura/scrittura sulla cartella var all'interno del progetto https://symfony.com/doc/4.4/setup/file_permissions.html
 
 ### Configurazione:
 
