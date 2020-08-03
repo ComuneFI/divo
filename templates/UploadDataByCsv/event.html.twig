@@ -16,7 +16,14 @@
       <h5 class="text-center" >NUMERO SEZIONI: {{num_sez}} </h5>
           
    </div>
-</div>           
+</div>   
+
+{% if circo_id == -1 %}  
+  <div class="alert alert-danger" role="alert">
+          <p>Non è stata trovata alcune circoscrizione, assicurarsi di aver eseguito</p>
+          <p class="font-weight-bold"> SERVICE 2.2 - RECUPERA LISTE E CANDIDATI</p>
+         </div>
+{% else %}  
 <div class="row">
 
   <div class="col-12 col-lg-12">
@@ -242,7 +249,7 @@
      {% endif %}
 {% endif %}
 
-
+{% endif %}
 </div>
 </div>
 
