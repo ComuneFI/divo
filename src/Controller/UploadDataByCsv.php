@@ -65,8 +65,11 @@ class UploadDataByCsv extends DivoController {
     function index($event,ReportService $ReportService){
 
         $records= $this->divoMiner->getSectionsByEvent($event);
-      
+     
+        $circo_id=$records['circo_id'];
         $records= $records['array'];
+       
+       
         ksort($records);
         $template = "UploadDataByCsv/event.html.twig";
         $num_sez=count($records);
@@ -85,8 +88,10 @@ class UploadDataByCsv extends DivoController {
   
         $configuration_status=$this->divoMiner->getConfStatus();
  
+
         $template_par = [
             'rxsezioni' => $records,
+            'circo_id' => $circo_id,
             'num_sez' => $num_sez,
             'evento' => $detailEvent,
             'confxvotantiList' => $comm,

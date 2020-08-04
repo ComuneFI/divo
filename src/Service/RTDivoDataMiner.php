@@ -1196,23 +1196,31 @@ class RTDivoDataMiner {
         $obj=[];
         $obj['array']=[];
         $obj['listOfId']=[];
+        $array=[];
+        $listOfId=[];
+        $circo_id=-1;
         $listRxCircoscrizioniServ = $this->serviceProvider->getSeedCircoscrizioni();
    
         $circoscrizioni = $this->ORMmanager->getActiveEntityObjects( $listRxCircoscrizioniServ, [ 
             'evento_id' => $event,
         ] );
         //MULTI-CIRCOSCRIZIONE?
-        $sezioni = $this->ORMmanager->getActiveEntityObjects( $this->serviceProvider->getSeedRxSezioni() , [
-            'circo_id' => $circoscrizioni[0]->getId(),
-        ]);
-        $array=[];
-        $listOfId=[];
-        foreach($sezioni as $sezione){
-            $array[$sezione->getNumero()]=$sezione;
-            array_push($listOfId,$sezione->getId());
+        if(isset($circoscrizioni[0])){
+            $sezioni = $this->ORMmanager->getActiveEntityObjects( $this->serviceProvider->getSeedRxSezioni() , [
+                'circo_id' => $circoscrizioni[0]->getId(),
+            ]);
+            $circo_id= $circoscrizioni[0]->getId();
+            foreach($sezioni as $sezione){
+                $array[$sezione->getNumero()]=$sezione;
+                array_push($listOfId,$sezione->getId());
+            }
         }
+       
+     
+      
         $obj['listOfId']=$listOfId;
         $obj['array']=$array;
+        $obj['circo_id']=$circo_id;
         return $obj;
     }
  
