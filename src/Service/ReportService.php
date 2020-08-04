@@ -945,7 +945,7 @@ class ReportService {
          LEFT JOIN '.$this->schema.'.rxscrutiniliste as rxscrutiniliste
          ON ( rxscrutiniliste.off is not true and rxscrutiniliste.sent=0 and rxscrutiniliste.rxsezione_id=sezioni.id and rxscrutiniliste.lista_preferenze_id=listapreferenze.id)
          where eventi.id= :event_id
-         order by eventi.id, circ.id, sezioni.numero::integer, listapreferenze.id_source ::integer asc
+         order by eventi.id, circ.id, sezioni.numero::integer, lp.posizione ::integer asc
          ';
         $stmt = $conn->prepare($sql);
         $stmt->execute($parameters);
@@ -1094,7 +1094,7 @@ class ReportService {
         where 1=1
         --and exe.ente_id=:ente_id 
         and eventi.id=:evento_id
-        order by eventi.id, circ.id, sezioni.numero::integer asc ';
+        order by eventi.id, circ.id, sezioni.numero::integer,  lp.posizione ::integer,secondarioxlista.posizione :: integer asc  ';
         $stmt = $conn->prepare($sql);
         $stmt->execute($parameters);
         // returns an array of arrays (i.e. a raw data set)
