@@ -118,7 +118,11 @@ bin/console App:CreateUser "divouser" "divopass" "email@email.it" "ws_user_per_a
 cd divo
 git pull
 composer install
+bin/console App:CleanSystemTables --force
+bin/console App:LoadFixtures
 ```
+
+
 
 ### Upgrade ad una specifica release
 ```
