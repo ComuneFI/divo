@@ -113,7 +113,7 @@
 <div class="form-row">
     <div class="col-lg-12 mx-auto">
      {% set url = '/UploadDataByCsv/Event/'~ evento_id %}
-<a href="{{ url }}"><button type="button" class="btn btn-primary">Go back</button></a>
+<a href="{{ url }}"><button type="button" class="btn btn-primary">{{  'buttons.go-back'|trans({}, 'App') }}</button></a>
 </div>
 </div>
 {% endblock %}
