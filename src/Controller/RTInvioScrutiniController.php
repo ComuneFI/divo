@@ -571,7 +571,6 @@ class RTInvioScrutiniController extends DivoController
         //retrieve position of list for that candidate
         $lista->posizioneLista = $list->getPosizione($this->ORMmanager, $candidate->getId());
         $lista->nomeLista = $list->getListaDesc();
-        $present=false;
         $scrutinioLista = $this->divoMiner->getScrutiniListaCandidato($section, $list);     
          
         if (isset($scrutinioLista)) {
