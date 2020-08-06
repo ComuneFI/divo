@@ -1289,6 +1289,7 @@ class ReportService {
         $this->addTitle('Schede Bianche',$fields, $sql, 'rxvotinonvalidi.numero_schede_bianche,');
         $this->addTitle('Schede Nulle',$fields, $sql, 'rxvotinonvalidi.numero_schede_nulle,');
         $this->addTitle('Schede Contestate',$fields, $sql, 'rxvotinonvalidi.numero_schede_contestate,');
+        $this->addTitle('Voti Solo Candidato',$fields, $sql, 'rxvotinonvalidi.tot_voti_dicui_solo_candidato,');
         $this->addTitle('Timestamp',$fields, $sql, 'rxvotinonvalidi.timestamp');
        
         $sql = $sql.' from
