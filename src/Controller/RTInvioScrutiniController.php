@@ -346,27 +346,31 @@ class RTInvioScrutiniController extends DivoController
             $liste_array = array();
             $prefLists = $this->divoMiner->getListe( $candidate );
 
-            //we insert the total amount of valid votes for the main candidate
-            if ($confVotiDiCui === 0) {
-                $value = $notValids->getTotVotiDicuiSoloCandidato();
-                $scrutinioCandidatoItem->votiTotaliDiCuiCandidato = (isset($value)) ? $value : 0;
-            }
-
+           
             //for each list it extracts votes and prepare cooked payload section
             if( $acquisizioneListe == 1) {
                 foreach($prefLists as $list) {
-                    array_push($liste_array, $this->setMessageLista($section, $candidate, $list));
-                }            
+                    $list_element= $this->setMessageLista($section, $candidate, $list);
+                    if(isset($list_element)) array_push($liste_array,$list_element);
+                }         
+                  
                 $scrutinioCandidatoItem->listaScrutinioListe = $liste_array;
             }
             array_push($candidati, $scrutinioCandidatoItem);
         }
         $message->listaScrutinioCandidatiListe = $candidati;
+        //we insert the total amount of valid votes for the main candidate
+        if ($confVotiDiCui === 0) {
+            $value = $notValids->getTotVotiDicuiSoloCandidato();
+            $message->votiTotaliDiCuiCandidato = (isset($value)) ? $value : 0;
+        }
+   
 
         //apppend voti non validi
         $message->votiNonValidi = $this->setMessageVotiNonValidi($section, $notValids);
 
         $payload['scrutinioSezione'] = $message;
+    
         //CONTROL TIME OF ELABORATION $time_elapsed_secs = microtime(true) - $start;
         //return final additional payload
         return $payload;
@@ -422,12 +426,14 @@ class RTInvioScrutiniController extends DivoController
         try { 
             //append additional payload to the request
             $payload = $this->appendPayload($payload, $section, $communication);
+            $this->ORMmanager->beginTransaction();
             //include array as JSON payload and perform POST call
             $proxyResponse = $this->AppProxyREST->doPOST($serviceURL, $payload);
             $reply = $proxyResponse['json'];
             $actionLogId = $proxyResponse['key'];
+            
+            
 
-            $this->ORMmanager->beginTransaction();
             if ($reply->esito->codice == '1') {
                 //move the event to the next stage
                 $this->moveWfOn($event, StatesService::ENT_EVENT);
@@ -565,16 +571,18 @@ class RTInvioScrutiniController extends DivoController
         //retrieve position of list for that candidate
         $lista->posizioneLista = $list->getPosizione($this->ORMmanager, $candidate->getId());
         $lista->nomeLista = $list->getListaDesc();
-
-        $scrutinioLista = $this->divoMiner->getScrutiniListaCandidato($section, $list);        
+        $scrutinioLista = $this->divoMiner->getScrutiniListaCandidato($section, $list);     
+         
         if (isset($scrutinioLista)) {
+
             array_push($this->rxscrutiniliste, $scrutinioLista);
             $lista->votiTotaleLista = $scrutinioLista->getVotiTotLista(); 
         }
         //pollings not existent for lists
         else {
-            $lista->votiTotaleLista = 0;
+            $lista=null;
         }
+         
         return $lista;
     }
 

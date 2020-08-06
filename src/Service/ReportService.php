@@ -1240,7 +1240,7 @@ class ReportService {
              LEFT JOIN '.$this->schema.'.rxsezioni as sezioni
              ON (  sezioni.circo_id=circ.id)
              LEFT JOIN '.$this->schema.'.rxvotinonvalidi as rxvotinonvalidi
-             ON ( rxvotinonvalidi.off is not true and rxvotinonvalidi.sent=0 and rxvotinonvalidi.rxsezione_id=sezioni.id)
+             ON ( rxvotinonvalidi.off is not true  and rxvotinonvalidi.rxsezione_id=sezioni.id)
         
              where exe.ente_id=:ente_id and sezioni.id= :sezione_sel
              order by eventi.id, circ.id, sezioni.numero::integer asc
@@ -1289,6 +1289,7 @@ class ReportService {
         $this->addTitle('Schede Bianche',$fields, $sql, 'rxvotinonvalidi.numero_schede_bianche,');
         $this->addTitle('Schede Nulle',$fields, $sql, 'rxvotinonvalidi.numero_schede_nulle,');
         $this->addTitle('Schede Contestate',$fields, $sql, 'rxvotinonvalidi.numero_schede_contestate,');
+        $this->addTitle('Voti Solo Candidato',$fields, $sql, 'rxvotinonvalidi.tot_voti_dicui_solo_candidato,');
         $this->addTitle('Timestamp',$fields, $sql, 'rxvotinonvalidi.timestamp');
        
         $sql = $sql.' from
