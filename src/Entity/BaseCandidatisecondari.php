@@ -52,7 +52,10 @@ class BaseCandidatisecondari
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $id_target;
-
+  /**
+     * @ORM\Column(name="`indipendente`", type="integer", nullable=true)
+     */
+    protected $indipendente;
     /**
      * @ORM\Column(name="`off`", type="boolean", nullable=true)
      */
@@ -237,6 +240,30 @@ class BaseCandidatisecondari
         return $this->id_target;
     }
 
+     /**
+     * Set the value of indipendente.
+     *
+     * @param integer $indipendente
+     * @return \App\Entity\Candidatisecondari
+     */
+    public function setIndipendente($indipendente)
+    {
+        $this->indipendente = $indipendente;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of indipendente.
+     *
+     * @return integer
+     */
+    public function getIndipendente()
+    {
+        return $this->indipendente;
+    }
+
+    
     /**
      * Set the value of off.
      *
