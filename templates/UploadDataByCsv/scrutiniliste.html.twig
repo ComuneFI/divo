@@ -63,6 +63,8 @@
                             <td>{{ record.lista_desc}}</td>
                             <td>{{ record.voti_tot_lista}}<input type='text' readonly='readonly' hidden='hidden'  data-iter='{{i}}' class='inputSave'                          
                                  name='lista_preferenze_id' value='{{record.lista_preferenze_id}}'>
+                                <input type='text' readonly='readonly' hidden='hidden'  data-iter='{{i}}' class='inputSave'                          
+                                 name='lista_desc' value='{{record.lista_desc}}'>
                                  <input type='text' readonly='readonly' hidden='hidden' data-iter='{{i}}' class='inputSave'                                 
                                  name='rxsezione_id' value='{{record.rxsezione_id}}'>
                                 <input type='text' readonly='readonly' hidden='hidden' data-iter='{{i}}'  class='inputSave'                                 
@@ -76,6 +78,7 @@
                     {% endfor %}
                 </tbody>
             </table>
+
 
 
            <!-- <button class="btn btn-primary btn-icon csvbutton" data-filename="scrutiniliste_{{idsezione}}.csv">

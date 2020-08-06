@@ -1227,7 +1227,8 @@ class ReportService {
             sezioni.descrizione,
             rxvotinonvalidi.numero_schede_bianche,
             rxvotinonvalidi.numero_schede_nulle,
-            rxvotinonvalidi.numero_schede_contestate
+            rxvotinonvalidi.numero_schede_contestate,
+            rxvotinonvalidi.tot_voti_dicui_solo_candidato
             from
             '.$this->schema.'.eventi eventi
               LEFT JOIN 

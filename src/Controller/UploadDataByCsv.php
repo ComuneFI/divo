@@ -911,16 +911,8 @@ class UploadDataByCsv extends DivoController {
     }
 
 
-     /**
-     * 
-     * @Route("uploadCandidatoPrincipale/{event}/{sezione_sel}", name="uploadCandidatoPrincipale")
-     */
-    function UploadCandidatoPrincipale($event, $sezione_sel, Request $request, ReportService $ReportService){
-
-
-        $serviceUser = $this->ORMmanager->getServiceUser();
-        $records= $ReportService->reportForCSVScrutiniCandidati($serviceUser->getEnti()->getId(),$sezione_sel);
-        $records_nulli= $ReportService->reportForCSVScrutiniVotiNulli($serviceUser->getEnti()->getId(),$sezione_sel);
+    private function votinonvalidiCandPrinc(&$records,$ente_id,$sezione_sel, ReportService $ReportService){
+        $records_nulli= $ReportService->reportForCSVScrutiniVotiNulli($ente_id,$sezione_sel);
         foreach($records_nulli as $record_nulli){
             
        
@@ -951,6 +943,62 @@ class UploadDataByCsv extends DivoController {
 
         }
         array_push($records,$record_bianche,$record_contestate,$record_schedenulle );
+    }
+
+
+    private function votinonvalidiListe(&$records,$ente_id,$sezione_sel, ReportService $ReportService){
+        $records_nulli= $ReportService->reportForCSVScrutiniVotiNulli($ente_id,$sezione_sel);
+        foreach($records_nulli as $record_nulli){
+           
+       
+            $record_bianche=$record_nulli;
+            $record_contestate=$record_nulli;
+            $record_schedenulle=$record_nulli;
+            $record_totvotisolocandidato=$record_nulli;
+            $record_bianche['voti_tot_lista']=$record_nulli['numero_schede_bianche'];
+            $record_bianche['lista_preferenze_id']=0;
+            $record_bianche['posizione']=0;
+            $record_bianche['lista_desc']='__BIANCHE__';
+         
+
+            $record_contestate['voti_tot_lista']=$record_nulli['numero_schede_contestate'];
+            $record_contestate['lista_preferenze_id']=0;
+            $record_contestate['posizione']=0;
+            $record_contestate['lista_desc']='__CONTESTATE__';
+           
+
+            $record_schedenulle['voti_tot_lista']=$record_nulli['numero_schede_nulle'];
+            $record_schedenulle['lista_preferenze_id']=0;
+            $record_schedenulle['posizione']=0;
+            $record_schedenulle['lista_desc']='__NULLE__';
+
+
+
+            $record_totvotisolocandidato['voti_tot_lista']=$record_nulli['tot_voti_dicui_solo_candidato'];
+            $record_totvotisolocandidato['lista_preferenze_id']=0;
+            $record_totvotisolocandidato['posizione']=0;
+            $record_totvotisolocandidato['lista_desc']='__VALIDI_PRESIDENTE__';
+
+        
+            
+
+        }
+        array_push($records,$record_bianche,$record_contestate,$record_schedenulle,$record_totvotisolocandidato );
+    }
+
+     /**
+     * 
+     * @Route("uploadCandidatoPrincipale/{event}/{sezione_sel}", name="uploadCandidatoPrincipale")
+     */
+    function UploadCandidatoPrincipale($event, $sezione_sel, Request $request, ReportService $ReportService){
+
+
+        $serviceUser = $this->ORMmanager->getServiceUser();
+       
+        $records= $ReportService->reportForCSVScrutiniCandidati($serviceUser->getEnti()->getId(),$sezione_sel);
+        
+        $this->votinonvalidiCandPrinc($records,$serviceUser->getEnti()->getId(),$sezione_sel,$ReportService);
+    
 
         $template = "UploadDataByCsv/scrutinicandidatiprincipali.html.twig";
         $listRxScrutiniCandidati = $this->RTServicesProvider->getSeedRxScrutini();
@@ -1123,6 +1171,9 @@ class UploadDataByCsv extends DivoController {
 
         $serviceUser = $this->ORMmanager->getServiceUser();
         $records= $ReportService->reportForCSVScrutiniListe($serviceUser->getEnti()->getId(),$sezione_sel);
+        
+        $this->votinonvalidiListe($records,$serviceUser->getEnti()->getId(),$sezione_sel,$ReportService);
+     
         $template = "UploadDataByCsv/scrutiniliste.html.twig";
         $listRxScrutiniListe = $this->RTServicesProvider->getSeedRxScrutiniListe();
         $formObj=$this->formCSV($request);
