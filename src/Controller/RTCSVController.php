@@ -129,7 +129,9 @@ class RTCSVController extends DivoController
        
         $records= $this->divoMiner->getReportService()->reportForCSVScrutiniListGlobal($event, $data);
 
-        $records = $this->appendVoidVotes($event, $records, $data, 'makeListRecord');
+        $records = $this->appendVoidVotes($event, $records, $data, 'makeListRecord', [
+            'Schede Bianche','Schede Contestate','Schede Nulle', 'Voti Solo Candidato'
+        ]);
 
         foreach($records as $record) {
             $rows[] = implode(';', $record);
@@ -140,24 +142,26 @@ class RTCSVController extends DivoController
 
     private function appendVoidVotes($event, $records, &$data, $makeMethod, array $fieldsEmptyVotes = null) 
     {
-        if (!isset($keyList)) {
-            $fieldsEmptyVotes = ['Schede Bianche','Schede Contestate','Schede Nulle', 'Voti Solo Candidato'];
+        if (!isset($fieldsEmptyVotes)) {
+            $fieldsEmptyVotes = ['Schede Bianche','Schede Contestate','Schede Nulle'];
         }
     
         $data = array_merge($data, $fieldsEmptyVotes);
         $records_nulli= $this->divoMiner->getReportService()->reportForCSVScrutiniVotiNulliGlobal($event, $data);
 
-        dump($records_nulli);
-        exit;
-
         foreach($records_nulli as $record_nulli){
             $record_bianche = $this->$makeMethod('__BIANCHE__', 'numero_schede_bianche', $record_nulli, $data);
             $record_contestate = $this->$makeMethod('__CONTESTATE__', 'numero_schede_contestate', $record_nulli, $data);
             $record_schedenulle = $this->$makeMethod('__NULLE__', 'numero_schede_nulle', $record_nulli, $data);
-            $record_voti_solo_candidato = $this->$makeMethod('__VALIDI_PRESIDENTE__', 'tot_voti_dicui_solo_candidato', $record_nulli, $data);
-
             //we are appending last ones
-            array_push($records,$record_bianche,$record_contestate,$record_schedenulle, $record_voti_solo_candidato);
+            array_push($records,$record_bianche,$record_contestate,$record_schedenulle);
+
+            if(in_array('Voti Solo Candidato',$fieldsEmptyVotes)) {
+                $record_voti_solo_candidato = $this->$makeMethod('__VALIDI_PRESIDENTE__', 'tot_voti_dicui_solo_candidato', $record_nulli, $data);
+                array_push($records,$record_voti_solo_candidato);
+            }
+
+            
         }
         return $records;
     }
