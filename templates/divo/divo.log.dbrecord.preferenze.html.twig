@@ -78,7 +78,8 @@
                                                             {{ recordPreferenze.candidatisecondari.nome }}  {{ recordPreferenze.candidatisecondari.cognome }}
                                                         </td>
                                                          <td>
-                                                           {{ recordPreferenze.candidatisecondari.indipendente }}  
+                                                          {{ recordPreferenze.candidatisecondari.indipendente? 'Sì' : 'No' }}
+                                                        
                                                         </td>
                                                          <td>
                                                             {{ recordPreferenze.numeroVoti }}
