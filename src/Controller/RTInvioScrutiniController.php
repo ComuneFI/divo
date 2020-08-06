@@ -285,6 +285,7 @@ class RTInvioScrutiniController extends DivoController
                 $data[$notValid['evento_id']]->array[$notValid['sezione_id']]->schede_bianche = $notValid['schede_bianche'];
                 $data[$notValid['evento_id']]->array[$notValid['sezione_id']]->schede_nulle = $notValid['schede_nulle'];;
                 $data[$notValid['evento_id']]->array[$notValid['sezione_id']]->schede_contestate = $notValid['schede_contestate'];
+                $data[$notValid['evento_id']]->array[$notValid['sezione_id']]->validi_presidente = $notValid['validi_presidente'];
                 if($notValid['bitnew']==1) {
                     $data[$notValid['evento_id']]->array[$notValid['sezione_id']]->changed = 1;
                 }
@@ -489,7 +490,7 @@ class RTInvioScrutiniController extends DivoController
         //moved upper level
         //$result = $this->divoMiner->getVotiNonValidi($section);
 
-        if (isset($result)) {
+        if (isset($NotValids)) {
             $votiNonValidi->schedeBianche = $NotValids->getNumeroSchedeBianche();
             $votiNonValidi->schedeNulle = $NotValids->getNumeroSchedeNulle();
             $votiNonValidi->votiContestatiCoalizioni = $NotValids->getNumeroSchedeContestate();
