@@ -346,12 +346,7 @@ class RTInvioScrutiniController extends DivoController
             $liste_array = array();
             $prefLists = $this->divoMiner->getListe( $candidate );
 
-            //we insert the total amount of valid votes for the main candidate
-            if ($confVotiDiCui === 0) {
-                $value = $notValids->getTotVotiDicuiSoloCandidato();
-                $scrutinioCandidatoItem->votiTotaliDiCuiCandidato = (isset($value)) ? $value : 0;
-            }
-
+           
             //for each list it extracts votes and prepare cooked payload section
             if( $acquisizioneListe == 1) {
                 foreach($prefLists as $list) {
@@ -362,11 +357,18 @@ class RTInvioScrutiniController extends DivoController
             array_push($candidati, $scrutinioCandidatoItem);
         }
         $message->listaScrutinioCandidatiListe = $candidati;
+        //we insert the total amount of valid votes for the main candidate
+        if ($confVotiDiCui === 0) {
+            $value = $notValids->getTotVotiDicuiSoloCandidato();
+            $message->votiTotaliDiCuiCandidato = (isset($value)) ? $value : 0;
+        }
+   
 
         //apppend voti non validi
         $message->votiNonValidi = $this->setMessageVotiNonValidi($section, $notValids);
 
         $payload['scrutinioSezione'] = $message;
+    
         //CONTROL TIME OF ELABORATION $time_elapsed_secs = microtime(true) - $start;
         //return final additional payload
         return $payload;
@@ -422,12 +424,14 @@ class RTInvioScrutiniController extends DivoController
         try { 
             //append additional payload to the request
             $payload = $this->appendPayload($payload, $section, $communication);
+            $this->ORMmanager->beginTransaction();
             //include array as JSON payload and perform POST call
             $proxyResponse = $this->AppProxyREST->doPOST($serviceURL, $payload);
             $reply = $proxyResponse['json'];
             $actionLogId = $proxyResponse['key'];
+            
+            
 
-            $this->ORMmanager->beginTransaction();
             if ($reply->esito->codice == '1') {
                 //move the event to the next stage
                 $this->moveWfOn($event, StatesService::ENT_EVENT);
