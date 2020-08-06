@@ -10,7 +10,7 @@
 
 <use xlink:href="https://italia.github.io/bootstrap-italia/dist/svg/sprite.svg"></use>
 <a href="{{ path('welcome') }}">
- <button type="button" class="btn btn-primary">Go back</button>
+ <button type="button" class="btn btn-primary">{{  'buttons.go-back'|trans({}, 'App') }}</button>
 
  </a>
  
@@ -87,7 +87,7 @@
 {% include "divo/pagination.html.twig" %}
 
 <a href="{{ path('welcome') }}">
- <button type="button" class="btn btn-primary">Go back</button>
+ <button type="button" class="btn btn-primary">{{  'buttons.go-back'|trans({}, 'App') }}</button>
  </a>
 
 </div>
