@@ -331,6 +331,10 @@ class RTInvioScrutiniController extends DivoController
         //which is the list of main candidates for that circoscrizione
         $mainCandidates = $this->divoMiner->getMainCandidates($circoscrizione);
       
+
+        //fetch non valid votes for that section
+        $notValids = $this->divoMiner->getVotiNonValidi($section);
+
         //fetch lists for each main candidate
         $candidati = array();
         foreach($mainCandidates as $candidate) {
@@ -340,6 +344,13 @@ class RTInvioScrutiniController extends DivoController
 
             $liste_array = array();
             $prefLists = $this->divoMiner->getListe( $candidate );
+
+            //we insert the total amount of valid votes for the main candidate
+            if ($confVotiDiCui === 0) {
+                $value = $notValids->getTotVotiDicuiSoloCandidato();
+                $scrutinioCandidatoItem->votiTotaliDiCuiCandidato = (isset($value)) ? $value : 0;
+            }
+
             //for each list it extracts votes and prepare cooked payload section
             if( $acquisizioneListe == 1) {
                 foreach($prefLists as $list) {
@@ -352,7 +363,7 @@ class RTInvioScrutiniController extends DivoController
         $message->listaScrutinioCandidatiListe = $candidati;
 
         //apppend voti non validi
-        $message->votiNonValidi = $this->setMessageVotiNonValidi($section);
+        $message->votiNonValidi = $this->setMessageVotiNonValidi($section, $notValids);
 
         $payload['scrutinioSezione'] = $message;
         //CONTROL TIME OF ELABORATION $time_elapsed_secs = microtime(true) - $start;
@@ -472,19 +483,19 @@ class RTInvioScrutiniController extends DivoController
     /**
      * prepare cooked object for payload.sezione
      */
-    private function setMessageVotiNonValidi(Rxsezioni $section) 
+    private function setMessageVotiNonValidi(Rxsezioni $section, &$NotValids) 
     {
         $votiNonValidi = new \StdClass();
-
-        $result = $this->divoMiner->getVotiNonValidi($section);
+        //moved upper level
+        //$result = $this->divoMiner->getVotiNonValidi($section);
 
         if (isset($result)) {
-            $votiNonValidi->schedeBianche = $result->getNumeroSchedeBianche();
-            $votiNonValidi->schedeNulle = $result->getNumeroSchedeNulle();
-            $votiNonValidi->votiContestatiCoalizioni = $result->getNumeroSchedeContestate();
+            $votiNonValidi->schedeBianche = $NotValids->getNumeroSchedeBianche();
+            $votiNonValidi->schedeNulle = $NotValids->getNumeroSchedeNulle();
+            $votiNonValidi->votiContestatiCoalizioni = $NotValids->getNumeroSchedeContestate();
         }
 
-        array_push($this->rxvotinonvalidi, $result);
+        array_push($this->rxvotinonvalidi, $NotValids);
 
         return $votiNonValidi;
     }
