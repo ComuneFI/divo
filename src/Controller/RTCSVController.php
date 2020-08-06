@@ -127,14 +127,35 @@ class RTCSVController extends DivoController
         //Header of file that it will be exported
         $rows[] = implode(';', $data);
        
-        $serviceUser = $this->ORMmanager->getServiceUser(); 
         $records= $this->divoMiner->getReportService()->reportForCSVScrutiniListGlobal($event, $data);
-    
+
+        $records = $this->appendVoidVotes($event, $records, $data, 'makeListRecord');
+
         foreach($records as $record) {
             $rows[] = implode(';', $record);
         }
         
         return $rows;
+    }
+
+    private function appendVoidVotes($event, $records, &$data, $makeMethod, array $fieldsEmptyVotes = null) 
+    {
+        if (!isset($keyList)) {
+            $fieldsEmptyVotes = ['Schede Bianche','Schede Contestate','Schede Nulle'];
+        }
+    
+        $data = array_merge($data, $fieldsEmptyVotes);
+        $records_nulli= $this->divoMiner->getReportService()->reportForCSVScrutiniVotiNulliGlobal($event, $data);
+
+        foreach($records_nulli as $record_nulli){
+            $record_bianche = $this->$makeMethod('__BIANCHE__', 'numero_schede_bianche', $record_nulli, $data);
+            $record_contestate = $this->$makeMethod('__CONTESTATE__', 'numero_schede_contestate', $record_nulli, $data);
+            $record_schedenulle = $this->$makeMethod('__NULLE__', 'numero_schede_nulle', $record_nulli, $data);
+
+            //we are appending last ones
+            array_push($records,$record_bianche,$record_contestate,$record_schedenulle );
+        }
+        return $records;
     }
 
     /**
@@ -156,6 +177,22 @@ class RTCSVController extends DivoController
     }
 
     /**
+     * It transforms a not valid votes record into a main candidate record
+     */
+    private function makeListRecord(String $label, String $label_key, &$record, &$titles):array 
+    {
+        $array = array();
+        if (in_array('Evento',$titles)) { $array['evento'] = $record['evento']; } 
+        if (in_array('Circoscrizione',$titles)) { $array['circ_desc'] = $record['circ_desc']; } 
+        if (in_array('Sezione',$titles)) {  $array['numero']=$record['numero']; } 
+        if (in_array('Id Lista',$titles)) {$array['lista_preferenze_id']=0; } 
+        if (in_array('Lista Preferenze',$titles)) {  $array['lista_desc']=$label; } 
+        if (in_array('Voti',$titles)) {$array['voti_tot_lista']=$record[$label_key]; } 
+        if (in_array('Timestamp',$titles)) { $array['timestamp']=$record['timestamp']; } 
+        return $array;
+    }
+
+    /**
      * Extract Candidates from database as CSV format
      */
     private function extractCandidates($data, $event): array 
@@ -165,19 +202,9 @@ class RTCSVController extends DivoController
         $rows[] = implode(';', $data);
         
         $records= $this->divoMiner->getReportService()->reportForCSVScrutiniCandidatiGlobal($event, $data);
-        $fieldsEmptyVotes = ['Schede Bianche','Schede Contestate','Schede Nulle'];
-        $data = array_merge($data, $fieldsEmptyVotes);
-        $records_nulli= $this->divoMiner->getReportService()->reportForCSVScrutiniVotiNulliGlobal($event, $data);
 
-        foreach($records_nulli as $record_nulli){
-            $record_bianche = $this->makeCandidateRecord('__BIANCHE__', 'numero_schede_bianche', $record_nulli, $data);
-            $record_contestate = $this->makeCandidateRecord('__CONTESTATE__', 'numero_schede_contestate', $record_nulli, $data);
-            $record_schedenulle = $this->makeCandidateRecord('__NULLE__', 'numero_schede_nulle', $record_nulli, $data);
-
-            //we are appending last ones
-            array_push($records,$record_bianche,$record_contestate,$record_schedenulle );
-        }
-    
+        $records= $this->appendVoidVotes($event, $records, $data, 'makeCandidateRecord');
+ 
         foreach($records as $record) {
             $rows[] = implode(';', $record);
         }
