@@ -350,8 +350,10 @@ class RTInvioScrutiniController extends DivoController
             //for each list it extracts votes and prepare cooked payload section
             if( $acquisizioneListe == 1) {
                 foreach($prefLists as $list) {
-                    array_push($liste_array, $this->setMessageLista($section, $candidate, $list));
-                }            
+                    $list_element= $this->setMessageLista($section, $candidate, $list);
+                    if(isset($list_element)) array_push($liste_array,$list_element);
+                }         
+                  
                 $scrutinioCandidatoItem->listaScrutinioListe = $liste_array;
             }
             array_push($candidati, $scrutinioCandidatoItem);
@@ -569,16 +571,19 @@ class RTInvioScrutiniController extends DivoController
         //retrieve position of list for that candidate
         $lista->posizioneLista = $list->getPosizione($this->ORMmanager, $candidate->getId());
         $lista->nomeLista = $list->getListaDesc();
-
-        $scrutinioLista = $this->divoMiner->getScrutiniListaCandidato($section, $list);        
+        $present=false;
+        $scrutinioLista = $this->divoMiner->getScrutiniListaCandidato($section, $list);     
+         
         if (isset($scrutinioLista)) {
+
             array_push($this->rxscrutiniliste, $scrutinioLista);
             $lista->votiTotaleLista = $scrutinioLista->getVotiTotLista(); 
         }
         //pollings not existent for lists
         else {
-            $lista->votiTotaleLista = 0;
+            $lista=null;
         }
+         
         return $lista;
     }
 

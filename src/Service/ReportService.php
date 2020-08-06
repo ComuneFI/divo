@@ -1240,7 +1240,7 @@ class ReportService {
              LEFT JOIN '.$this->schema.'.rxsezioni as sezioni
              ON (  sezioni.circo_id=circ.id)
              LEFT JOIN '.$this->schema.'.rxvotinonvalidi as rxvotinonvalidi
-             ON ( rxvotinonvalidi.off is not true and rxvotinonvalidi.sent=0 and rxvotinonvalidi.rxsezione_id=sezioni.id)
+             ON ( rxvotinonvalidi.off is not true  and rxvotinonvalidi.rxsezione_id=sezioni.id)
         
              where exe.ente_id=:ente_id and sezioni.id= :sezione_sel
              order by eventi.id, circ.id, sezioni.numero::integer asc
