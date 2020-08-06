@@ -121,7 +121,7 @@ composer install
 bin/console App:CleanSystemTables --force
 bin/console App:LoadFixtures
 ```
-
+Controllare il file CHANGELOG.MD per ulteriori informazioni
 
 
 ### Upgrade ad una specifica release
