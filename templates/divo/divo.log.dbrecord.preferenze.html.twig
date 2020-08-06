@@ -54,6 +54,7 @@
                                             <td>ID Record</td>
                                             <td>Lista</td>
                                             <td>Candidato secondario</td>
+                                            <td>Indipendente</td>
                                             <td>Numero Voti</td>
                                             <td>Off</td>
                                             <td>Sent</td>
@@ -75,6 +76,9 @@
                                                         <td>
                                                             {{ records.posizionicandidatosec[recordPreferenze.listapreferenze.id][recordPreferenze.candidatisecondari.id] }} - 
                                                             {{ recordPreferenze.candidatisecondari.nome }}  {{ recordPreferenze.candidatisecondari.cognome }}
+                                                        </td>
+                                                         <td>
+                                                           {{ recordPreferenze.candidatisecondari.indipendente }}  
                                                         </td>
                                                          <td>
                                                             {{ recordPreferenze.numeroVoti }}
