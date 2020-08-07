@@ -263,6 +263,7 @@ class RTInvioScrutiniController extends DivoController
             $secItem->schede_bianche = '';
             $secItem->schede_nulle = '';
             $secItem->schede_contestate = '';
+            $secItem->validi_presidente = '';
             $secItem->num_votanti_maschi = '';
             $secItem->num_votanti_femmine = '';
             $secItem->num_votanti_totali = '';
