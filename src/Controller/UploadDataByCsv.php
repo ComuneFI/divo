@@ -909,6 +909,11 @@ class UploadDataByCsv extends DivoController {
                 $i = 0;
                 $insert = 0;
                 foreach($reduced_array as $row) {  
+                    foreach($invalidKeys as $key) {
+                        if (!isset($row[$key])) {
+                            $row[$key] = 'null';
+                        }
+                    }
                     $sqlValues['invalid'] = $sqlValues['invalid']."
                         (nextval('".$schema.".rxvotinonvalidi_id_seq'),".$sectionMap[$row['Sezione']]->getId()."
                         ,".$row['__BIANCHE__']."
