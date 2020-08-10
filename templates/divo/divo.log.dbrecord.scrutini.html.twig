@@ -123,7 +123,7 @@
                 </tbody>
             </table>
         </thead>
-   <h5>Voti Non Validi</h5>
+   <h5>Voti Non Validi e Voti Totali di cui solo Candidato</h5>
     <table class="table table-sm table-responsive-sm table-striped bitable table-hover">
         <thead>
             <tr>
@@ -132,6 +132,7 @@
                 <td>Schede Bianche</td>
                 <td>Schede Nulle</td>
                 <td>Schede Contestate</td>
+                <td>Voti Totali di cui solo Candidato</td>
                 <td>Off</td>
                 <td>Sent</td>
                 <td>Data Update</td>
@@ -154,6 +155,9 @@
                             </td>
                              <td>
                                 {{ recordScrutinioVotiNonValidi.numeroSchedeContestate }}
+                            </td>
+                                 <td>
+                                {{ recordScrutinioVotiNonValidi.totVotiDiCuiSoloCandidato }}
                             </td>
                           
                             <td>

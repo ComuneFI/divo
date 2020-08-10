@@ -180,19 +180,45 @@ class FunctionsAjaxController extends DivoController{
                        break;
                 case'Rxscrutiniliste':
                     if($record['voti_tot_lista']!=''){
-                        $rxscrutiniliste =new Rxscrutiniliste();
-                        $sezione= $this->ORMmanager->getEntityById(Rxsezioni::class,$record['rxsezione_id']);
-                        $listapreferenza= $this->ORMmanager->getEntityById(Listapreferenze::class,$record['lista_preferenze_id']);        
-                        $rxscrutiniliste->setRxsezioni($sezione);
-                        $rxscrutiniliste->setListapreferenze($listapreferenza);
-                        $rxscrutiniliste->setVotiTotLista($record['voti_tot_lista']);
-                        $rxscrutiniliste->setOff('false');
-                        $rxscrutiniliste->setSent('0');
-                        $rxscrutiniliste->setTimestamp(new \DateTime("now"));
-                        $rxscrutiniliste->setInsDate(new \DateTime("now"));
-                        $param=['rxsezione_id'=>$record['rxsezione_id'],'lista_preferenze_id'=>$record['lista_preferenze_id']];  
-                        $this->ORMmanager->setOffAllEntitiesByParameters($listRxScrutiniListe,$param);
-                        $this->ORMmanager->insertEntity($rxscrutiniliste);
+                        if($record['lista_preferenze_id']!=0){
+                            $rxscrutiniliste =new Rxscrutiniliste();
+                            $sezione= $this->ORMmanager->getEntityById(Rxsezioni::class,$record['rxsezione_id']);
+                            $listapreferenza= $this->ORMmanager->getEntityById(Listapreferenze::class,$record['lista_preferenze_id']);        
+                            $rxscrutiniliste->setRxsezioni($sezione);
+                            $rxscrutiniliste->setListapreferenze($listapreferenza);
+                            $rxscrutiniliste->setVotiTotLista($record['voti_tot_lista']);
+                            $rxscrutiniliste->setOff('false');
+                            $rxscrutiniliste->setSent('0');
+                            $rxscrutiniliste->setTimestamp(new \DateTime("now"));
+                            $rxscrutiniliste->setInsDate(new \DateTime("now"));
+                            $param=['rxsezione_id'=>$record['rxsezione_id'],'lista_preferenze_id'=>$record['lista_preferenze_id']];  
+                            $this->ORMmanager->setOffAllEntitiesByParameters($listRxScrutiniListe,$param);
+                            $this->ORMmanager->insertEntity($rxscrutiniliste);
+                        }else{
+                            if(!$voti_non_validi){
+                                $rxvotinonvalidi =new Rxvotinonvalidi();
+                                $sezione= $this->ORMmanager->getEntityById(Rxsezioni::class,$record['rxsezione_id']);     
+                                $rxvotinonvalidi->setRxsezioni($sezione);
+                                $rxvotinonvalidi->setOff('false');
+                                $rxvotinonvalidi->setSent('0');
+                                $rxvotinonvalidi->setTimestamp(new \DateTime("now"));
+                                $rxvotinonvalidi->setInsDate(new \DateTime("now"));
+                                $param=['rxsezione_id'=>$record['rxsezione_id']];  
+                                $this->ORMmanager->setOffAllEntitiesByParameters($listRxvotinonvalidi,$param);
+                                $voti_non_validi=true;
+                            
+                            }
+                            if($record['lista_desc']=='__BIANCHE__')
+                                $rxvotinonvalidi->setNumeroSchedeBianche($record['voti_tot_lista']);
+                            if($record['lista_desc']=='__NULLE__')
+                                $rxvotinonvalidi->setNumeroSchedeNulle($record['voti_tot_lista']);
+                            if($record['lista_desc']=='__CONTESTATE__')
+                                $rxvotinonvalidi->setNumeroSchedeContestate($record['voti_tot_lista']);
+                            if($record['lista_desc']=='__VALIDI_PRESIDENTE__')
+                                $rxvotinonvalidi->setTotVotiDicuiSoloCandidato($record['voti_tot_lista']);
+
+                        }
+                        
 
                     }
                  break;

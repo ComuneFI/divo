@@ -30,6 +30,7 @@ class Candidatisecondari extends BaseCandidatisecondari
         $this->setNome( $candidatoPreferenze->nome );
         $this->setSesso( $candidatoPreferenze->sesso);
         $this->setLuogoNascita( $candidatoPreferenze->luogoNascita);
+        $this->setIndipendente( $candidatoPreferenze->indipendente);
     }
 
     /**

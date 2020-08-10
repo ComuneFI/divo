@@ -465,14 +465,15 @@ class UploadDataByCsv extends DivoController {
      * @Route("CSV/{event}/liste/upload", name="CSVUploadLists")
      */
     function UploadListeAll(Request $request, ReportService $ReportService, $event){
-     
-
-        set_time_limit(300);
-    
+        set_time_limit(300); 
         $schema = getenv('BICORE_SCHEMA');
+
+        $invalidKeys = ['__BIANCHE__','__CONTESTATE__','__NULLE__', '__VALIDI_PRESIDENTE__'];
         //in order to boost the insertion of many records
+        
         $em = $this->ORMmanager->getManager(); 
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
+        //where elaboration has to landing after done
         $template = "UploadDataByCsv/liste-all.html.twig";
               
         $formObj=$this->formCSV($request);
@@ -483,80 +484,117 @@ class UploadDataByCsv extends DivoController {
          $deleted_record=[];
          $errorDelete=false;
          $batchSize = 100;
-         
 
-         try{
-
-            
+        try{
             if(count($formObj['arrayass'])>1){
                 $formObj['arrayass'] = isset($formObj['arrayass'][0]) ? $formObj['arrayass'] : array($formObj['arrayass']);
+
                 //Check validity of arrays, when first invalid found it aroses an exception
                 if (!$this->checkValidity($formObj['arrayass'], ['Id Lista','Sezione'])) {
-                  
                     throw new ValidatorException("Invalid loaded CSV file");
-                } 
-                $listSections=$this->divoMiner->getSectionsByEvent($event);
-                $sectionMap=$listSections['array'];
-                $listOfId=$listSections['listOfId'];
-                $listMap = $this->divoMiner->getMappingListsByEvent($event);
-               
-                try{
-                    $param_delete_array=['rxsezione_id'=>$listOfId];
-                    $listRxScrutiniListe = $this->RTServicesProvider->getSeedRxScrutiniListe();
-                    $this->ORMmanager->setOffAllEntitiesByParametersIN($listRxScrutiniListe,$param_delete_array);
-                    }catch (\Throwable $t) {
-                       
-                         $errorDelete=true;
-                    
-                    }
-       
-                $i = 0;
-           
-                 //preparing queries
-                 $sqlInsert = "INSERT INTO ".$schema.".rxscrutiniliste 
-                                (id, rxsezione_id, lista_preferenze_id  , off, timestamp, sent, voti_tot_lista, discr, ins_date )
-                                VALUES ";
-                $sqlValues = '';
-                $numItems = count($formObj['arrayass']);
-                $insert=0;
-                foreach($formObj['arrayass'] as $row) { 
-                     
-                    if(!isset($row['Voti']) or $row['Voti']==''){
-                        $i++;
-                        continue;
-                    }
-                    if(!isset($row['Timestamp']) or $row['Timestamp']=='')$row['Timestamp']= 'NOW()';
-                  
-                    $i++;
-                    if ($i !== $numItems and $insert>0) {
-                        $sqlValues = $sqlValues .',';
-                        $insert++;
-                    }
-                    $sqlValues = $sqlValues."
-                    (nextval('".$schema.".rxscrutiniliste_id_seq'), ".$sectionMap[$row['Sezione']]->getId().",".$listMap[$row['Id Lista']]->getId().", 
-                     false, '".$row['Timestamp']."', 0, ".$row['Voti'].",'extended', NOW())
-                    ";   
-                  
-                    if (($insert % $batchSize) === 0) {
-                        $sql = $sqlInsert.$sqlValues;
-                        $stmt = $em->getConnection()->prepare($sql);
-                        $r = $stmt->execute();
-                        if (!$r) { $output->writeln('<comment>An error occured.</comment>');} 
-                        $sqlValues = '';
-                    }
-                  
-                   
                 }
-             
-               
+
+                //Upload the map of sections (number, RxSection)
+                $resultsSection=$this->divoMiner->getSectionsByEvent($event);
+                $sectionMap=$resultsSection['array'];
+                $listOfIds=$resultsSection['listOfId'];
+                //Upload the map of candidates
+                //$listCandidates = $this->divoMiner->getAllMainCandidatesByEvent($event);
+                $listByEvent = $this->divoMiner->getMappingListsByEvent($event);
+                $listMap = array();
+                foreach($listByEvent as $list) {
+                    $listMap[$list->getIdSource()] = $list;
+                }
+
+                //read seeds
+                $RxPoolsListe = $this->RTServicesProvider->getSeedRxScrutiniListe();
+                $RxNotValidPools = $this->RTServicesProvider->getSeedRxVotiNonValidi();
+                //Invalidate already existent preferences
+                try{
+                    $this->ORMmanager->setOffAllEntitiesByParametersIN($RxPoolsListe,['rxsezione_id'=>$listOfIds]);
+                    $this->ORMmanager->setOffAllEntitiesByParametersIN($RxNotValidPools,['rxsezione_id'=>$listOfIds]);
+                }catch (\Throwable $t) {
+                    $errorDelete=true;
+                }  
+
+               //Divide into 2 different groups
+               $array_lists = array();
+               $array_votes = array();
+               $this->divideByType($formObj['arrayass'], $array_lists, $array_votes, $invalidKeys, 'Lista Preferenze', 'Voti');
+
+               //$numItems_cand = count($array_lists);
+
+                //preparing INSERT query parts
+                $sqlInsert = array();
+                $sqlInsert['pools'] = "INSERT INTO ".$schema.".rxscrutiniliste 
+                (id, rxsezione_id, lista_preferenze_id  , off, timestamp, sent, voti_tot_lista, discr, ins_date )
+                VALUES ";
+                $sqlInsert['invalid'] = "INSERT INTO ".$schema.".rxvotinonvalidi 
+                (id, rxsezione_id, numero_schede_bianche, numero_schede_nulle, numero_schede_contestate, tot_voti_dicui_solo_candidato, off, timestamp, sent, discr, ins_date )
+                VALUES ";
+                //preparing VALUES query parts
+                $sqlValues = array();
+                $sqlValues['pools'] = '';
+                $sqlValues['invalid'] = '';
+
+                //preparing controllers
+                //DEAL LISTS POOLS
+                $i = 0;
+                $insert = 0;
+
+                foreach($array_lists as $row) {  
+                    $sqlValues['pools'] = $sqlValues['pools']."
+                        (nextval('".$schema.".rxscrutiniliste_id_seq'), ".$sectionMap[$row['Sezione']]->getId().", 
+                        ".$listMap[$row['Id Lista']]->getId().", 
+                         false, '".$row['Timestamp']."', 0, ".$row['Voti'].",'extended', NOW()),";            
+                    $i++;
+                    $insert++;
+                    if (($insert % $batchSize) === 0 && $insert > 0) {
+                        $this->writeData($em, $sqlInsert['pools'], $sqlValues['pools'] );
+                        $sqlValues['pools'] = '';
+                    }
+                }
                 //are there some other records lesser than batchsize?
                 if( ($insert% $batchSize) > 0 )  {
-          
-                    $sql = $sqlInsert.$sqlValues;  
-                    //echo $sql;
-                    $stmt = $em->getConnection()->prepare($sql);
-                    $r = $stmt->execute();
-                    if (!$r) { $output->writeln('<comment>An error occured.</comment>');} 
+                    $this->writeData($em, $sqlInsert['pools'], $sqlValues['pools'] );
+                }
+                $em->flush(); //Persist objects that did not make up an entire batch
+                $em->clear();
+                $commit = true;
+         
+                //prepare data for insertion
+                //reducing records by 4
+                $reduced_array = array();
+                $this->projectIntoSections($array_votes, $reduced_array, $invalidKeys);
+
+                //DEAL NOT VALID POOLS
+                //$numItems_votes = count($reduced_array);
+                //numero_schede_bianche, numero_schede_nulle, numero_schede_contestate, voti candidato singolo
+                $i = 0;
+                $insert = 0;
+                foreach($reduced_array as $row) {  
+                    foreach($invalidKeys as $key) {
+                        if (!isset($row[$key])) {
+                            $row[$key] = 'null';
+                        }
+                    }
+                    $sqlValues['invalid'] = $sqlValues['invalid']."
+                        (nextval('".$schema.".rxvotinonvalidi_id_seq'),".$sectionMap[$row['Sezione']]->getId()."
+                        ,".$row['__BIANCHE__']."
+                        ,".$row['__NULLE__']."
+                        ,".$row['__CONTESTATE__']."
+                        ,".$row['__VALIDI_PRESIDENTE__']."
+                        ,false, '".$row['Timestamp']."', 0, 'extended', NOW()),";            
+                    $i++;
+                    $insert++;
+                    if (($insert % $batchSize) === 0 && $insert > 0) {
+                        $this->writeData($em, $sqlInsert['invalid'], $sqlValues['invalid'] );
+                        $sqlValues['invalid'] = '';
+                    }
+                }
+                //are there some other records lesser than batchsize?
+                if( ($insert% $batchSize) > 0 )  {
+                    $this->writeData($em, $sqlInsert['invalid'], $sqlValues['invalid'] );
                 }
                 $em->flush(); //Persist objects that did not make up an entire batch
                 $em->clear();
@@ -564,11 +602,13 @@ class UploadDataByCsv extends DivoController {
             } 
 
         }
+        /** */
         catch (ValidatorException $e) {
             $checkArrayValid = false;
         }
         catch (\Throwable $t) {
             $commit = false;
+            throw $t;
          }
          //end uploaded csv
         $template_par = [
@@ -705,10 +745,11 @@ class UploadDataByCsv extends DivoController {
     /**
      * Split the complete array into 2 new arrays divided by type (pools on candidates or not valid pools)
      */
-    private function divideByType(array &$completeArray, array &$poolsCandidates, array &$poolsNotValid, array &$invalidKeys) 
+    private function divideByType(array &$completeArray, array &$type1, array &$type2, array &$invalidKeys, $keyColumn, $keyValue) 
     {
+        //TODO: insert additional keys
         foreach($completeArray as $row) {
-            if( $this->isColumnUnset('Voti', $row) ) {
+            if( $this->isColumnUnset($keyValue, $row) ) {
                 //process ignores these lines
                 continue;
             }
@@ -716,12 +757,12 @@ class UploadDataByCsv extends DivoController {
                 $row['Timestamp']= 'NOW()';
             }
             //where I have to put it
-            if (in_array( $row['Cognome'], $invalidKeys )) {
-                $row[ $row['Cognome'] ] = $row['Voti'];
-                array_push($poolsNotValid, $row);
+            if (in_array( $row[$keyColumn], $invalidKeys )) {
+                $row[ $row[$keyColumn] ] = $row[$keyValue];
+                array_push($type2, $row);
             }
             else {
-                array_push($poolsCandidates, $row);
+                array_push($type1, $row);
             }
        }
     }
@@ -816,7 +857,7 @@ class UploadDataByCsv extends DivoController {
                //Divide into 2 different groups
                $array_candidates = array();
                $array_votes = array();
-               $this->divideByType($formObj['arrayass'], $array_candidates, $array_votes, $invalidKeys);
+               $this->divideByType($formObj['arrayass'], $array_candidates, $array_votes, $invalidKeys, 'Cognome', 'Voti');
 
                $numItems_cand = count($array_candidates);
           
@@ -868,6 +909,11 @@ class UploadDataByCsv extends DivoController {
                 $i = 0;
                 $insert = 0;
                 foreach($reduced_array as $row) {  
+                    foreach($invalidKeys as $key) {
+                        if (!isset($row[$key])) {
+                            $row[$key] = 'null';
+                        }
+                    }
                     $sqlValues['invalid'] = $sqlValues['invalid']."
                         (nextval('".$schema.".rxvotinonvalidi_id_seq'),".$sectionMap[$row['Sezione']]->getId()."
                         ,".$row['__BIANCHE__']."
@@ -911,16 +957,8 @@ class UploadDataByCsv extends DivoController {
     }
 
 
-     /**
-     * 
-     * @Route("uploadCandidatoPrincipale/{event}/{sezione_sel}", name="uploadCandidatoPrincipale")
-     */
-    function UploadCandidatoPrincipale($event, $sezione_sel, Request $request, ReportService $ReportService){
-
-
-        $serviceUser = $this->ORMmanager->getServiceUser();
-        $records= $ReportService->reportForCSVScrutiniCandidati($serviceUser->getEnti()->getId(),$sezione_sel);
-        $records_nulli= $ReportService->reportForCSVScrutiniVotiNulli($serviceUser->getEnti()->getId(),$sezione_sel);
+    private function votinonvalidiCandPrinc(&$records,$ente_id,$sezione_sel, ReportService $ReportService){
+        $records_nulli= $ReportService->reportForCSVScrutiniVotiNulli($ente_id,$sezione_sel);
         foreach($records_nulli as $record_nulli){
             
        
@@ -951,6 +989,62 @@ class UploadDataByCsv extends DivoController {
 
         }
         array_push($records,$record_bianche,$record_contestate,$record_schedenulle );
+    }
+
+
+    private function votinonvalidiListe(&$records,$ente_id,$sezione_sel, ReportService $ReportService){
+        $records_nulli= $ReportService->reportForCSVScrutiniVotiNulli($ente_id,$sezione_sel);
+        foreach($records_nulli as $record_nulli){
+           
+       
+            $record_bianche=$record_nulli;
+            $record_contestate=$record_nulli;
+            $record_schedenulle=$record_nulli;
+            $record_totvotisolocandidato=$record_nulli;
+            $record_bianche['voti_tot_lista']=$record_nulli['numero_schede_bianche'];
+            $record_bianche['lista_preferenze_id']=0;
+            $record_bianche['posizione']=0;
+            $record_bianche['lista_desc']='__BIANCHE__';
+         
+
+            $record_contestate['voti_tot_lista']=$record_nulli['numero_schede_contestate'];
+            $record_contestate['lista_preferenze_id']=0;
+            $record_contestate['posizione']=0;
+            $record_contestate['lista_desc']='__CONTESTATE__';
+           
+
+            $record_schedenulle['voti_tot_lista']=$record_nulli['numero_schede_nulle'];
+            $record_schedenulle['lista_preferenze_id']=0;
+            $record_schedenulle['posizione']=0;
+            $record_schedenulle['lista_desc']='__NULLE__';
+
+
+
+            $record_totvotisolocandidato['voti_tot_lista']=$record_nulli['tot_voti_dicui_solo_candidato'];
+            $record_totvotisolocandidato['lista_preferenze_id']=0;
+            $record_totvotisolocandidato['posizione']=0;
+            $record_totvotisolocandidato['lista_desc']='__VALIDI_PRESIDENTE__';
+
+        
+            
+
+        }
+        array_push($records,$record_bianche,$record_contestate,$record_schedenulle,$record_totvotisolocandidato );
+    }
+
+     /**
+     * 
+     * @Route("uploadCandidatoPrincipale/{event}/{sezione_sel}", name="uploadCandidatoPrincipale")
+     */
+    function UploadCandidatoPrincipale($event, $sezione_sel, Request $request, ReportService $ReportService){
+
+
+        $serviceUser = $this->ORMmanager->getServiceUser();
+       
+        $records= $ReportService->reportForCSVScrutiniCandidati($serviceUser->getEnti()->getId(),$sezione_sel);
+        
+        $this->votinonvalidiCandPrinc($records,$serviceUser->getEnti()->getId(),$sezione_sel,$ReportService);
+    
 
         $template = "UploadDataByCsv/scrutinicandidatiprincipali.html.twig";
         $listRxScrutiniCandidati = $this->RTServicesProvider->getSeedRxScrutini();
@@ -1123,6 +1217,9 @@ class UploadDataByCsv extends DivoController {
 
         $serviceUser = $this->ORMmanager->getServiceUser();
         $records= $ReportService->reportForCSVScrutiniListe($serviceUser->getEnti()->getId(),$sezione_sel);
+        
+        $this->votinonvalidiListe($records,$serviceUser->getEnti()->getId(),$sezione_sel,$ReportService);
+     
         $template = "UploadDataByCsv/scrutiniliste.html.twig";
         $listRxScrutiniListe = $this->RTServicesProvider->getSeedRxScrutiniListe();
         $formObj=$this->formCSV($request);

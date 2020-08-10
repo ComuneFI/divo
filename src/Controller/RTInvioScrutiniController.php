@@ -263,6 +263,7 @@ class RTInvioScrutiniController extends DivoController
             $secItem->schede_bianche = '';
             $secItem->schede_nulle = '';
             $secItem->schede_contestate = '';
+            $secItem->validi_presidente = '';
             $secItem->num_votanti_maschi = '';
             $secItem->num_votanti_femmine = '';
             $secItem->num_votanti_totali = '';
@@ -285,6 +286,7 @@ class RTInvioScrutiniController extends DivoController
                 $data[$notValid['evento_id']]->array[$notValid['sezione_id']]->schede_bianche = $notValid['schede_bianche'];
                 $data[$notValid['evento_id']]->array[$notValid['sezione_id']]->schede_nulle = $notValid['schede_nulle'];;
                 $data[$notValid['evento_id']]->array[$notValid['sezione_id']]->schede_contestate = $notValid['schede_contestate'];
+                $data[$notValid['evento_id']]->array[$notValid['sezione_id']]->validi_presidente = $notValid['validi_presidente'];
                 if($notValid['bitnew']==1) {
                     $data[$notValid['evento_id']]->array[$notValid['sezione_id']]->changed = 1;
                 }
@@ -331,6 +333,10 @@ class RTInvioScrutiniController extends DivoController
         //which is the list of main candidates for that circoscrizione
         $mainCandidates = $this->divoMiner->getMainCandidates($circoscrizione);
       
+
+        //fetch non valid votes for that section
+        $notValids = $this->divoMiner->getVotiNonValidi($section);
+
         //fetch lists for each main candidate
         $candidati = array();
         foreach($mainCandidates as $candidate) {
@@ -340,21 +346,32 @@ class RTInvioScrutiniController extends DivoController
 
             $liste_array = array();
             $prefLists = $this->divoMiner->getListe( $candidate );
+
+           
             //for each list it extracts votes and prepare cooked payload section
             if( $acquisizioneListe == 1) {
                 foreach($prefLists as $list) {
-                    array_push($liste_array, $this->setMessageLista($section, $candidate, $list));
-                }            
+                    $list_element= $this->setMessageLista($section, $candidate, $list);
+                    if(isset($list_element)) array_push($liste_array,$list_element);
+                }         
+                  
                 $scrutinioCandidatoItem->listaScrutinioListe = $liste_array;
             }
             array_push($candidati, $scrutinioCandidatoItem);
         }
         $message->listaScrutinioCandidatiListe = $candidati;
+        //we insert the total amount of valid votes for the main candidate
+        if ($confVotiDiCui === 0) {
+            $value = $notValids->getTotVotiDicuiSoloCandidato();
+            $message->votiTotaliDiCuiCandidato = (isset($value)) ? $value : 0;
+        }
+   
 
         //apppend voti non validi
-        $message->votiNonValidi = $this->setMessageVotiNonValidi($section);
+        $message->votiNonValidi = $this->setMessageVotiNonValidi($section, $notValids);
 
         $payload['scrutinioSezione'] = $message;
+    
         //CONTROL TIME OF ELABORATION $time_elapsed_secs = microtime(true) - $start;
         //return final additional payload
         return $payload;
@@ -410,12 +427,14 @@ class RTInvioScrutiniController extends DivoController
         try { 
             //append additional payload to the request
             $payload = $this->appendPayload($payload, $section, $communication);
+            $this->ORMmanager->beginTransaction();
             //include array as JSON payload and perform POST call
             $proxyResponse = $this->AppProxyREST->doPOST($serviceURL, $payload);
             $reply = $proxyResponse['json'];
             $actionLogId = $proxyResponse['key'];
+            
+            
 
-            $this->ORMmanager->beginTransaction();
             if ($reply->esito->codice == '1') {
                 //move the event to the next stage
                 $this->moveWfOn($event, StatesService::ENT_EVENT);
@@ -472,19 +491,19 @@ class RTInvioScrutiniController extends DivoController
     /**
      * prepare cooked object for payload.sezione
      */
-    private function setMessageVotiNonValidi(Rxsezioni $section) 
+    private function setMessageVotiNonValidi(Rxsezioni $section, &$NotValids) 
     {
         $votiNonValidi = new \StdClass();
+        //moved upper level
+        //$result = $this->divoMiner->getVotiNonValidi($section);
 
-        $result = $this->divoMiner->getVotiNonValidi($section);
-
-        if (isset($result)) {
-            $votiNonValidi->schedeBianche = $result->getNumeroSchedeBianche();
-            $votiNonValidi->schedeNulle = $result->getNumeroSchedeNulle();
-            $votiNonValidi->votiContestatiCoalizioni = $result->getNumeroSchedeContestate();
+        if (isset($NotValids)) {
+            $votiNonValidi->schedeBianche = $NotValids->getNumeroSchedeBianche();
+            $votiNonValidi->schedeNulle = $NotValids->getNumeroSchedeNulle();
+            $votiNonValidi->votiContestatiCoalizioni = $NotValids->getNumeroSchedeContestate();
         }
 
-        array_push($this->rxvotinonvalidi, $result);
+        array_push($this->rxvotinonvalidi, $NotValids);
 
         return $votiNonValidi;
     }
@@ -553,16 +572,18 @@ class RTInvioScrutiniController extends DivoController
         //retrieve position of list for that candidate
         $lista->posizioneLista = $list->getPosizione($this->ORMmanager, $candidate->getId());
         $lista->nomeLista = $list->getListaDesc();
-
-        $scrutinioLista = $this->divoMiner->getScrutiniListaCandidato($section, $list);        
+        $scrutinioLista = $this->divoMiner->getScrutiniListaCandidato($section, $list);     
+         
         if (isset($scrutinioLista)) {
+
             array_push($this->rxscrutiniliste, $scrutinioLista);
             $lista->votiTotaleLista = $scrutinioLista->getVotiTotLista(); 
         }
         //pollings not existent for lists
         else {
-            $lista->votiTotaleLista = 0;
+            $lista=null;
         }
+         
         return $lista;
     }
 

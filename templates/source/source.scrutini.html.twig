@@ -168,7 +168,7 @@
                                                                         </tr>
                                                                     {% endfor %}      
                                                                         <tr>                                                                      
-                                                                        <td>VOTI NON VALIDI</td>
+                                                                        <td>RIEPILOGO VOTI</td>
                                                                         <td></td><td></td>
                                                                         </tr>                                                                          
                                                                         <tr class="{% if struct.changed != 0 %} record_nuovo table-primary {% else %} table-secondary {% endif %}">                                                                      
@@ -196,9 +196,16 @@
                                                                             {% set sum = sum + struct.schede_nulle %}
                                                                          {% endif %}
                                                                         </tr>
+                                                                        <tr class="{% if struct.changed != 0 %} record_nuovo table-primary {% else %} table-secondary {% endif %}">                                                                                                                                                                                                                
+                                                                        <td>Voti Totali di cui solo candidato</td>
+                                                                        <td></td><td>{{struct.validi_presidente}}</td>
+                                                                        {% if struct.validi_presidente matches '/^\\d+$/' %}
+                    
+                                                                         {% endif %}
+                                                                        </tr>
                                                                         
                                                                         <tr class="text-sm">
-                                                                        <td>Totale voti (validi e non validi)</td>
+                                                                        <td>Voti Totali Complessivi</td>
                                                                         <td></td><td>{{ sum  }}</td>
                                                                         </tr>
 

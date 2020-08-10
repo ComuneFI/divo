@@ -409,6 +409,7 @@ class RTInvioPreferenzeController extends DivoController
         $candObj->nome = $candidatoSecondario->getNome();
         $candObj->luogoNascita = $candidatoSecondario->getLuogoNascita();
         $candObj->sesso = $candidatoSecondario->getSesso();
+        $candObj->indipendente = $candidatoSecondario->getIndipendente();
         $candObj->posizione = $candidatoSecondario->getPosizione($this->ORMmanager, $this->RTServicesProvider, $lista->getId() );
         $candObj->votiPreferenzaCandidato = $preferenza->getNumeroVoti();
         return $candObj;
