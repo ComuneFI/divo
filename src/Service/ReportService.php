@@ -292,7 +292,7 @@ class ReportService {
                 numero_schede_bianche as schede_bianche,
                 numero_schede_contestate as schede_contestate,
                 numero_schede_nulle as schede_nulle,
-                coalesce(tot_voti_dicui_solo_candidato,0) as validi_presidente,
+                tot_voti_dicui_solo_candidato as validi_presidente,
                 circo_id as circo_id,
                 evento_id as evento_id,
                 CASE  
