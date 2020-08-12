@@ -11,7 +11,7 @@ use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use App\Entity\Candidatiprincipali;
-use App\Entity\ListaPreferenze;
+use App\Entity\Listapreferenze;
 use App\Entity\Rxsezioni;
 use App\Entity\Rxvotanti;
 use App\Entity\Rxscrutinicandidati;
