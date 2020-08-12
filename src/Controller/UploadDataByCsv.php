@@ -11,6 +11,7 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Validator\Exception\ValidatorException;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use App\Entity\FileCSV;
 use App\Entity\Rxcandidati;
 use App\Entity\Rxliste;
