@@ -549,8 +549,8 @@ class RTInvioScrutiniController extends DivoController
 
         //Look for final votes
         $scrutinio = $this->divoMiner->getScrutiniCandidato($section, $candidate);
-        array_push($this->rxscrutini, $scrutinio);
         if (isset($scrutinio)) {
+            array_push($this->rxscrutini, $scrutinio);
             $candObj->votiTotaleCandidato = $scrutinio->getVotiTotaleCandidato();
             //value of voti di cui solo candidato
             if ($confVotiDiCui == 1) {
