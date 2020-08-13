@@ -2,3 +2,24 @@ home:
     benvenuto: Benvenuto
 buttons:
     go-back: Indietro
+    data-download: Scarica dati
+    data-upload: Carica dati
+    action-exec: Esegui
+    action-save-selected: Salva selezionati
+download:
+    event:
+        select: Scegli l'evento per il quale scaricare i dati
+        alert: Attenzione non risultano Eventi associati all'Ente
+    csv:
+        main-cand: Scarica CSV candidato principale
+        secondary-cand: Scarica CSV candidati secondari
+        list: Scarica CSV dettaglio liste
+upload:
+    error:
+        off-fail: Impossibile mettere ad off i dati precedenti
+    warning:
+        format: Formato csv non valido, controllare il separatore che deve essere necessariamente il carattere -> ; e l'id sezione deve essere valido
+    success:
+        updated: Dati aggiornati
+    affluences:
+        intro: Scaricare il file e compilare i valori da caricare (Vengono mostrati solo i record con off a false e sent a 0)

@@ -11,7 +11,7 @@
 <div class="row">
   <div class="col-12 col-lg-12">
   <p>
-  <h5> Scegli l'evento per il quale caricare i dati:</h5> 
+  <h5> {{  'download.event.select'|trans({}, 'App') }}</h5> 
   </p>
   </div>
 </div>
@@ -34,7 +34,7 @@
           <p class="card-text"></p>
     
           <a class="read-more showSpinner" href="{{'downCSVxSource/'~  evento.eventi.id}}">
-            <span class="text">Carica dati</span>
+            <span class="text">{{  'buttons.data-download'|trans({}, 'App') }}</span>
             <svg class="icon">
               <use xlink:href="#it-arrow-right"></use>
             </svg>
@@ -52,7 +52,7 @@
 <div class="row">
   <div class="col-12 col-lg-12">
   <p>
-  <h5>Attenzione non risultano Eventi associati all'Ente</h5> 
+  <h5>{{  'download.event.alert'|trans({}, 'App') }}</h5> 
   </p>
   </div>
 </div>

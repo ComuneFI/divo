@@ -242,7 +242,7 @@ class RTCSVController extends DivoController
             //look for 1 Rx candidate matching with divo candidate
             $rxList = new Rxliste();
             if ( $divoList->getIdSource() != null ) {
-                $rxList = $this->ORMmanager->getOneEntity(Rxliste::class, [ 
+                $rxList = $this->ORMmanager->popActiveEntity( $this->RTServicesProvider->getSeedRxListe(), [ 
                     'id_source' => $divoList->getIdSource(),
                     'ente_id' => $serviceUser->getEnti()->getId(), ]);
             }
@@ -287,7 +287,7 @@ class RTCSVController extends DivoController
             //look for 1 Rx candidate matching with divo candidate
             $rxCandidate = new Rxcandidati();
             if ( $candidate->getIdSource() != null ) {
-                $rxCandidate = $this->ORMmanager->getOneEntity(Rxcandidati::class, [ 
+                $rxCandidate = $this->ORMmanager->popActiveEntity( $this->RTServicesProvider->getSeedRxCandidati(), [ 
                     'id_source' => $candidate->getIdSource(),
                     'ente_id' => $serviceUser->getEnti()->getId(), ]);
             }
@@ -336,7 +336,7 @@ class RTCSVController extends DivoController
             //look for 1 Rx candidate matching with divo candidate
             $rxCandidate = new Rxcandidatisecondari();
             if ( $candidate->getIdSource() != null ) {
-                $rxCandidate = $this->ORMmanager->getOneEntity(Rxcandidatisecondari::class, [ 
+                $rxCandidate = $this->ORMmanager->popActiveEntity( $this->RTServicesProvider->getSeedRxCandidatisecondari(), [ 
                     'id_source' => $candidate->getIdSource(),
                     'ente_id' => $serviceUser->getEnti()->getId(), ]);
             }

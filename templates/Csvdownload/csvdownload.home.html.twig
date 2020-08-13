@@ -11,12 +11,12 @@
     <div class="card-wrapper card-space">
       <div class="card card-bg">
         <div class="card-body">
-          <h5 class="card-title">Scarica CSV candidato principale</h5>
+          <h5 class="card-title">{{  'download.csv.main-cand'|trans({}, 'App') }}</h5>
           <p class="card-text"></p>
         <div class="it-card-footer">
 
           <a href="{{'/service/downCSVCandPrincxSource/'~  evento}}">
-            <button type="button" class="btn btn-primary">Esegui</button>
+            <button type="button" class="btn btn-primary">{{  'buttons.action-exec'|trans({}, 'App') }}</button>
           </a>
         
         </div>
@@ -33,12 +33,12 @@
     <div class="card-wrapper card-space">
       <div class="card card-bg">
         <div class="card-body">
-          <h5 class="card-title">Scarica CSV dettaglio liste</h5>
+          <h5 class="card-title">{{  'download.csv.list'|trans({}, 'App') }}</h5>
           <p class="card-text"></p>
           <div class="it-card-footer">
            <a href="{{'/service/downCSVCandSecxSource/'~  evento}}">
     
-            <button type="button" class="btn btn-primary">Esegui</button>
+            <button type="button" class="btn btn-primary">{{  'buttons.action-exec'|trans({}, 'App') }}</button>
           </a>
          
           </div>
@@ -49,7 +49,7 @@
   </div>
 </div>
 <a href="{{ path('welcome') }}">
- <button type="button" class="btn btn-primary">Go home</button>
+ <button type="button" class="btn btn-primary">{{  'buttons.go-back'|trans({}, 'App') }}</button>
  </a>
 </div>
 
