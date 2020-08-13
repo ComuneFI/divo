@@ -614,12 +614,18 @@ class RTDivoDataMiner {
     /**
      * Read not valid votes for the given section item.
      * It expects to find only 1 record.
+     * If exists read active record, otherwise read already sent entity
      */
     public function getVotiNonValidi($section) 
     {
-        $result = $this->ORMmanager->getOneEntity( RTServicesProvider::ENT_RX_VOTI_NON_VALIDI, [
+        $result = $this->ORMmanager->popActiveEntity( $this->serviceProvider->getSeedRxVotiNonValidi() , [
             'rxsezione_id' => $section->getId(),
         ]);
+        if (!isset($result)) {
+            $result = $this->ORMmanager->popSentEntity( $this->serviceProvider->getSeedRxVotiNonValidi() , [
+                'rxsezione_id' => $section->getId(),
+            ]);
+        }
         
         return $result;
     }
