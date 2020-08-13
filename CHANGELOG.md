@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.3.7] - 2020-08-12
+### Fix invio numeroTotaleVotiDiCuiSoloCandidato
+- In alcuni casi i voti totali di cui solo candidato potevano non essere inclusi nel payload della comunicazione causando l'errore "I voti validi non corrispondono ai voti alle liste + voti solo candidato". Con il fix incluso nella versione 1.3.7, viene corretta questa anomalia
+
 ## [1.2.16] - 2020-08-06
 ### Fix numeroTotaleVotiDiCuiSoloCandidato
 - In caso di aggiornamento della versione 1.2.15
