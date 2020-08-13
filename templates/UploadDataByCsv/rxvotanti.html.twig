@@ -12,21 +12,21 @@
         <div class="col-lg-12 mx-auto">
             {% if (errorDelete) %}
                 <div class="alert alert-danger" role="alert">
-                    Impossibile mettere ad off i dati precedenti
+                    {{  'upload.error'|trans({}, 'App') }}
                 </div>
             {% endif %}
             {% if ( not checkArrayValid) %}
                 <div class="alert alert-danger" role="alert">
-                    Formato csv non valido, controllare il separatore che deve essere necessariamente il carattere -> ; e l'id sezione deve essere valido
+                    {{  'upload.warning'|trans({}, 'App') }}
                 </div>
             {% endif %}
 
             {% if ( commit ) %}
                 <div class="alert alert-success" role="success">
-                    Dati aggiornati
+                    {{  'upload.success'|trans({}, 'App') }}
                 </div>
             {% endif %}
-            Scaricare il file e compilare i valori da caricare (Vengono mostrati solo i record con off a false e sent a 0)
+            {{  'upload.affluences.intro'|trans({}, 'App') }}
             {% set idComunicazione='' %}
             <table class="table table-sm table-responsive-sm table-striped bitable table-hover">
                 <thead>
@@ -99,7 +99,7 @@
                             <use xlink:href="#it-arrow-up"></use>
                         </svg>
                     </span>
-                    <span>Salva selezionati</span>
+                    <span>{{  'buttons.action-save-selected'|trans({}, 'App') }}</span>
                 </button>
             </br>
         </br>
