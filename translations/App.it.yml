@@ -2,3 +2,14 @@ home:
     benvenuto: Benvenuto
 buttons:
     go-back: Indietro
+    data-download: Scarica dati
+    data-upload: Carica dati
+    action-exec: Esegui
+download:
+    event:
+        select: Scegli l'evento per il quale scaricare i dati
+        alert: Attenzione non risultano Eventi associati all'Ente
+    csv:
+        main-cand: Scarica CSV candidato principale
+        secondary-cand: Scarica CSV candidati secondari
+        list: Scarica CSV dettaglio liste

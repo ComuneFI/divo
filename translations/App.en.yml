@@ -2,3 +2,14 @@ home:
     benvenuto: Welcome
 buttons:
     go-back: Back
+    data-download: Download data
+    data-upload: Upload data
+    action-exec: Exec
+download:
+    event:
+        select: Select the event
+        alert: Attention! It seems that "Ente" doesn't have associated events
+    csv:
+        main-cand: Download CSV premier candidates
+        secondary-cand: Download CSV candidates of preference
+        list: Download CSV lists of preference
