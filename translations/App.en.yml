@@ -5,6 +5,7 @@ buttons:
     data-download: Download data
     data-upload: Upload data
     action-exec: Exec
+    action-save-selected: Save selected
 download:
     event:
         select: Select the event
@@ -13,3 +14,12 @@ download:
         main-cand: Download CSV premier candidates
         secondary-cand: Download CSV candidates of preference
         list: Download CSV lists of preference
+upload:
+    error:
+        off-fail: Impossible to disable previous data
+    warning:
+        format: Invalid csv format. Please, check the separator character that must be -> ; and the section id must be valid
+    success:
+        updated: Success. Updated data
+    affluences:
+        intro: Download the file and fill it with values to upload (the page displayes only records having off equal to false and sent equal to 0)
