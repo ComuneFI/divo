@@ -471,15 +471,4 @@ class ORMManager {
         return $entities;
     }
 
-    /**
-     * [DEPRECATED] Retrieve entities by repository and passing [] parameters to filter results
-     * @deprecated from introduction of Off/Sent flags /divo/issues/30 use instead: popActiveEntity(RTSentableInterface $entityInterface, array $parameters = null, array $ordering = null)
-     */
-    function getOneEntity($classType, $parameters ) 
-    {
-        $entityManager = $this->manager;
-        $entity = $entityManager->getRepository($classType)->findOneBy( $parameters );
-        return $entity;
-    }
-
 }
