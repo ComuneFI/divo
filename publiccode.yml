@@ -90,7 +90,7 @@ platforms:
   - linux
 releaseDate: '2020-07-07'
 softwareType: standalone/web
-softwareVersion: 1.3.6
+softwareVersion: 1.3.7
 url: 'https://github.com/ComuneFI/divo'
 usedBy:
   - Comune di Firenze
