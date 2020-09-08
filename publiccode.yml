@@ -93,4 +93,6 @@ softwareType: standalone/web
 softwareVersion: 1.3.9
 url: 'https://github.com/ComuneFI/divo'
 usedBy:
+  - Comune di Carrara
   - Comune di Firenze
+  - Comune di Pistoia
