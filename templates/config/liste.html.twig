@@ -98,7 +98,8 @@
                                                                                     {% set style ="" %}
                                                                                     {% set selected = '' %}
                                                                                     {% set class ="" %}
-                                                                                    {% set verifiedDescription = ( lista.listaDesc| upper == itemList.listaDesc ) %}
+                                                                              
+                                                                                    {% set verifiedDescription = ( lista.listaDesc|upper == itemList.listaDesc|upper ) %}
 
                                                                                     {% if (dataupload[lista.id] is defined and dataupload[lista.id] == itemList.idSource) %}
                                                                                         {% set selected = 'selected' %}
