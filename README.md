@@ -110,7 +110,7 @@ bin/console App:CreateUser "divouser" "divopass" "email@email.it" "ws_user_per_a
 ### Configurazione data evento:
 - Accedere all'applicativo da browser (es. http://divo.comune.it/)
 - Inserire username e password forniti in fase di installazione (es. admin - password)
-- Accedere alla rotta Enti (es. http://divo.comune.it/Utenti)
+- Accedere alla rotta Utenti (es. http://divo.comune.it/Utenti)
 - Modificare la riga (con doppio click sull'utente) e impostare la data evento (per i test 31/05/2015, per produzione sarà la data dell'elezione)
 
 ### Upgrade
