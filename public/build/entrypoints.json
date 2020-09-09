@@ -1,5 +1,14 @@
 {
   "entrypoints": {
+    "login": {
+      "js": [
+        "/build/runtime.d94b3b43.js",
+        "/build/login.a9edb89f.js"
+      ],
+      "css": [
+        "/build/login.5417b838.css"
+      ]
+    },
     "app": {
       "js": [
         "/build/runtime.d94b3b43.js",
@@ -7,14 +16,6 @@
       ],
       "css": [
         "/build/app.6dc18bfc.css"
-      ]
-    },
-    "uploadDataCSV": {
-      "js": [
-        "/build/runtime.d94b3b43.js",
-        "/build/0.cf60d32b.js",
-        "/build/1.93d3a47e.js",
-        "/build/uploadDataCSV.aebe87ba.js"
       ]
     },
     "configsave": {
@@ -67,13 +68,12 @@
         "/build/bicore.0bccd34a.css"
       ]
     },
-    "login": {
+    "uploadDataCSV": {
       "js": [
         "/build/runtime.d94b3b43.js",
-        "/build/login.a9edb89f.js"
-      ],
-      "css": [
-        "/build/login.5417b838.css"
+        "/build/0.cf60d32b.js",
+        "/build/1.93d3a47e.js",
+        "/build/uploadDataCSV.aebe87ba.js"
       ]
     },
     "bitabella": {
@@ -81,7 +81,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.93d3a47e.js",
-        "/build/bitabella.10b6f51e.js"
+        "/build/bitabella.0629dbf4.js"
       ],
       "css": [
         "/build/bitabella.c23c4a13.css"
@@ -95,7 +95,7 @@
         "/build/bidemo.20e8bf13.js"
       ],
       "css": [
-        "/build/bidemo.c23c4a13.css"
+        "/build/bidemo.3c00756c.css"
       ]
     },
     "adminpanel": {
@@ -103,7 +103,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/2.5c1a8b24.js",
-        "/build/adminpanel.0f164de1.js"
+        "/build/adminpanel.17b06699.js"
       ],
       "css": [
         "/build/adminpanel.afd1c739.css"
