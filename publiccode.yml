@@ -90,9 +90,10 @@ platforms:
   - linux
 releaseDate: '2020-07-07'
 softwareType: standalone/web
-softwareVersion: 1.4.1
+softwareVersion: 1.4.3
 url: 'https://github.com/ComuneFI/divo'
 usedBy:
+  - Comune di Arezzo
   - Comune di Carrara
   - Comune di Firenze
   - Comune di Pistoia
