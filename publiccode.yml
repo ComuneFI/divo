@@ -6,6 +6,61 @@ publiccodeYmlVersion: '0.2'
 categories:
   - workflow-management
   - communications
+developmentStatus: stable
+name: Divo
+platforms:
+  - linux
+releaseDate: '2020-09-22'
+softwareType: standalone/web
+softwareVersion: 1.4.4
+url: 'https://github.com/ComuneFI/divo'
+usedBy:
+  - Comune di Arezzo
+  - Comune di Carrara
+  - Comune di Castelfranco di Sotto
+  - Comune di Firenze
+  - Comune di Pistoia
+  - Comune di San Giuliano Terme
+maintenance:
+  contacts:
+    - affiliation: Comune di Firenze
+      email: giovanni1.rossi@comune.fi.it
+      name: Giovanni Rossi
+    - affiliation: Comune di Firenze
+      email: sara.campittiello@comune.fi.it
+      name: Sara Ciampittiello
+    - affiliation: Comune di Firenze
+      email: andrea.manzi@comune.fi.it
+      name: Andrea Manzi
+    - affiliation: Comune di Firenze
+      email: riccardo.vannetti@comune.fi.it
+      name: Riccardo Vannetti
+  type: internal
+legal:
+  license: AGPL-3.0-or-later
+intendedAudience:
+  countries:
+    - it
+  scope:
+    - government
+localisation:
+  availableLanguages:
+    - it
+  localisationReady: false
+it:
+  conforme:
+    gdpr: true
+    lineeGuidaDesign: true
+    misureMinimeSicurezza: true
+    modelloInteroperabilita: true
+  countryExtensionVersion: '0.2'
+  piattaforme:
+    anpr: false
+    cie: false
+    pagopa: false
+    spid: false
+  riuso:
+    codiceIPA: c_d612
 description:
   it:
     documentation: 'https://github.com/ComuneFI/divo/wiki'
@@ -44,58 +99,3 @@ description:
     shortDescription: >-
       Applicazione di integrazione di sistemi terzi o dati con API dei servizi
       elettorali della Regione Toscana
-developmentStatus: development
-intendedAudience:
-  countries:
-    - it
-  scope:
-    - government
-it:
-  conforme:
-    gdpr: true
-    lineeGuidaDesign: true
-    misureMinimeSicurezza: true
-    modelloInteroperabilita: true
-  countryExtensionVersion: '0.2'
-  piattaforme:
-    anpr: false
-    cie: false
-    pagopa: false
-    spid: false
-  riuso:
-    codiceIPA: c_d612
-legal:
-  license: AGPL-3.0-or-later
-localisation:
-  availableLanguages:
-    - it
-  localisationReady: false
-maintenance:
-  contacts:
-    - affiliation: Comune di Firenze
-      email: giovanni1.rossi@comune.fi.it
-      name: Giovanni Rossi
-    - affiliation: Comune di Firenze
-      email: sara.campittiello@comune.fi.it
-      name: Sara Ciampittiello
-    - affiliation: Comune di Firenze
-      email: andrea.manzi@comune.fi.it
-      name: Andrea Manzi
-    - affiliation: Comune di Firenze
-      email: riccardo.vannetti@comune.fi.it
-      name: Riccardo Vannetti
-  type: internal
-name: Divo
-platforms:
-  - linux
-releaseDate: '2020-07-07'
-softwareType: standalone/web
-softwareVersion: 1.4.4
-url: 'https://github.com/ComuneFI/divo'
-usedBy:
-  - Comune di Arezzo
-  - Comune di Carrara
-  - Comune di Castelfranco di Sotto
-  - Comune di Firenze
-  - Comune di Pistoia
-  - Comune di San Giuliano Terme
