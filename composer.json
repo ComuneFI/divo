@@ -3,7 +3,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
-        "comunedifirenze/bicorebundle": "^1.0",
+        "comunedifirenze/bicorebundle": "^2.0",
         "doctrine/doctrine-bundle": "^2.0",
         "sensiolabs/security-checker": "^6.0",
         "symfony/apache-pack": "^1.0",
