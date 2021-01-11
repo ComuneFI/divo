@@ -37,16 +37,13 @@ build:
     nodes:
         analysis:
           tests:
-            override: [php-scrutinizer-run]
+            override: 
+                - 'composer install --no-interaction --no-scripts'
+                - 'bin/console bicorebundle:install admin password admin@admin.it'
+                - 'bin/console App:CreateViews'
+                - 'bin/console App:LoadFixtures'
+                - 'php-scrutinizer-run'
             
-    project_setup:
-        override:
-        - 'composer install --no-interaction --no-scripts'
-        - 'bin/console bicorebundle:install admin password admin@admin.it'
-        - 'bin/console App:CreateViews'
-        - 'bin/console App:LoadFixtures'
-
-    
 filter:
     excluded_paths:
         - 'vendor/*'
@@ -54,8 +51,8 @@ filter:
     paths:
         - 'src/*'
 tools:
-    external_code_coverage:
-        timeout: 3600    # Timeout in seconds.
+    #external_code_coverage:
+    #    timeout: 3600    # Timeout in seconds.
     php_code_sniffer:
         enabled: true
         config:
