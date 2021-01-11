@@ -46,8 +46,7 @@ test:
         - tags
     stage: test
     script:
-      #- bin/simple-phpunit
-      - echo "TODO Test"
+      - bin/simple-phpunit
 
 deploy:
     only:
@@ -56,4 +55,3 @@ deploy:
     stage: deploy
     script:
       - bin/console deploy test -v
-      #- bin/console deploy test -v
