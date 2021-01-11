@@ -61,5 +61,6 @@ deploy:
       refs:
         - tags
     stage: deploy
+    when: manual
     script:
       - bin/console deploy test -v
