@@ -44,7 +44,7 @@ build:
             - 'bin/console App:LoadFixtures'
             - 'php-scrutinizer-run'
             
-      phpunit:
+      tests:
           environment:
               php: 7.4
           dependencies:
