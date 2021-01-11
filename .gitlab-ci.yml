@@ -43,9 +43,6 @@ before_script:
       - echo $TESTAPPENVS;
       - ls -al
       - composer install --no-interaction
-      - bin/console bicorebundle:install admin adminpass admin@admin.it
-      - bin/console App:CreateViews
-      - bin/console App:LoadFixtures
 test:
     only:
       refs:
@@ -53,6 +50,10 @@ test:
     stage: test
     services:
       - postgres:12.2-alpine
+    before_script:
+      - bin/console bicorebundle:install admin adminpass admin@admin.it
+      - bin/console App:CreateViews
+      - bin/console App:LoadFixtures
     script:
       - bin/simple-phpunit
 deploy:
