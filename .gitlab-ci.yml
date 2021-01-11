@@ -43,7 +43,7 @@ before_script:
 test:
     only:
       refs:
-        - tags
+        - develop
     stage: test
     script:
       - bin/simple-phpunit
