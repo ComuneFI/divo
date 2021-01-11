@@ -38,11 +38,14 @@ build:
         analysis:
           tests:
             override: [php-scrutinizer-run]
-    commands:
+            
+    project_setup:
+        override:
         - 'composer install --no-interaction --no-scripts'
         - 'bin/console bicorebundle:install admin password admin@admin.it'
         - 'bin/console App:CreateViews'
         - 'bin/console App:LoadFixtures'
+
     
 filter:
     excluded_paths:
