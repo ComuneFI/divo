@@ -44,6 +44,21 @@ build:
             - 'bin/console App:LoadFixtures'
             - 'php-scrutinizer-run'
             
+        phpunit:
+            environment:
+                php: 7.4
+            dependencies:
+                override:
+                    - 'composer install --no-interaction --no-scripts'
+                    - 'bin/console bicorebundle:install admin password admin@admin.it'
+                    - 'bin/console App:CreateViews'
+                    - 'bin/console App:LoadFixtures'
+            tests:
+                override:
+                    - on_node: 2
+                      idle_timeout: 4800
+                      command: "./vendor/bin/phpunit"
+            
 filter:
     excluded_paths:
         - 'vendor/*'
