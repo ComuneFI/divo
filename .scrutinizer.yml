@@ -34,16 +34,17 @@ build:
     services:
         postgres: 12
         
-    nodes:
-        analysis:
-          tests:
-            override: [php-scrutinizer-run]
+    #nodes:
+    #    analysis:
+    #      tests:
+    #        override: [php-scrutinizer-run]
         
     commands:
       - 'composer install --no-interaction --no-scripts'
       - 'bin/console bicorebundle:install admin password admin@admin.it'
       - 'bin/console App:CreateViews'
       - 'bin/console App:LoadFixtures'
+      - 'php-scrutinizer-run'
             
 filter:
     excluded_paths:
