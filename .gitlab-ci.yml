@@ -1,4 +1,4 @@
-image: php:7.2
+image: $CI_REGISTRY/docker/php7.4-xdebug-apache
 
 stages:
     - test
@@ -17,8 +17,11 @@ variables:
   NO_PROXY: $CI_NO_PROXY
   HTTPS_PROXY_REQUEST_FULLURI: 0
   NSS_SSL_CBC_RANDOM_IV: 0
-  DATABASE_URL: $CI_TARGET_DB_URL
+  DATABASE_URL: $CI_TEST_DB_URL
   BICORE_SCHEMA: $CI_TARGET_DB_SCHEMA
+  POSTGRES_DB: divodb
+  POSTGRES_USER: admin
+  POSTGRES_PASSWORD: "adminpass"
 
 cache:
   paths:
@@ -39,16 +42,19 @@ before_script:
       - echo $CI_COMMIT_TAG
       - echo $TESTAPPENVS;
       - ls -al
-      - bash ci/docker_install.sh > /dev/null
+      - composer install --no-interaction
+      - bin/console bicorebundle:install admin adminpass admin@admin.it
+      - bin/console App:CreateViews
+      - bin/console App:LoadFixtures
 test:
     only:
       refs:
-        - tags
+        - develop
     stage: test
+    services:
+      - postgres:12.2-alpine
     script:
-      #- bin/simple-phpunit
-      - echo "TODO Test"
-
+      - bin/simple-phpunit
 deploy:
     only:
       refs:
@@ -56,4 +62,3 @@ deploy:
     stage: deploy
     script:
       - bin/console deploy test -v
-      #- bin/console deploy test -v
