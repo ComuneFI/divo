@@ -21,12 +21,6 @@ checks:
         align_assignments: true
         code_rating: true
             
-before_commands:
-    - 'composer install --no-interaction --no-scripts'
-    - 'bin/console bicorebundle:install admin password admin@admin.it'
-    - 'bin/console App:CreateViews'
-    - 'bin/console App:LoadFixtures'
-    
 build:
     environment:
         php:
@@ -44,7 +38,11 @@ build:
         analysis:
           tests:
             override: [php-scrutinizer-run]
-
+    commands:
+        - 'composer install --no-interaction --no-scripts'
+        - 'bin/console bicorebundle:install admin password admin@admin.it'
+        - 'bin/console App:CreateViews'
+        - 'bin/console App:LoadFixtures'
     
 filter:
     excluded_paths:
