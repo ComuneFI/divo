@@ -57,7 +57,7 @@ build:
                 override:
                     - on_node: 2
                       idle_timeout: 4800
-                      command: "./vendor/bin/phpunit"
+                      command: "./bin/simple-phpunit"
             
 filter:
     excluded_paths:
