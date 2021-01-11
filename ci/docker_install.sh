@@ -23,7 +23,7 @@ docker-php-ext-install gd zip pdo_pgsql
 # Install and run Composer
 curl -sS https://getcomposer.org/installer | php
 php composer.phar config -g secure-http false
-php composer.phar global require hirak/prestissimo
+#php composer.phar global require hirak/prestissimo
 php composer.phar install
 #yarn install
 #yarn upgrade

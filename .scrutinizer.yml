@@ -28,11 +28,17 @@ build:
             ini:
                 'memory_limit': '4G'
         node: "v10.15.3"
+        variables:
+          DATABASE_URL: pgsql://scrutinizer:scrutinizer@127.0.0.1:5432/scrutinizer
+
     nodes:
         analysis:
           tests:
             override: [php-scrutinizer-run]
-        
+        my-node:
+          services:
+            # For available tags, see https://hub.docker.com/_/postgres/
+            postgres: 12        
 filter:
     excluded_paths:
         - 'vendor/*'
