@@ -35,9 +35,9 @@ build:
         analysis:
           tests:
             override: [php-scrutinizer-run]
-          services:
-            # For available tags, see https://hub.docker.com/_/postgres/
-            postgres: 12        
+            services:
+              # For available tags, see https://hub.docker.com/_/postgres/
+              postgres: 12        
 filter:
     excluded_paths:
         - 'vendor/*'
