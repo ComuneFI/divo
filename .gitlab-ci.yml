@@ -1,4 +1,4 @@
-image: php:7.2
+image: $CI_REGISTRY/docker/php7.4-xdebug-apache
 
 stages:
     - test
