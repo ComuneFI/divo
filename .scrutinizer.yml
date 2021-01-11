@@ -30,11 +30,9 @@ build:
         node: "v10.15.3"
         variables:
           DATABASE_URL: pgsql://scrutinizer:scrutinizer@127.0.0.1:5432/scrutinizer
+        postgres: 12        
 
     nodes:
-        services:
-          # For available tags, see https://hub.docker.com/_/postgres/
-          postgres: 12        
         analysis:
           tests:
             override: [php-scrutinizer-run]
