@@ -20,11 +20,11 @@ checks:
         avoid_multiple_statements_on_same_line: true
         align_assignments: true
         code_rating: true
-        version: 7.4  # or any other released version
     
 build:
     environment:
         php:
+            version: 7.4  # or any other released version
             ini:
                 'memory_limit': '4G'
         node: "v10.15.3"
