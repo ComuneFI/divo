@@ -30,8 +30,10 @@ build:
         node: "v10.15.3"
         variables:
           DATABASE_URL: pgsql://scrutinizer:scrutinizer@127.0.0.1:5432/scrutinizer
-        postgresql: 12        
-
+        postgresql: true
+    services:
+        postgres: 12
+        
     nodes:
         analysis:
           tests:
