@@ -5,7 +5,6 @@
         "php": "^7.2",
         "comunedifirenze/bicorebundle": "^2.0",
         "doctrine/doctrine-bundle": "^2.0",
-        "sensiolabs/security-checker": "^6.0",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "4.4.*",
         "symfony/console": "^4.4",
@@ -43,8 +42,7 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "security-checker security:check": "script"
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"
