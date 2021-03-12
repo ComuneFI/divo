@@ -1,143 +1,163 @@
 {
   "entrypoints": {
-    "login": {
-      "js": [
-        "build/runtime.4caecefa.js",
-        "build/login.a9edb89f.js"
-      ],
-      "css": [
-        "build/login.5417b838.css"
-      ]
-    },
     "app": {
       "js": [
-        "build/runtime.4caecefa.js",
-        "build/app.a5be0abd.js"
+        "build/runtime.dcd5fd43.js",
+        "build/app.20bd9506.js"
       ],
       "css": [
-        "build/app.6dc18bfc.css"
-      ]
-    },
-    "configsave": {
-      "js": [
-        "build/runtime.4caecefa.js",
-        "build/0.cf60d32b.js",
-        "build/1.93d3a47e.js",
-        "build/configsave.ddde4ca9.js"
-      ]
-    },
-    "tableDetailLog": {
-      "js": [
-        "build/runtime.4caecefa.js",
-        "build/0.cf60d32b.js",
-        "build/tableDetailLog.0e3b40c6.js"
-      ]
-    },
-    "timeline": {
-      "js": [
-        "build/runtime.4caecefa.js",
-        "build/0.cf60d32b.js",
-        "build/timeline.798f9031.js"
-      ]
-    },
-    "checkenabled": {
-      "js": [
-        "build/runtime.4caecefa.js",
-        "build/0.cf60d32b.js",
-        "build/1.93d3a47e.js",
-        "build/checkenabled.8604e178.js"
-      ]
-    },
-    "bootstrapitalia": {
-      "js": [
-        "build/runtime.4caecefa.js",
-        "build/0.cf60d32b.js",
-        "build/3.0f411d2b.js",
-        "build/bootstrapitalia.de50d595.js"
-      ],
-      "css": [
-        "build/3.1da61f69.css"
-      ]
-    },
-    "bicore": {
-      "js": [
-        "build/runtime.4caecefa.js",
-        "build/bicore.931bc7f4.js"
-      ],
-      "css": [
-        "build/bicore.29c7bce7.css"
+        "build/app.b75294ae.css"
       ]
     },
     "uploadDataCSV": {
       "js": [
-        "build/runtime.4caecefa.js",
-        "build/0.cf60d32b.js",
-        "build/1.93d3a47e.js",
-        "build/uploadDataCSV.aebe87ba.js"
+        "build/runtime.dcd5fd43.js",
+        "build/755.f5cf308f.js",
+        "build/455.2cf031c3.js",
+        "build/893.db02c2ea.js",
+        "build/571.ef22386f.js",
+        "build/uploadDataCSV.f36439f6.js"
+      ]
+    },
+    "configsave": {
+      "js": [
+        "build/runtime.dcd5fd43.js",
+        "build/755.f5cf308f.js",
+        "build/455.2cf031c3.js",
+        "build/893.db02c2ea.js",
+        "build/571.ef22386f.js",
+        "build/configsave.103ae8ac.js"
+      ]
+    },
+    "tableDetailLog": {
+      "js": [
+        "build/runtime.dcd5fd43.js",
+        "build/755.f5cf308f.js",
+        "build/tableDetailLog.db3848cc.js"
+      ]
+    },
+    "timeline": {
+      "js": [
+        "build/runtime.dcd5fd43.js",
+        "build/755.f5cf308f.js",
+        "build/timeline.83fe0a45.js"
+      ]
+    },
+    "checkenabled": {
+      "js": [
+        "build/runtime.dcd5fd43.js",
+        "build/755.f5cf308f.js",
+        "build/455.2cf031c3.js",
+        "build/checkenabled.3bd5d114.js"
+      ]
+    },
+    "bootstrapitalia": {
+      "js": [
+        "build/runtime.dcd5fd43.js",
+        "build/755.f5cf308f.js",
+        "build/981.51afc3c7.js",
+        "build/234.bcdc8648.js",
+        "build/bootstrapitalia.8ae7882c.js"
+      ],
+      "css": [
+        "build/234.745779d8.css"
+      ]
+    },
+    "bicore": {
+      "js": [
+        "build/runtime.dcd5fd43.js",
+        "build/bicore.009ae177.js"
+      ],
+      "css": [
+        "build/bicore.c67afce7.css"
+      ]
+    },
+    "login": {
+      "js": [
+        "build/runtime.dcd5fd43.js",
+        "build/login.d48e89d9.js"
+      ],
+      "css": [
+        "build/login.2c972312.css"
       ]
     },
     "bitabella": {
       "js": [
-        "build/runtime.4caecefa.js",
-        "build/0.cf60d32b.js",
-        "build/1.93d3a47e.js",
-        "build/bitabella.03bba628.js"
+        "build/runtime.dcd5fd43.js",
+        "build/755.f5cf308f.js",
+        "build/455.2cf031c3.js",
+        "build/893.db02c2ea.js",
+        "build/981.51afc3c7.js",
+        "build/994.b3b1dff4.js",
+        "build/373.a376f7a0.js",
+        "build/583.21f9c37b.js",
+        "build/bitabella.ebb3cfb5.js"
       ],
       "css": [
-        "build/bitabella.94ca1cd1.css"
+        "build/373.c6cd87ed.css",
+        "build/bitabella.fd7e2425.css"
       ]
     },
     "bidemo": {
       "js": [
-        "build/runtime.4caecefa.js",
-        "build/0.cf60d32b.js",
-        "build/1.93d3a47e.js",
-        "build/bidemo.3d875ab1.js"
+        "build/runtime.dcd5fd43.js",
+        "build/755.f5cf308f.js",
+        "build/455.2cf031c3.js",
+        "build/893.db02c2ea.js",
+        "build/981.51afc3c7.js",
+        "build/994.b3b1dff4.js",
+        "build/373.a376f7a0.js",
+        "build/583.21f9c37b.js",
+        "build/bidemo.4f27c05b.js"
       ],
       "css": [
-        "build/bidemo.58932f94.css"
+        "build/373.c6cd87ed.css",
+        "build/bidemo.fd7e2425.css"
       ]
     },
     "adminpanel": {
       "js": [
-        "build/runtime.4caecefa.js",
-        "build/0.cf60d32b.js",
-        "build/2.5c1a8b24.js",
-        "build/adminpanel.90a273f1.js"
+        "build/runtime.dcd5fd43.js",
+        "build/755.f5cf308f.js",
+        "build/893.db02c2ea.js",
+        "build/994.b3b1dff4.js",
+        "build/adminpanel.049bede9.js"
       ],
       "css": [
-        "build/adminpanel.1078f6ae.css"
+        "build/adminpanel.73c4a350.css"
       ]
     },
     "alert": {
       "js": [
-        "build/runtime.4caecefa.js",
-        "build/0.cf60d32b.js",
-        "build/alert.da217b28.js"
+        "build/runtime.dcd5fd43.js",
+        "build/755.f5cf308f.js",
+        "build/alert.3b4b4365.js"
       ]
     },
     "divoSlicer": {
       "js": [
-        "build/runtime.4caecefa.js",
-        "build/0.cf60d32b.js",
-        "build/1.93d3a47e.js",
-        "build/divoSlicer.1d2ac440.js"
+        "build/runtime.dcd5fd43.js",
+        "build/755.f5cf308f.js",
+        "build/455.2cf031c3.js",
+        "build/divoSlicer.6032925c.js"
       ]
     },
     "openCollapse": {
       "js": [
-        "build/runtime.4caecefa.js",
-        "build/0.cf60d32b.js",
-        "build/2.5c1a8b24.js",
-        "build/openCollapse.ab3aa3ed.js"
+        "build/runtime.dcd5fd43.js",
+        "build/755.f5cf308f.js",
+        "build/893.db02c2ea.js",
+        "build/openCollapse.8b610d8e.js"
       ]
     },
     "creautente": {
       "js": [
-        "build/runtime.4caecefa.js",
-        "build/0.cf60d32b.js",
-        "build/1.93d3a47e.js",
-        "build/creautente.95f90623.js"
+        "build/runtime.dcd5fd43.js",
+        "build/755.f5cf308f.js",
+        "build/455.2cf031c3.js",
+        "build/893.db02c2ea.js",
+        "build/571.ef22386f.js",
+        "build/creautente.c4da1062.js"
       ]
     }
   }
