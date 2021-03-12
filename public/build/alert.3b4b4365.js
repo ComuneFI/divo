@@ -1,0 +1,1 @@
+(self.webpackChunk=self.webpackChunk||[]).push([[745],{4975:(e,s,t)=>{var a=t(9755);a("#selectOption").change((function(){a(".alert").alert("close")}))}},e=>{"use strict";e.O(void 0,[755],(()=>{return s=4975,e(e.s=s);var s}))}]);

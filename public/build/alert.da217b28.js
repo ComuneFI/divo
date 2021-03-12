@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([["alert"],{oFS1:function(n,o,e){(function(n){n("#selectOption").change((function(){n(".alert").alert("close")}))}).call(this,e("EVdn"))}},[["oFS1","runtime",0]]]);
