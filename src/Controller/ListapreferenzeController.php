@@ -34,7 +34,7 @@ class ListapreferenzeController extends FiController {
     /**
      * Lists all tables entities.
      */
-    public function index(Request $request, \Symfony\Component\Asset\Packages $assetsmanager) {
+    public function index(Request $request, \Symfony\Component\Asset\Packages $assetsmanager) : Response {
 
         $arr_listid = $this->retrieveIdListe();
 

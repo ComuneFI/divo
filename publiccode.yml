@@ -10,9 +10,9 @@ developmentStatus: stable
 name: Divo
 platforms:
   - linux
-releaseDate: '2020-09-22'
+releaseDate: '2022-01-20'
 softwareType: standalone/web
-softwareVersion: 1.4.5
+softwareVersion: 2.0.0
 url: 'https://github.com/ComuneFI/divo'
 usedBy:
   - Comune di Arezzo
