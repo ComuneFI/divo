@@ -10,7 +10,7 @@
 
 ### Prerequisiti
 
-Testato su Debian e CentOS 7 ma compatibile con altre distribuzioni Linux.
+Testato su Debian e CentOS 7, ma compatibile con altre distribuzioni Linux.
 
 - apache HTTP server 
 - Composer (https://getcomposer.org/) 
