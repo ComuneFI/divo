@@ -24,17 +24,11 @@ usedBy:
 maintenance:
   contacts:
     - affiliation: Comune di Firenze
-      email: giovanni1.rossi@comune.fi.it
-      name: Giovanni Rossi
-    - affiliation: Comune di Firenze
-      email: sara.campittiello@comune.fi.it
-      name: Sara Ciampittiello
-    - affiliation: Comune di Firenze
-      email: andrea.manzi@comune.fi.it
-      name: Andrea Manzi
-    - affiliation: Comune di Firenze
       email: riccardo.vannetti@comune.fi.it
       name: Riccardo Vannetti
+    - affiliation: Comune di Firenze
+      email: eq.sviluppoprogetti@comune.fi.it
+      name: EQ Sviluppo Progetti Aziendali
   type: internal
 legal:
   license: AGPL-3.0-or-later
