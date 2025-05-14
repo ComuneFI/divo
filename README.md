@@ -30,7 +30,7 @@ Moduli php
 
 ### Installazione
 
-ATTENZIONE: Il DataBase e lo schema del DataBase non devono avere lo stesso nome, si consiglia di nominare il DB “divo” e lo schema “divoschema”
+ATTENZIONE: Il DataBase e lo schema del DataBase non devono avere lo stesso nome, si consiglia di nominare il DB “divo” e lo schema “divoschema”.
 
 ```
 git clone https://github.com/ComuneFi/divo.git
